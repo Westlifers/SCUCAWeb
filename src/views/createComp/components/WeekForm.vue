@@ -14,8 +14,8 @@
 
       <el-form-item label="选择项目" prop="events">
         <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">全选</el-checkbox>
-        <el-checkbox-group v-model="state.createForm.checkedEvents" @change="handleCheckedCitiesChange">
-          <el-checkbox v-for="event in events" :key="event" :label="event">{{event}}</el-checkbox>
+        <el-checkbox-group v-model="state.createForm.checkedEvents" @change="handleCheckedEventsChange">
+          <el-checkbox v-for="event in ALL_EVENTS" :key="event" :label="event">{{event}}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
 
@@ -34,35 +34,19 @@
 import {reactive, ref} from 'vue'
 import {FormInstance} from "element-plus";
 import {createCompetition} from "@/api/service";
+import {ALL_EVENTS} from "@/utils";
 
 const checkAll = ref(false)
 const isIndeterminate = ref(true)
-const events= [
-  '222',
-  '333',
-  '444',
-  '555',
-  '666',
-  '777',
-  'skewb',
-  'pyra',
-  'sq1',
-  'minx',
-  'clock',
-  '333oh',
-  '333bld',
-  '444bld',
-  '555bld',
-]
 
 const handleCheckAllChange = (val: boolean) => {
-  state.createForm.checkedEvents = val ? events : []
+  state.createForm.checkedEvents = val ? ALL_EVENTS : []
   isIndeterminate.value = false
 }
-const handleCheckedCitiesChange = (value: string[]) => {
+const handleCheckedEventsChange = (value: string[]) => {
   const checkedCount = value.length
-  checkAll.value = checkedCount === events.length
-  isIndeterminate.value = checkedCount > 0 && checkedCount < events.length
+  checkAll.value = checkedCount === ALL_EVENTS.length
+  isIndeterminate.value = checkedCount > 0 && checkedCount < ALL_EVENTS.length
 }
 
 const formRef = ref<FormInstance>()

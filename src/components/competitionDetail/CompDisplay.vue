@@ -11,6 +11,7 @@
 import {computed, ref} from 'vue'
 import DataTable from "@/components/competitionDetail/DataTable.vue";
 import {getComp} from "@/api/fetchData";
+import {ALL_EVENTS} from "@/utils";
 
 const props = defineProps<{
   comp: string
@@ -38,7 +39,6 @@ const ClassifiedTableData = computed(() => {
 })
 
 const events = computed(() => {
-  const events:string[] = ['333', '222', '444', '555', '666', '777', '333bld', '333oh', 'clock', 'minx', 'pyra', 'skewb', 'sq1', '444bld', '555bld']
   const eventsGot: string[] = []
   for (const result of tableData.result_set) {
     if (!(eventsGot.indexOf(result.event) > -1)) {
@@ -48,7 +48,7 @@ const events = computed(() => {
 
   // 排序
   const sorted_events:string[] = []
-  for (const event of events) {
+  for (const event of ALL_EVENTS) {
     if (eventsGot.indexOf(event) > -1) {
       sorted_events.push(event)
     }
