@@ -14,7 +14,7 @@
 <script lang="ts" setup>
 import {TableColumnCtx} from "element-plus";
 import {Result} from "@/types";
-import {time_convert} from "@/utils";
+import {SPECIAL_EVENTS, time_convert} from "@/utils";
 import {computed} from "vue";
 
 
@@ -24,8 +24,7 @@ const formatter = (row: Result, column: TableColumnCtx<Result>) => {
 }
 
 const maxScrambleCount = computed(() => {
-  const specs: string[] = ['333bld', '444bld', '555bld', '666', '777']
-  if (specs.indexOf(props.tableData[0].event) > -1) {
+  if (SPECIAL_EVENTS.indexOf(props.tableData[0].event) > -1) {
     return 3
   } else {
     return 5

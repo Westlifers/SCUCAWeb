@@ -42,3 +42,6 @@ export function time_convert(time: number): string {
     const sec = (time % 60).toFixed(3)
     return min>0?`${min}: ${sec}`:`${sec}`
 }
+
+export const SPECIAL_EVENTS = ['333bld', '444bld', '555bld', '666', '777']
+export const ALL_EVENTS = ['333', '222', '444', '555', '666', '777', '333bld', '333oh', 'clock', 'minx', 'pyra', 'skewb', 'sq1', '444bld', '555bld']

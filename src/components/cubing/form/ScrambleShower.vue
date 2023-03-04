@@ -24,10 +24,10 @@
 import {Scramble} from "@/types";
 import {computed, ref, watch} from "vue";
 import SubmitForm from "@/components/cubing/form/SubmitForm.vue";
+import {SPECIAL_EVENTS} from "@/utils";
 
 const maxScrambleCount = computed(() => {
-  const specs: string[] = ['333bld', '444bld', '555bld', '666', '777']
-  if (specs.indexOf(props.event) > -1) {
+  if (SPECIAL_EVENTS.indexOf(props.event) > -1) {
     return 3
   } else {
     return 5

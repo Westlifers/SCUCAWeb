@@ -63,7 +63,7 @@
 import {computed, reactive, ref} from 'vue'
 import {ElNotification, FormInstance} from "element-plus";
 import {postResult} from "@/api/service";
-import {convert_time} from "@/utils";
+import {convert_time, SPECIAL_EVENTS} from "@/utils";
 import {store, UPDATE_USER_PARTICIPATION_DATA} from "@/store";
 import router from "@/router";
 
@@ -162,8 +162,7 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
 }
 
 const count = computed(() => {
-  const specs: string[] = ['333bld', '444bld', '555bld', '666', '777']
-  if (specs.indexOf(props.event) > -1) {
+  if (SPECIAL_EVENTS.indexOf(props.event) > -1) {
     return 3
   } else {
     return 5

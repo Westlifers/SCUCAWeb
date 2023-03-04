@@ -12,9 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import NavUser from "@/layout/components/NavUser.vue";
-
-</script>
+import NavUser from "@/layout/components/NavUser.vue";</script>
 
 <style scoped>
 .func {
