@@ -1,12 +1,13 @@
 <template>
   <Suspense>
-    <cubing-form comp="week" />
+    <cubing-index comp="week" />
   </Suspense>
 </template>
 
 <script lang="ts" setup>
 
-import CubingForm from "@/components/cubing/CubingForm.vue";</script>
+import CubingIndex from "@/components/cubing/CubingIndex.vue"
+</script>
 
 <style scoped>
 

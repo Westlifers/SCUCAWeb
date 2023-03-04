@@ -21,7 +21,7 @@ import {computed, ref} from "vue";
 import {store, UPDATE_USER_PARTICIPATION_DATA} from "@/store";
 import {getComp} from "@/api/fetchData";
 import {Scramble} from "@/types";
-import ScrambleShower from "@/components/cubing/ScrambleShower.vue";
+import ScrambleShower from "@/components/cubing/form/ScrambleShower.vue";
 import {go_page} from "@/utils";
 
 const isLoggedIn = computed(() => !(store.state.user.username === ''))

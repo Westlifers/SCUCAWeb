@@ -23,7 +23,7 @@
 
 import {Scramble} from "@/types";
 import {computed, ref, watch} from "vue";
-import SubmitForm from "@/components/cubing/SubmitForm.vue";
+import SubmitForm from "@/components/cubing/form/SubmitForm.vue";
 
 const maxScrambleCount = computed(() => {
   const specs: string[] = ['333bld', '444bld', '555bld', '666', '777']
