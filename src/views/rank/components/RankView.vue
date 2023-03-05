@@ -17,7 +17,7 @@
 
 
   <div class="data-table">
-    <data-table :table-data="paginationData.results" :aorb="aorb" />
+    <data-table :table-data="paginationData.results" :aorb="aorb" :page="page" />
 
     <el-pagination background layout="prev, pager, next" :page-count="total_page" :current-page="page" @current-change="changePage"/>
   </div>
