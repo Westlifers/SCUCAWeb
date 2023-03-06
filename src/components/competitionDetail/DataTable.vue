@@ -1,13 +1,31 @@
 <template>
   <el-table :data="tableData" style="max-width: 920px" max-height="750" border >
-    <el-table-column fixed prop="username" label="用户名" width="200"/>
-    <el-table-column prop="time_1" label="第一次" :formatter="formatter" width="120"/>
-    <el-table-column prop="time_2" label="第二次" :formatter="formatter" width="120"/>
-    <el-table-column prop="time_3" label="第三次" :formatter="formatter" width="120"/>
-    <el-table-column prop="time_4" label="第四次" :formatter="formatter" v-if="maxScrambleCount===5" width="120"/>
-    <el-table-column prop="time_5" label="第五次" :formatter="formatter" v-if="maxScrambleCount===5" width="120"/>
-    <el-table-column prop="avg" label="平均" :formatter="formatter" width="120" :sortable="true" :sort-method="sort_avg_count_in_zero"/>
-    <el-table-column prop="best" label="最佳" :formatter="formatter" width="120" :sortable="true" :sort-method="sort_best_count_in_zero"/>
+    <el-table-column fixed prop="username" label="用户名" width="150"/>
+    <el-table-column prop="time_1" label="第一次" :formatter="formatter" width="110"/>
+    <el-table-column prop="time_2" label="第二次" :formatter="formatter" width="110"/>
+    <el-table-column prop="time_3" label="第三次" :formatter="formatter" width="110"/>
+    <el-table-column prop="time_4" label="第四次" :formatter="formatter" v-if="maxScrambleCount===5" width="110"/>
+    <el-table-column prop="time_5" label="第五次" :formatter="formatter" v-if="maxScrambleCount===5" width="110"/>
+    <el-table-column prop="avg" label="平均" width="110" :sortable="true" :sort-method="sort_avg_count_in_zero">
+      <template v-slot:default="scope">
+        <el-badge value="SCUR" class="item" v-if="scope.row.is_avg_scur">
+          <div class="badge-value">
+            {{time_convert(scope.row.avg)}}
+          </div>
+        </el-badge>
+        <div v-else>{{time_convert(scope.row.avg)}}</div>
+      </template>
+    </el-table-column>
+    <el-table-column prop="best" label="最佳" width="110" :sortable="true" :sort-method="sort_best_count_in_zero">
+      <template v-slot:default="scope">
+        <el-badge value="SCUR" class="item" v-if="scope.row.is_best_scur">
+          <div class="badge-value">
+            {{time_convert(scope.row.best)}}
+          </div>
+        </el-badge>
+        <div v-else>{{time_convert(scope.row.best)}}</div>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
@@ -61,5 +79,10 @@ const props = defineProps<{
 </script>
 
 <style scoped>
-
+.item {
+  margin-top: 10px;
+}
+.badge-value {
+  width: 50px;
+}
 </style>

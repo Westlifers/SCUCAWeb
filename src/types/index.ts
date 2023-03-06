@@ -15,7 +15,9 @@ export interface Result {
     time_4: number,
     time_5: number,
     avg: number,
-    best: number
+    best: number,
+    is_avg_scur: boolean,
+    is_best_scur: boolean
 }
 
 
