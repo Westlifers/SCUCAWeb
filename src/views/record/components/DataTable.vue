@@ -29,7 +29,10 @@ import {time_convert} from "@/utils";
 
 const record: Record = await getScuRecord()
 
-
+const formatter = (row: Result, column: TableColumnCtx<Result>) => {
+  const val = row[column.property]
+  return val>0?time_convert(val):'DNF'
+}
 
 interface integratedData {
   usernameAvg: string
