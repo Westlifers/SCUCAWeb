@@ -39,7 +39,11 @@ export function convert_time(validatedTimeStr: string): number {
 
 export function time_convert(time: number): string {
     const min = Math.floor(time / 60)
-    const sec = (time % 60).toFixed(3)
+    let sec = (time % 60).toFixed(3)
+    // if sec < 10 and min > 0, add 0 before sec
+    if (parseFloat(sec) < 10 && min > 0) {
+        sec = '0' + sec
+    }
     return min>0?`${min}: ${sec}`:`${sec}`
 }
 
