@@ -6,7 +6,11 @@
     </el-menu-item>
   </el-menu>
   <el-menu class="func" text-color="#fff" active-text-color="#fff" background-color="#EC4141FF">
-    <div class="user-popover"><nav-user /></div>
+    <div class="user-popover">
+      <Suspense>
+        <nav-user />
+      </Suspense>
+    </div>
   </el-menu>
   <div class="h-6" />
 </template>

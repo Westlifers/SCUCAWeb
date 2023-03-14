@@ -2,7 +2,7 @@
   <el-popover
       :visible="visible"
       placement="top"
-      :width="300"
+      :width="600"
       popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
   >
     <template #reference>
@@ -10,13 +10,22 @@
     </template>
     <template #default>
       <div class="hello">
-        <h3>{{isLoggedIn?'你好，' + userData[0]['username']: '请登录'}}</h3>
+        <h3>{{isLoggedIn?'你好，' + user.username: '请登录'}}</h3>
         <el-button v-if="isLoggedIn" @click="logout_all" round>登出</el-button>
         <el-button v-if="!isLoggedIn" @click="go_page('login')" round>登陆</el-button>
       </div>
-      <el-table :data="userData" v-if="isLoggedIn">
-        <el-table-column width="100" property="username" label="用户名" />
-        <el-table-column width="150" property="email" label="email" />
+      <el-table :data="integratedUserData" v-if="isLoggedIn" style="max-width: 1024px" :header-cell-style="{'text-align':'center'}" :cell-style="{'text-align':'center'}" border>
+        <el-table-column label="平均">
+          <el-table-column prop="dateAvg" label="时间" />
+          <el-table-column prop="avg" :formatter="formatter" label="成绩" />
+        </el-table-column>
+
+        <el-table-column prop="event" label="项目" />
+
+        <el-table-column label="单次">
+          <el-table-column prop="best" :formatter="formatter" label="成绩" />
+          <el-table-column prop="dateBest" label="时间" />
+        </el-table-column>
       </el-table>
     </template>
   </el-popover>
@@ -26,17 +35,44 @@
 import {CLEAR_USER, store} from "@/store";
 import {computed, ref} from "vue";
 import {logout} from "@/api/service";
-import {go_page} from "@/utils";
+import {go_page, time_convert} from "@/utils";
 import router from "@/router";
+import {getUserPb} from "@/api/fetchData";
+import {OmittedResultAvg, OmittedResultBest, Record, Result} from "@/types";
+import {TableColumnCtx} from "element-plus";
 
 const user = computed(() => store.state.user)
 const isLoggedIn = computed(() => user.value['username'] != '')
-const userData = computed(() => [
-  {
-    'username': user.value.username,
-    'email': user.value.email
+const userData: Record = await getUserPb()
+
+interface IntegratedUserData {
+  dateAvg: string,
+  dateBest: string,
+  avg: number,
+  best: number,
+  event: string
+}
+
+const integratedUserData = computed(() => {
+  const intData: IntegratedUserData[] = []
+  for (const i in userData.avg) {
+    const result_avg = userData.avg[i]
+    const result_best = userData.best[i]
+    intData.push({
+      dateAvg: result_avg.date,
+      dateBest: result_best.date,
+      avg: result_avg.avg,
+      best: result_best.best,
+      event: result_best.event
+    })
   }
-])
+  return intData
+})
+
+const formatter = (row: Result, column: TableColumnCtx<Result>) => {
+  const val = row[column.property]
+  return val>0?time_convert(val):'DNF'
+}
 
 const visible = ref(false)
 

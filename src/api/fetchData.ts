@@ -10,6 +10,7 @@ import {
     Scramble,
     UserParticipationData
 } from "@/types";
+import {store} from "@/store";
 
 export async function getComp (compId: string): Promise<DetailedCompetition> {
     let res
@@ -172,4 +173,45 @@ export async function getUserParticipationData (): Promise<UserParticipationData
             events_finished: res_special['events_finished']
         }
     }
+}
+
+export async function getUserPb (): Promise<Record> {
+    const res = await request({
+        url: '/user/data/',
+        method: 'get'
+    })
+
+    const username = store.state.user.username
+
+    for (const result of res['avg']){
+        result['username'] = username
+        delete result['compId']
+    }
+
+    const pb: Record = {
+        avg: [],
+        best: []
+    }
+
+    for (const result of res['avg']) {
+        const result_: OmittedResultAvg = {
+            avg: result['avg'],
+            username: result['username'],
+            event: result['event'],
+            date: result['date']
+        }
+        pb.avg.push(result_)
+    }
+
+    for (const result of res['best']) {
+        const result_: OmittedResultBest = {
+            best: result['best'],
+            username: result['username'],
+            event: result['event'],
+            date: result['date']
+        }
+        pb.best.push(result_)
+    }
+
+    return pb
 }
