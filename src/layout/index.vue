@@ -32,7 +32,6 @@ export default defineComponent({
 <style scoped>
 .el-header {
   padding: 0;
-  -webkit-app-region: drag;
 }
 
 .el-main {

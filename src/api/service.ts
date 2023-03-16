@@ -48,3 +48,23 @@ export async function createCompetition(comp: string, data: any) {
         })
     }
 }
+
+export async function postAnnouncement (data: any) {
+    let url
+    switch (data['type']) {
+        case 'update':
+            url = '/post/update/'
+            break
+        case 'scur break':
+            url = '/post/break/'
+            break
+        case 'announcement':
+            url = '/post/announcement/'
+            break
+    }
+    return request({
+        url: url,
+        method: 'post',
+        data
+    })
+}

@@ -11,11 +11,26 @@ import rankSuspense from "@/views/rank/RankSuspense.vue";
 import weekCubingSuspense from "@/views/cubing/WeekCubingSuspense.vue";
 import specialCubingSuspense from "@/views/cubing/SpecialCubingSuspense.vue";
 import createCompetitionSuspense from "@/views/createComp/createCompetitionSuspense.vue";
+import announcementSuspense from "@/views/announcement/announcementSuspense.vue";
+import createAnnouncementForm from "@/views/createAnnouncement/createAnnouncementForm.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/login/index',
+    redirect: 'login/index/',
+  },
+
+
+  {
+    path: '/index',
+    component: layout,
+    children: [
+      {
+        path: 'index',
+        component: announcementSuspense,
+        name: 'index'
+      }
+    ]
   },
 
 
@@ -131,6 +146,18 @@ const routes: Array<RouteRecordRaw> = [
         path: 'index',
         component: loginRegister,
         name: 'login'
+      }
+    ]
+  },
+
+  {
+    path: '/post',
+    component: layout,
+    children: [
+      {
+        path: 'index',
+        component: createAnnouncementForm,
+        name: 'post'
       }
     ]
   }

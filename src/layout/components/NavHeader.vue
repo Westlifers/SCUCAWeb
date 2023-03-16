@@ -1,6 +1,6 @@
 <template>
   <el-menu class="el-menu-demo" mode="horizontal" background-color="#EC4141FF" text-color="#fff" active-text-color="#ffd04b">
-    <el-menu-item index="1">
+    <el-menu-item index="1" @click="go_page('index')">
       <el-icon size="50"><ElementPlus /></el-icon>
       <template #title> SCUCAComp </template>
     </el-menu-item>
@@ -16,7 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-import NavUser from "@/layout/components/NavUser.vue";</script>
+import NavUser from "@/layout/components/NavUser.vue";
+import {go_page} from "@/utils";
+</script>
 
 <style scoped>
 .func {

@@ -1,5 +1,6 @@
 import request from "@/api/index";
 import {
+    Announcement,
     DetailedCompetition,
     OmittedCompetition,
     OmittedResultAvg,
@@ -214,4 +215,38 @@ export async function getUserPb (): Promise<Record> {
     }
 
     return pb
+}
+
+
+export async function getAnnouncement (type: 'update' | 'scur break' | 'announcement'): Promise<Announcement[]> {
+    let res
+    if (type === 'update') {
+        res = await request({
+            url: '/post/update/',
+            method: 'get'
+        })
+    } else if (type === 'scur break') {
+        res = await request({
+            url: '/post/break/',
+            method: 'get'
+        })
+    } else {
+        res = await request({
+            url: '/post/announcement/',
+            method: 'get'
+        })
+    }
+
+    const announcements: Announcement[] = []
+    for (const announcement of res) {
+        announcements.push({
+            title: announcement['title'],
+            content: announcement['content'],
+            date: announcement['date'],
+            author: announcement['author'],
+            type: announcement['type']
+        })
+    }
+
+    return announcements
 }
