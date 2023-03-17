@@ -7,7 +7,9 @@
         <template #header>
           <div class="card-header">
             <div class="card-header-title">
-              <span>{{ post.title }}</span>
+              <el-badge :value="post.type==='update'?'更新':'公告'" class="item" :type="post.type==='update'?'success':'primary'">
+                <span>{{ post.title }}</span>
+              </el-badge>
             </div>
             <div class="card-header-info">
               <el-icon><UserFilled /></el-icon>
@@ -25,7 +27,7 @@
 
         <div>
           <!--     show only first 30 characters of the content     -->
-          <p>{{ post.content.substring(0, 30) }}</p>
+          <p>{{ post.content.substring(0, 30) + '...' }}</p>
         </div>
 
 

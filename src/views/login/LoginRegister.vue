@@ -39,11 +39,19 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import LoginForm from "@/views/login/components/LoginForm.vue";
 import RegisterForm from "@/views/login/components/RegisterForm.vue";
+import {store} from "@/store";
+import router from "@/router";
 
 const signUpMode = ref(false)
+
+// redirect to home page if user is already logged in
+const isLoggedIn = computed(() => store.state.user.username !== '')
+if (isLoggedIn.value) {
+  router.push({name: 'index'})
+}
 </script>
 <style scoped>
 .container {

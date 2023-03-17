@@ -38,7 +38,7 @@ import {logout} from "@/api/service";
 import {go_page, time_convert} from "@/utils";
 import router from "@/router";
 import {getUserPb} from "@/api/fetchData";
-import {OmittedResultAvg, OmittedResultBest, Record, Result} from "@/types";
+import {Record, Result} from "@/types";
 import {TableColumnCtx} from "element-plus";
 
 const user = computed(() => store.state.user)
