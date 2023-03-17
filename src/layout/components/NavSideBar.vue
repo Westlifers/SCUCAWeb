@@ -94,7 +94,7 @@ import {computed, ref} from "vue";
 import {go_page} from "@/utils";
 import {store} from "@/store";
 
-const isCollapse = ref(true)
+const isCollapse = ref(false)
 
 const isLoggedIn = computed(() => !(store.state.user.username===''))
 </script>
