@@ -19,12 +19,12 @@
 
       <el-form-item label="内容" prop="content">
         <div id="editor">
-          <v-md-editor v-model="state.announcementForm.content" height="500px"></v-md-editor>
+          <v-md-editor v-model="state.announcementForm.content" height="440px"></v-md-editor>
         </div>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="handleSubmit(formRef)">提交</el-button>
+        <el-button type="primary" @click="handleSubmit(formRef)" style="margin-left: 50px">提交</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -51,6 +51,7 @@ const state = reactive({
   },
   announcementRules: {
     title: [{required: true, message: '请输入标题', trigger: 'blur'}],
+    type: [{required: true, message: '请选择类型', trigger: 'blur'}]
   }
 })
 

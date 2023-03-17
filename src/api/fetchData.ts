@@ -218,7 +218,7 @@ export async function getUserPb (): Promise<Record> {
 }
 
 
-export async function getAnnouncement (type: 'update' | 'scur break' | 'announcement'): Promise<Announcement[]> {
+export async function getAnnouncement (type: 'update' | 'scur break' | 'announcement' | 'ua'): Promise<Announcement[]> {
     let res
     if (type === 'update') {
         res = await request({
@@ -230,9 +230,14 @@ export async function getAnnouncement (type: 'update' | 'scur break' | 'announce
             url: '/post/break/',
             method: 'get'
         })
-    } else {
+    } else if (type === 'announcement') {
         res = await request({
             url: '/post/announcement/',
+            method: 'get'
+        })
+    } else {  // type === 'ua', meaning update and announcement
+        res = await request({
+            url: '/post/ua/',
             method: 'get'
         })
     }
@@ -243,7 +248,7 @@ export async function getAnnouncement (type: 'update' | 'scur break' | 'announce
             title: announcement['title'],
             content: announcement['content'],
             date: announcement['date'],
-            author: announcement['author'],
+            author: announcement['user'],
             type: announcement['type']
         })
     }

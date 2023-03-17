@@ -1,6 +1,6 @@
 <template>
   <div class="history-list">
-    <el-table :row-class-name="rowClassName" :data="tableData" style="max-width: 920px" :header-cell-style="{'text-align':'center'}" :cell-style="{'text-align':'center'}">
+    <el-table :row-class-name="rowClassName" :data="tableData" style="max-width: 920px" :header-cell-style="{'text-align':'center'}" :cell-style="{'text-align':'center'}" border>
       <el-table-column prop="compId" label="比赛名">
         <template v-slot="scope">
           <router-link :to="{path: '/history/detail/' + scope.row.compId}">{{scope.row.compId}}</router-link>
