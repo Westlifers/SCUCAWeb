@@ -2,7 +2,7 @@
   <el-popover
       :visible="visible"
       placement="top"
-      :width="600"
+      :width="width"
       popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
   >
     <template #reference>
@@ -81,6 +81,14 @@ const logout_all = async () => {
   await logout()
   store.commit(CLEAR_USER)
 }
+
+// check if device is mobile
+const isMobile = computed(() => {
+  return window.innerWidth <= 768
+})
+const width = computed(() => {
+  return isMobile.value ? 300 : 600
+})
 </script>
 
 <style scoped>

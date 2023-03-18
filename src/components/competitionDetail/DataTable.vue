@@ -1,12 +1,27 @@
 <template>
   <el-table :data="tableData" style="max-width: 920px" max-height="750" border >
-    <el-table-column fixed prop="username" label="用户名" width="150"/>
-    <el-table-column prop="time_1" label="第一次" :formatter="formatter" width="110"/>
-    <el-table-column prop="time_2" label="第二次" :formatter="formatter" width="110"/>
-    <el-table-column prop="time_3" label="第三次" :formatter="formatter" width="110"/>
-    <el-table-column prop="time_4" label="第四次" :formatter="formatter" v-if="maxScrambleCount===5" width="110"/>
-    <el-table-column prop="time_5" label="第五次" :formatter="formatter" v-if="maxScrambleCount===5" width="110"/>
-    <el-table-column prop="avg" label="平均" width="110" :sortable="true" :sort-method="sort_avg_count_in_zero">
+
+    <!--  appear for mobile devices  -->
+    <el-table-column type="expand" v-if="isMobile">
+      <template #default="props">
+        <el-table :data="[{time_1: props.row.time_1, time_2: props.row.time_2, time_3: props.row.time_3, time_4: props.row.time_4, time_5: props.row.time_5}]">
+          <el-table-column prop="time_1" label="第一次" :formatter="formatter"/>
+          <el-table-column prop="time_2" label="第二次" :formatter="formatter"/>
+          <el-table-column prop="time_3" label="第三次" :formatter="formatter"/>
+          <el-table-column prop="time_4" label="第四次" :formatter="formatter" v-if="maxScrambleCount===5"/>
+          <el-table-column prop="time_5" label="第五次" :formatter="formatter" v-if="maxScrambleCount===5"/>
+        </el-table>
+      </template>
+    </el-table-column>
+    <el-table-column prop="username" label="用户名" :width="width"/>
+    <!--  appear for PC  -->
+    <el-table-column prop="time_1" label="第一次" :formatter="formatter" :width="width" v-if="!isMobile"/>
+    <el-table-column prop="time_2" label="第二次" :formatter="formatter" :width="width" v-if="!isMobile"/>
+    <el-table-column prop="time_3" label="第三次" :formatter="formatter" :width="width" v-if="!isMobile"/>
+    <el-table-column prop="time_4" label="第四次" :formatter="formatter" v-if="maxScrambleCount===5 & !isMobile" :width="width"/>
+    <el-table-column prop="time_5" label="第五次" :formatter="formatter" v-if="maxScrambleCount===5 & !isMobile" :width="width"/>
+
+    <el-table-column prop="avg" label="平均" :width="width" :sortable="true" :sort-method="sort_avg_count_in_zero">
       <template v-slot:default="scope">
         <el-badge value="SCUR" class="item" v-if="scope.row.is_avg_scur">
           <div class="badge-value">
@@ -16,7 +31,7 @@
         <div v-else>{{time_convert(scope.row.avg)}}</div>
       </template>
     </el-table-column>
-    <el-table-column prop="best" label="最佳" width="110" :sortable="true" :sort-method="sort_best_count_in_zero">
+    <el-table-column prop="best" label="最佳" :width="width" :sortable="true" :sort-method="sort_best_count_in_zero">
       <template v-slot:default="scope">
         <el-badge value="SCUR" class="item" v-if="scope.row.is_best_scur">
           <div class="badge-value">
@@ -26,6 +41,7 @@
         <div v-else>{{time_convert(scope.row.best)}}</div>
       </template>
     </el-table-column>
+
   </el-table>
 </template>
 
@@ -76,6 +92,15 @@ const sort_best_count_in_zero = (obj_a, obj_b) => {
 const props = defineProps<{
   tableData: Result[]
 }>()
+
+// check if device is mobile
+const isMobile = computed(() => {
+  return window.innerWidth < 768
+})
+const width = computed(() => {
+  return isMobile.value ? 75 : 110
+})
+
 </script>
 
 <style scoped>

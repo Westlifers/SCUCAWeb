@@ -34,7 +34,7 @@
         <div class="card-footer">
           <el-button type="primary" @click="drawer[index] = true"><el-icon><MoreFilled /></el-icon></el-button>
         </div>
-        <el-drawer v-model="drawer[index]">
+        <el-drawer v-model="drawer[index]" :direction="drawerDirection" :size="drawerSize">
           <v-md-preview :text="'# ' + post.title + '\n' + post.content" />
         </el-drawer>
 
@@ -46,7 +46,7 @@
 
 <script lang="ts" setup>
 import {getAnnouncement} from "@/api/fetchData";
-import {Ref, ref} from "vue";
+import {computed, Ref, ref} from "vue";
 
 const posts = await getAnnouncement('ua')
 // add a list of boolean values to control the drawer
@@ -54,6 +54,11 @@ const drawer: Ref<boolean[]> = ref([])
 for (let i = 0; i < posts.length; i++) {
   drawer.value.push(false)
 }
+
+// check if the device is mobile, and change drawer direction and size accordingly
+const isMobile = computed(() => window.innerWidth <= 600)
+const drawerDirection = computed(() => isMobile.value ? 'btt' : 'rtl')
+const drawerSize = computed(() => isMobile.value ? '60%' : '50%')
 </script>
 
 <style scoped>
@@ -81,6 +86,18 @@ for (let i = 0; i < posts.length; i++) {
 
 .card-footer {
   text-align: right;
+}
+
+/* for mobile devices define css differently */
+@media only screen and (max-width: 600px) {
+  .cards {
+    margin: 50px 0 10px 5px;
+  }
+
+  .card {
+    width: 100%;
+  }
+
 }
 
 </style>

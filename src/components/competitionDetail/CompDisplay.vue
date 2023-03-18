@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activeName" class="demo-tabs" type="card">
+  <el-tabs v-model="activeName" class="demo-tabs" tab-position="left">
     <el-tab-pane v-for="(event, key) in events" :key="key" :name="event" :label="event">
       <DataTable :table-data="ClassifiedTableData[event]"></DataTable>
     </el-tab-pane>
@@ -62,13 +62,10 @@ const events = computed(() => {
 <style scoped>
 .demo-tabs {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
 }
 .el-tabs {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
 }
 </style>
