@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLoggedIn">
-    <el-space direction="vertical" :size="50">
+    <el-space direction="vertical" :size="10">
       <el-select v-model="event" class="m-2" placeholder="未参与项目" size="large">
         <el-option
             v-for="event in events_available"

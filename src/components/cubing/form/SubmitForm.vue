@@ -3,7 +3,7 @@
       ref="formRef"
       :model="state.resultForm"
       label-width="auto"
-      :size="size"
+      size="default"
       v-if="event"
       :rules="state.resultRules"
   >
@@ -50,10 +50,6 @@
     <el-form-item>
       <el-space size="large">
         <el-button type="primary" @click="handleSubmit(formRef)">提交</el-button>
-        <el-radio-group v-model="size" label="size control">
-          <el-radio-button label="default">大</el-radio-button>
-          <el-radio-button label="small">小</el-radio-button>
-        </el-radio-group>
       </el-space>
     </el-form-item>
   </el-form>
@@ -66,8 +62,6 @@ import {postResult} from "@/api/service";
 import {convert_time, SPECIAL_EVENTS} from "@/utils";
 import {store, UPDATE_USER_PARTICIPATION_DATA} from "@/store";
 import router from "@/router";
-
-const size = ref('default')
 
 const formRef = ref<FormInstance>()
 

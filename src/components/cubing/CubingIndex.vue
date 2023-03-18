@@ -2,12 +2,12 @@
   <div class="cubing">
     <cubing-form :comp="comp" v-if="is_form" />
     <cubing-timer :comp="comp" v-if="!is_form" />
-    <el-switch
-        v-model="is_form"
-        class="mb-2"
-        active-text="表单模式"
-        inactive-text="计时器模式"
-    />
+<!--    <el-switch-->
+<!--        v-model="is_form"-->
+<!--        class="mb-2"-->
+<!--        active-text="表单模式"-->
+<!--        inactive-text="计时器模式"-->
+<!--    />-->
   </div>
 </template>
 
