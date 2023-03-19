@@ -25,13 +25,13 @@ import {Record, Result} from "@/types";
 import {getScuRecord} from "@/api/fetchData";
 import {computed} from "vue";
 import {TableColumnCtx} from "element-plus";
-import {time_convert} from "@/utils";
+import {ALL_EVENTS, time_convert} from "@/utils";
 
 const record: Record = await getScuRecord()
 
 const formatter = (row: Result, column: TableColumnCtx<Result>) => {
   const val = row[column.property]
-  return val>0?time_convert(val):'DNF'
+  return val>0?time_convert(val):val===-1?'':'DNF'
 }
 
 interface integratedData {
@@ -45,23 +45,41 @@ interface integratedData {
 }
 
 const tableData = computed(() => {
-  const tableData: integratedData[] = []
-  for (const i in record.avg) {
-    let result_avg = record.avg[i]
-    let result_best = record.best[i]
-    let intData: integratedData = {
-      usernameAvg: result_avg.username,
-      dateAvg: result_avg.date,
-      usernameBest: result_best.username,
-      dateBest: result_best.date,
-      avg: result_avg.avg,
-      best: result_best.best,
-      event: result_best.event
-    }
-    tableData.push(intData)
+  // before we integrate the data, note that the avg part and best part are not necessarily of the same length
+  // one may have some events that the other doesn't have.
+  // so we need to add empty data to the corresponding part, this action is mutual,
+  // however, we don't need to iterate twice, instead, since both part is sorted by event,
+  // we initialize an entirely empty array, and then iterate through both part, and fill the empty array
+  const emptyData: integratedData[] = []
+  for (const i in ALL_EVENTS) {
+    emptyData.push({
+      usernameAvg: '',
+      dateAvg: '',
+      usernameBest: '',
+      dateBest: '',
+      avg: -1,
+      best: -1,
+      event: ALL_EVENTS[i]
+    })
   }
 
-  return tableData
+  for (const i in record.avg) {
+    let result_avg = record.avg[i]
+    const j = ALL_EVENTS.indexOf(result_avg.event)
+    emptyData[j].usernameAvg = result_avg.username
+    emptyData[j].dateAvg = result_avg.date
+    emptyData[j].avg = result_avg.avg
+  }
+
+  for (const i in record.best) {
+    let result_best = record.best[i]
+    const j = ALL_EVENTS.indexOf(result_best.event)
+    emptyData[j].usernameBest = result_best.username
+    emptyData[j].dateBest = result_best.date
+    emptyData[j].best = result_best.best
+  }
+
+  return emptyData
 })
 </script>
 
