@@ -17,7 +17,7 @@ import createAnnouncementForm from "@/views/createAnnouncement/createAnnouncemen
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: 'login/index/',
+    redirect: 'login/',
   },
 
 
@@ -26,7 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     component: layout,
     children: [
       {
-        path: 'index',
+        path: '',
         component: announcementSuspense,
         name: 'index'
       }
@@ -57,7 +57,7 @@ const routes: Array<RouteRecordRaw> = [
     component: layout,
     children: [
       {
-        path: 'index',
+        path: '',
         component: specialSuspense,
         name: 'special'
       },
@@ -75,7 +75,7 @@ const routes: Array<RouteRecordRaw> = [
     component: layout,
     children: [
       {
-        path: 'index',
+        path: '',
         component: historyListSuspense,
         name: 'history'
       },
@@ -92,7 +92,7 @@ const routes: Array<RouteRecordRaw> = [
     component: layout,
     children: [
       {
-        path: 'index',
+        path: '',
         component: scuRecord,
         name: 'record'
       }
@@ -105,7 +105,7 @@ const routes: Array<RouteRecordRaw> = [
     component: layout,
     children: [
       {
-        path: 'index',
+        path: '',
         component: rankSuspense,
         name: 'rank'
       }
@@ -118,7 +118,7 @@ const routes: Array<RouteRecordRaw> = [
     component: layout,
     children: [
       {
-        path: 'index',
+        path: '',
         component: createCompetitionSuspense,
         name: 'create'
       }
@@ -131,7 +131,7 @@ const routes: Array<RouteRecordRaw> = [
     component: layout,
     children: [
       {
-        path: 'index',
+        path: '',
         component: aboutUs,
         name: 'about'
       }
@@ -143,7 +143,7 @@ const routes: Array<RouteRecordRaw> = [
     component: layout,
     children: [
       {
-        path: 'index',
+        path: '',
         component: loginRegister,
         name: 'login'
       }
@@ -155,7 +155,7 @@ const routes: Array<RouteRecordRaw> = [
     component: layout,
     children: [
       {
-        path: 'index',
+        path: '',
         component: createAnnouncementForm,
         name: 'post'
       }

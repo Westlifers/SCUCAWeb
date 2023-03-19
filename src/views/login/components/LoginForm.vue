@@ -105,7 +105,9 @@ const handleLogin = (formEl: FormInstance | undefined) => {
           message: '用户登录成功！',
           type: 'success',
         })
-        await router.push({name: 'overview'})
+        // refresh the window so that the menu can be updated
+        window.location.reload()
+        await router.push({name: 'index'})
       } catch (e) {
         await router.push({name: 'login'})
       }

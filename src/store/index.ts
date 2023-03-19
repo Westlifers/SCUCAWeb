@@ -51,8 +51,9 @@ export const store = createStore({
         state[prop] = userInfo[prop];
       }
     },
-    clearUser(state: object | any) {
-      window.localStorage.setItem("userInfo", '')
+    async clearUser(state: object | any) {
+      // use await to make sure the localStorage is cleared before we log out
+      await window.localStorage.setItem("userInfo", '')
       state.user = initDefaultUserInfo()
       ElNotification({
         title: '成功',
