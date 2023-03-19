@@ -11,6 +11,13 @@
         <nav-user />
       </Suspense>
     </div>
+    <div class="user-popover">
+      <Suspense>
+        <el-badge type="primary" is-dot>
+          <nav-break-notice />
+        </el-badge>
+      </Suspense>
+    </div>
   </el-menu>
   <div class="h-6" />
 </template>
@@ -18,6 +25,7 @@
 <script lang="ts" setup>
 import NavUser from "@/layout/components/NavUser.vue";
 import {go_page} from "@/utils";
+import NavBreakNotice from "@/layout/components/NavBreakNotice.vue";
 </script>
 
 <style scoped>
@@ -34,5 +42,6 @@ import {go_page} from "@/utils";
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-right: 10px;
 }
 </style>
