@@ -25,10 +25,10 @@
       <template v-slot:default="scope">
         <el-badge value="SCUR" class="item" v-if="scope.row.is_avg_scur">
           <div class="badge-value">
-            {{time_convert(scope.row.avg) > 0 ? time_convert(scope.row.avg) : 'DNF'}}
+            {{scope.row.avg > 0 ? time_convert(scope.row.avg) : 'DNF'}}
           </div>
         </el-badge>
-        <div v-else>{{time_convert(scope.row.avg) > 0 ? time_convert(scope.row.avg) : 'DNF'}}</div>
+        <div v-else>{{scope.row.avg > 0 ? time_convert(scope.row.avg) : 'DNF'}}</div>
       </template>
     </el-table-column>
     <el-table-column prop="best" label="最佳" :width="width" :sortable="true" :sort-method="sort_best_count_in_zero">
