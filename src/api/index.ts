@@ -1,7 +1,8 @@
 import axios, {AxiosResponse} from "axios";
 import {ElMessage} from "element-plus";
 import router from "@/router";
-import {getCookie} from "@/utils";
+import {getCookie, go_page} from "@/utils";
+import {CLEAR_USER, store} from "@/store";
 
 
 const request = axios.create({
@@ -47,7 +48,7 @@ request.interceptors.response.use(
 
         return data
     },
-    ({message, response}) => {
+    async ({message, response}) => {
         console.log('err => ', message, response) // for debug
         if (response && response.data && response.data.detail) {
             ElMessage({
@@ -63,8 +64,8 @@ request.interceptors.response.use(
             })
         }
         if (response && (response.status === 403 || response.status === 401)) {
-            localStorage.removeItem('user');
-            return router.push('/login')
+            store.commit(CLEAR_USER)
+            return go_page('login')
         }
         return Promise.reject(message)
     }

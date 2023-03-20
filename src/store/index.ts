@@ -5,6 +5,7 @@ import {ElNotification} from "element-plus";
 import {getUserParticipationData} from "@/api/fetchData";
 
 export const SET_USER = 'setUser'
+export const LOG_OUT = 'logOut'
 export const CLEAR_USER = 'clearUser'
 
 export const UPDATE_USER_PARTICIPATION_DATA = 'updateUserParticipationData'
@@ -51,7 +52,7 @@ export const store = createStore({
         state[prop] = userInfo[prop];
       }
     },
-    async clearUser(state: object | any) {
+    async logOut(state: object | any) {
       // use await to make sure the localStorage is cleared before we log out
       await window.localStorage.setItem("userInfo", '')
       state.user = initDefaultUserInfo()
@@ -59,6 +60,16 @@ export const store = createStore({
         title: '成功',
         message: '登出成功！',
         type: 'success',
+      })
+    },
+    async clearUser(state: object | any) {
+      // use await to make sure the localStorage is cleared before we log out
+      await window.localStorage.setItem("userInfo", '')
+      state.user = initDefaultUserInfo()
+      ElNotification({
+        title: '登录异常',
+        message: '您的登录信息已过期或出现异常，请重新登录',
+        type: 'warning',
       })
     },
     async updateUserParticipationData(state: object | any) {

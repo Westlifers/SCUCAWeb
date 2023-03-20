@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import {CLEAR_USER, store} from "@/store";
+import {LOG_OUT, store} from "@/store";
 import {computed, ref} from "vue";
 import {logout} from "@/api/service";
 import {go_page, time_convert} from "@/utils";
@@ -79,7 +79,7 @@ const visible = ref(false)
 const logout_all = async () => {
   await router.push({name: 'overview'})
   await logout()
-  store.commit(CLEAR_USER)
+  store.commit(LOG_OUT)
 }
 
 // check if device is mobile

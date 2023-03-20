@@ -50,6 +50,7 @@ const signUpMode = ref(false)
 // redirect to home page if user is already logged in
 const isLoggedIn = computed(() => store.state.user.username !== '')
 if (isLoggedIn.value) {
+  console.log('已登录，重定向')
   router.push({name: 'index'})
 }
 </script>
