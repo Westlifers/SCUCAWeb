@@ -1,9 +1,9 @@
 <template>
-  <el-menu class="el-menu-demo" mode="horizontal" background-color="#EC4141FF" text-color="#fff" active-text-color="#ffd04b">
-    <el-menu-item index="1" @click="go_page('index')">
+  <el-menu class="el-menu-demo" mode="horizontal" text-color="#fff">
+    <div class="el-menu-item" @click="go_page('index')">
       <el-icon size="50"><ElementPlus /></el-icon>
-      <template #title> SCUCAComp </template>
-    </el-menu-item>
+      SCUCAComp
+    </div>
   </el-menu>
   <el-menu class="func" text-color="#fff" active-text-color="#fff" background-color="#EC4141FF">
     <div class="user-popover">
@@ -19,6 +19,9 @@
         <nav-break-notice v-else />
       </Suspense>
     </div>
+    <div class="user-popover">
+      <el-switch size="large" v-model="isDark" active-icon="Sunny" inactive-icon="Moon" style="--el-switch-on-color: #ff4949; --el-switch-off-color: #409EFF" inline-prompt/>
+    </div>
   </el-menu>
   <div class="h-6" />
 </template>
@@ -28,6 +31,10 @@ import NavUser from "@/layout/components/NavUser.vue";
 import {go_page} from "@/utils";
 import NavBreakNotice from "@/layout/components/NavBreakNotice.vue";
 import {ref} from "vue";
+import { useDark, useToggle } from '@vueuse/core'
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
 
 const is_new_notice = ref(true)
 const new_record_title = ref('')
@@ -65,11 +72,20 @@ const receive_no_new_record = () => {
   flex-direction: row-reverse;
   top: 0;
   height: 56px;
+  background-color: inherit;
 }
 .user-popover {
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-right: 10px;
+  background-color: inherit;
+}
+.el-menu-demo {
+  background-color: #EC4141FF;
+  height: 100%;
+}
+.el-menu-item {
+  --el-menu-hover-bg-color: #EC4141FF;
 }
 </style>

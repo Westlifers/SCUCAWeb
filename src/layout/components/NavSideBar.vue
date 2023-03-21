@@ -1,7 +1,7 @@
 <template>
   <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse">
 
-    <el-button type="danger" icon="MoreFilled" @click="isCollapse=!isCollapse" circle />
+    <el-button type="danger" icon="MoreFilled" id="collapse-button" @click="isCollapse=!isCollapse" circle />
 
 
     <el-sub-menu index="1">

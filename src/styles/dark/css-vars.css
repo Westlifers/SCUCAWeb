@@ -1,0 +1,20 @@
+html.dark {
+    background-color: var(--el-bg-color);
+}
+
+html.dark .el-main, html.dark .el-menu, html.dark .el-menu-demo{
+    background-color: var(--el-bg-color) !important;
+}
+html.dark .func .el-button, html.dark #collapse-button {
+    background-color: var(--el-bg-color) !important;
+    border: white 2px solid;
+}
+html.dark .about {
+    color: white;
+}
+html.dark .about svg {
+    fill: white;
+}
+html.dark .el-menu-demo .el-menu-item {
+    --el-menu-hover-bg-color: var(--el-bg-color);
+}

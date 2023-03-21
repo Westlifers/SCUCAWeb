@@ -52,6 +52,10 @@
         <el-button type="primary" @click="handleSubmit(formRef)">提交</el-button>
       </el-space>
     </el-form-item>
+
+    <div class="tip">
+      <v-md-preview text="> 如DNF请直接输入DNF, dnf, 或0"></v-md-preview>
+    </div>
   </el-form>
 </template>
 
