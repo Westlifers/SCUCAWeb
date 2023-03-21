@@ -14,7 +14,7 @@
     <div class="user-popover">
       <Suspense>
         <el-badge type="primary" is-dot v-if="is_new_notice" @click="read_new_record">
-          <nav-break-notice @receive_new_record="receive_new_record" @update_visible="update_visible" />
+          <nav-break-notice @receive_new_record="receive_new_record" @update_visible="update_visible" @receive_no_new_record="receive_no_new_record" />
         </el-badge>
         <nav-break-notice v-else />
       </Suspense>
@@ -43,12 +43,16 @@ const read_new_record = async () => {
   // there's a variable named visible in nav-break-notice, if it's true, return
   if (visible.value) return
   is_new_notice.value = false
-  localStorage.setItem('latestBreakAnnouncement', JSON.stringify(new_record_title.value))
+  localStorage.setItem('latestBreakAnnouncement', new_record_title.value)
   localStorage.setItem('breakAnnouncementLength', JSON.stringify(new_length.value))
 }
 
 const update_visible = (new_visible) => {
   visible.value = new_visible
+}
+
+const receive_no_new_record = () => {
+  is_new_notice.value = false
 }
 </script>
 

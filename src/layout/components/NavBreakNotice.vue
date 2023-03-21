@@ -39,17 +39,17 @@ const breakAnnouncements: Announcement[] = await getAnnouncement('scur break')
 // compare the first announcement and length of breakAnnouncement with local storage
 // if the first announcement is not the same as the one in local storage and the length of breakAnnouncement is more than local storage
 // then update the local storage, and set is_new_notice to true
+// otherwise, set is_new_notice to false
 const emits = defineEmits<{
   (e: 'receive_new_record', record_title_and_new_length: object): void
   (e: 'update_visible', visible: boolean): void
+  (e: 'receive_no_new_record'): void
 }>()
 
 let latestBreakAnnouncementInLocalStorage: string | null = await localStorage.getItem('latestBreakAnnouncement')
 // if latestBreakAnnouncementInLocalStorage is null, then set it to '', otherwise, parse it to string
 if (latestBreakAnnouncementInLocalStorage === null) {
   latestBreakAnnouncementInLocalStorage = ''
-} else {
-  latestBreakAnnouncementInLocalStorage = latestBreakAnnouncementInLocalStorage.toString()
 }
 
 let breakAnnouncementsInLocalStorageLength: string | null | number = await localStorage.getItem('breakAnnouncementLength')
@@ -62,6 +62,8 @@ if (breakAnnouncementsInLocalStorageLength === null) {
 
 if (breakAnnouncements[0].title !== latestBreakAnnouncementInLocalStorage || breakAnnouncements.length > breakAnnouncementsInLocalStorageLength) {
   emits('receive_new_record', {record_title: breakAnnouncements[0].title, new_length: breakAnnouncements.length})
+} else {
+  emits('receive_no_new_record')
 }
 
 // watch visible, to sync father component's visible
