@@ -27,14 +27,47 @@
 </template>
 
 <script lang="ts" setup>
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import {getAnnouncement} from "@/api/fetchData";
 import {Announcement} from "@/types";
 import {time_convert} from "@/utils";
 
 const visible = ref(false)
 const width = ref(300)
+
 const breakAnnouncements: Announcement[] = await getAnnouncement('scur break')
+// compare the first announcement and length of breakAnnouncement with local storage
+// if the first announcement is not the same as the one in local storage and the length of breakAnnouncement is more than local storage
+// then update the local storage, and set is_new_notice to true
+const emits = defineEmits<{
+  (e: 'receive_new_record', record_title_and_new_length: object): void
+  (e: 'update_visible', visible: boolean): void
+}>()
+
+let latestBreakAnnouncementInLocalStorage: string | null = await localStorage.getItem('latestBreakAnnouncement')
+// if latestBreakAnnouncementInLocalStorage is null, then set it to '', otherwise, parse it to string
+if (latestBreakAnnouncementInLocalStorage === null) {
+  latestBreakAnnouncementInLocalStorage = ''
+} else {
+  latestBreakAnnouncementInLocalStorage = latestBreakAnnouncementInLocalStorage.toString()
+}
+
+let breakAnnouncementsInLocalStorageLength: string | null | number = await localStorage.getItem('breakAnnouncementLength')
+// if breakAnnouncementsInLocalStorageLength is null, then set it to 0, otherwise, parse it to int
+if (breakAnnouncementsInLocalStorageLength === null) {
+  breakAnnouncementsInLocalStorageLength = 0
+} else {
+  breakAnnouncementsInLocalStorageLength = parseInt(breakAnnouncementsInLocalStorageLength)
+}
+
+if (breakAnnouncements[0].title !== latestBreakAnnouncementInLocalStorage || breakAnnouncements.length > breakAnnouncementsInLocalStorageLength) {
+  emits('receive_new_record', {record_title: breakAnnouncements[0].title, new_length: breakAnnouncements.length})
+}
+
+// watch visible, to sync father component's visible
+watch(visible, (newVisible, oldValue) => {
+  emits('update_visible', newVisible)
+})
 
 // compute the event and aorb from each announcement
 const getUserAndEventAndAorb = (content: string) => {
