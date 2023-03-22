@@ -2,7 +2,7 @@ html.dark {
     background-color: var(--el-bg-color);
 }
 
-html.dark .el-main, html.dark .el-menu, html.dark .el-menu-demo{
+html.dark .el-main, html.dark .el-menu, html.dark .el-menu-demo, html.dark .container{
     background-color: var(--el-bg-color) !important;
 }
 html.dark .func .el-button, html.dark #collapse-button {
@@ -17,4 +17,8 @@ html.dark .about svg {
 }
 html.dark .el-menu-demo .el-menu-item {
     --el-menu-hover-bg-color: var(--el-bg-color);
+}
+html.dark .container .el-form {
+    box-shadow: 0 0 10px #cccc;
+    background-color: var(--el-bg-color)
 }
