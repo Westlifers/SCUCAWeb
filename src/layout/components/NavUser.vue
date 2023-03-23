@@ -77,9 +77,9 @@ const formatter = (row: Result, column: TableColumnCtx<Result>) => {
 const visible = ref(false)
 
 const logout_all = async () => {
-  await router.push({name: 'overview'})
   await logout()
   store.commit(LOG_OUT)
+  await router.push({name: 'login'})
 }
 
 // check if device is mobile

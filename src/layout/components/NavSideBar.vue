@@ -100,5 +100,9 @@ const isLoggedIn = computed(() => !(store.state.user.username===''))
 </script>
 
 <style scoped>
-
+#collapse-button {
+  width: 100%;
+  border-radius: 0;
+  border: none !important;
+}
 </style>
