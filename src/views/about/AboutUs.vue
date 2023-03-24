@@ -3,9 +3,7 @@
     <span>四川大学魔方协会 SCUCAComp v{{version}}</span>
     <span>本项目已开源至GitHub: <el-link type="primary" :underline="true" href="https://github.com/Westlifers/SCUCAWeb" target="_blank">https://github.com/Westlifers/SCUCAWeb</el-link></span>
 
-    <el-divider>
-      <el-icon><star-filled /></el-icon>
-    </el-divider>
+    <el-divider />
 
     <div class="power">
       <el-space size="large">Powered By:

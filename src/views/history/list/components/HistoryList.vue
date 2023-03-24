@@ -43,10 +43,12 @@ const rowClassName = ({ row }) => {
 
 a {
   text-decoration: none;
+  color: var(--yougi-link-color);
 }
 
 .router-link-active {
   text-decoration: none;
+  color: var(--yougi-link-color);
 }
 ::v-deep .hideRow {
   display: none;
