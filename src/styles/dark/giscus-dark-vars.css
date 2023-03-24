@@ -99,6 +99,6 @@ main .pagination-loader-container {
 }
 
 /*! Custom CSS */
-.gsc-homepage-bg {
-    background-color: var(--yougi-light-black) !important;
+body {
+    background-color: var(--yougi-light-black);
 }
