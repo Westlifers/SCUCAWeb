@@ -13,6 +13,7 @@ import specialCubingSuspense from "@/views/cubing/SpecialCubingSuspense.vue";
 import createCompetitionSuspense from "@/views/createComp/createCompetitionSuspense.vue";
 import announcementSuspense from "@/views/announcement/announcementSuspense.vue";
 import createAnnouncementForm from "@/views/createAnnouncement/createAnnouncementForm.vue";
+import discussionGiscus from "@/views/discussion/discussionGiscus.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -121,6 +122,19 @@ const routes: Array<RouteRecordRaw> = [
         path: '',
         component: createCompetitionSuspense,
         name: 'create'
+      }
+    ]
+  },
+
+
+  {
+    path: '/discussion',
+    component: layout,
+    children: [
+      {
+        path: '',
+        component: discussionGiscus,
+        name: 'discussion'
       }
     ]
   },

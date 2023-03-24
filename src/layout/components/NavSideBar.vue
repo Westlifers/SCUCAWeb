@@ -67,19 +67,25 @@
     </el-menu-item>
 
 
-    <el-menu-item index="6" @click="go_page('create')">
+    <el-menu-item index="6" @click="go_page('discussion')">
+      <el-icon><ChatSquare /></el-icon>
+      <template #title>讨论中心</template>
+    </el-menu-item>
+
+
+    <el-menu-item index="7" @click="go_page('create')">
       <el-icon><Management /></el-icon>
       <template #title>发布比赛</template>
     </el-menu-item>
 
 
-    <el-menu-item index="7" @click="go_page('post')">
+    <el-menu-item index="8" @click="go_page('post')">
       <el-icon><FolderAdd /></el-icon>
       <template #title>发布通知</template>
     </el-menu-item>
 
 
-    <el-menu-item index="8" @click="go_page('about')">
+    <el-menu-item index="9" @click="go_page('about')">
       <el-icon><InfoFilled /></el-icon>
       <template #title>关于</template>
     </el-menu-item>
