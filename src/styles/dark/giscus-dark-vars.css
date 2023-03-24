@@ -1,0 +1,13 @@
+:root {
+    --yougi-light-black: #242424FF;
+    --yougi-light-black-2: #434343FF;
+    --yougi-link-color: #5866D5FF;
+}
+
+html {
+    background-color: var(--yougi-light-black) !important;
+}
+
+.color-text-primary {
+    background-color: var(--yougi-light-black) !important;
+}
