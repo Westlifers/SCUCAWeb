@@ -7,6 +7,7 @@ import {getUserParticipationData} from "@/api/fetchData";
 export const SET_USER = 'setUser'
 export const LOG_OUT = 'logOut'
 export const CLEAR_USER = 'clearUser'
+export const TOGGLE_DARK_MODE = 'toggleDarkMode'
 
 export const UPDATE_USER_PARTICIPATION_DATA = 'updateUserParticipationData'
 
@@ -39,10 +40,16 @@ export const initUserParticipationData = (): UserParticipationData => {
   }
 }
 
+const initDarkMode = (): boolean => {
+    const darkMode = window.localStorage.getItem("vueuse-color-scheme")
+    return darkMode === 'dark';
+}
+
 export const store = createStore({
   state: {
     user: initDefaultUserInfo(),  // 用户数据
-    userParticipation: initUserParticipationData()
+    userParticipation: initUserParticipationData(),
+    isDark: initDarkMode()
   },
   getters: {
   },
@@ -74,6 +81,9 @@ export const store = createStore({
     },
     async updateUserParticipationData(state: object | any) {
       state.userParticipation = await getUserParticipationData()
+    },
+    toggleDarkMode(state: object | any, isDark: boolean) {
+      state.isDark = isDark
     }
   },
   actions: {

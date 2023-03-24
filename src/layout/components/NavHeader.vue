@@ -30,8 +30,9 @@
 import NavUser from "@/layout/components/NavUser.vue";
 import {go_page} from "@/utils";
 import NavBreakNotice from "@/layout/components/NavBreakNotice.vue";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import { useDark, useToggle } from '@vueuse/core'
+import {store, TOGGLE_DARK_MODE} from "@/store";
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -61,6 +62,10 @@ const update_visible = (new_visible) => {
 const receive_no_new_record = () => {
   is_new_notice.value = false
 }
+
+watch(isDark, (newVal) => {
+  store.commit(TOGGLE_DARK_MODE, newVal)
+})
 </script>
 
 <style scoped>

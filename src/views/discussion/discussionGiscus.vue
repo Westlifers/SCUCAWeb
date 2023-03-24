@@ -1,5 +1,5 @@
 <template>
-  <div class="giscus">
+  <div class="giscus-container">
     <giscus-widget
         repo="Westlifers/SCUCAWeb"
         repo-id="R_kgDOJFJMCg"
@@ -10,22 +10,35 @@
         reactions-enabled="1"
         emit-metadata="0"
         input-position="bottom"
-        theme="light"
         lang="zh-CN"
         crossorigin="anonymous"
+        :theme="theme"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
 import 'giscus'
+import {computed} from "vue";
+import {store} from "@/store";
+
+const isDark = computed(() => store.state.isDark)
+const dark_theme = 'https://rawcdn.githack.com/Westlifers/SCUCAWeb/11527401ca6c395341d7359e144df1d17d87a177/src/styles/dark/giscus-dark-vars.css'
+const theme = computed(() => {
+  if (isDark.value) {
+    return dark_theme
+  } else {
+    return 'light'
+  }
+})
+
 </script>
 
 <style scoped>
-.giscus {
+.giscus-container {
   display: flex;
   justify-content: center;
-  padding-right: 1px;  /* to avoid overflow */
+  padding-right: 5px;  /* to avoid overflow */
 }
 
 giscus-widget {
