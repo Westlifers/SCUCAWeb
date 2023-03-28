@@ -23,7 +23,7 @@ import {computed} from "vue";
 import {store} from "@/store";
 
 const isDark = computed(() => store.state.isDark)
-const dark_theme = 'https://rawcdn.githack.com/Westlifers/SCUCAWeb/11527401ca6c395341d7359e144df1d17d87a177/src/styles/dark/giscus-dark-vars.css'
+const dark_theme = 'https://cdn.jsdelivr.net/gh/Westlifers/SCUCAWeb/src/styles/dark/giscus-dark-vars.css'
 const theme = computed(() => {
   if (isDark.value) {
     return dark_theme
