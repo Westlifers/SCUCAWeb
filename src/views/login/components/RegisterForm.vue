@@ -119,7 +119,7 @@ const handleRegister = (formEl: FormInstance | undefined) => {
         const data: any = await register(req);
         ElNotification({
           title: '成功',
-          message: '用户注册成功！',
+          message: '用户注册成功！待管理员审核后方可登录！',
           type: 'success',
         })
         await router.push({name: 'login'})
