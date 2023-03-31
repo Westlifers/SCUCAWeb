@@ -1,11 +1,11 @@
 <template>
-  <el-menu class="el-menu-demo" mode="horizontal" text-color="#fff">
+  <el-menu class="el-menu-demo" mode="horizontal">
     <div class="el-menu-item" @click="go_page('index')">
-      <el-icon size="50"><ElementPlus /></el-icon>
-      SCUCAComp
+      <el-icon size="100"><ElementPlus /></el-icon>
+      <p class="app-name">SCUCAComp</p>
     </div>
   </el-menu>
-  <el-menu class="func" text-color="#fff" active-text-color="#fff" background-color="#EC4141FF">
+  <el-menu class="func">
     <div class="user-popover">
       <Suspense>
         <nav-user />
@@ -20,7 +20,7 @@
       </Suspense>
     </div>
     <div class="user-popover">
-      <el-switch size="large" v-model="isDark" active-icon="Sunny" inactive-icon="Moon" style="--el-switch-on-color: #ff4949; --el-switch-off-color: #409EFF" inline-prompt/>
+      <el-switch size="large" v-model="isDark" active-icon="Moon" inactive-icon="Sunny" active-color="black" inline-prompt/>
     </div>
   </el-menu>
   <div class="h-6" />
@@ -69,6 +69,24 @@ watch(isDark, (newVal) => {
 </script>
 
 <style scoped>
+.el-menu-demo {
+  background-color: var(--yougi-bg-color);
+  height: 100%;
+  color: var(--yougi-main-color);
+}
+
+.el-menu-demo .el-menu-item p {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  margin: 0 32px;
+  font-family: "DM Sans", sans-serif;
+}
+
+.el-menu-demo .el-menu-item p:hover {
+  color: inherit;
+}
+
 .func {
   display: flex;
   position: absolute;
@@ -79,6 +97,7 @@ watch(isDark, (newVal) => {
   height: 56px;
   background-color: inherit;
 }
+
 .user-popover {
   display: flex;
   flex-direction: column;
@@ -86,11 +105,12 @@ watch(isDark, (newVal) => {
   margin-right: 10px;
   background-color: inherit;
 }
-.el-menu-demo {
-  background-color: #EC4141FF;
-  height: 100%;
-}
+
 .el-menu-item {
-  --el-menu-hover-bg-color: #EC4141FF;
+  --el-menu-hover-bg-color: var(--yougi-bg-color);
+}
+
+.el-menu--horizontal {
+  border: none;
 }
 </style>

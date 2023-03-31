@@ -37,7 +37,7 @@ export default defineComponent({
 .el-main {
   padding: 0;
   height: calc(100vh - 60px);
-  background-color: rgb(248, 248, 248);
+  background-color: var(--yougi-bg-color);
 }
 
 #largest-container {

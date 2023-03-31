@@ -1,0 +1,21 @@
+:root {
+    --yougi-bg-color: #F3F6FDFF;
+
+    --yougi-app-container: #f3f6fd;
+    --yougi-main-color: #1f1c2e;
+    --yougi-secondary-color: #4A4A4A;
+    --yougi-link-color: #1f1c2e;
+    --yougi-link-color-hover: #c3cff4;
+    --yougi-link-color-active: #fff;
+    --yougi-link-color-active-bg: #1f1c2e;
+    --yougi-projects-section: #fff;
+    --yougi-message-box-hover: #fafcff;
+    --yougi-message-box-border: #e9ebf0;
+    --yougi-more-list-bg: #fff;
+    --yougi-more-list-bg-hover: #f6fbff;
+    --yougi-more-list-shadow: rgba(209, 209, 209, 0.4);
+    --yougi-button-bg: #1f1c24;
+    --yougi-search-area-bg: #fff;
+    --yougi-star: #1ff1c2e;
+    --yougi-message-btn: #fff;
+}

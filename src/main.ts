@@ -7,7 +7,9 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElIcons from "@element-plus/icons-vue"
 import 'element-plus/theme-chalk/dark/css-vars.css'
-import './styles/dark/css-vars.css'
+
+import './styles/dark/dark-style.css'
+import './styles/style.css'
 
 import VMdEditor from '@kangc/v-md-editor';
 import '@kangc/v-md-editor/lib/style/base-editor.css';

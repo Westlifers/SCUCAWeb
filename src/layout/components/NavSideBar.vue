@@ -1,7 +1,7 @@
 <template>
   <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" unique-opened>
 
-    <el-button type="danger" icon="MoreFilled" id="collapse-button" @click="isCollapse=!isCollapse" circle />
+    <el-button icon="MoreFilled" id="collapse-button" @click="isCollapse=!isCollapse" circle />
 
 
     <el-sub-menu index="1">
@@ -113,6 +113,19 @@ const isLoggedIn = computed(() => !(store.state.user.username===''))
 #collapse-button {
   width: 100%;
   border-radius: 0;
+  background-color: var(--yougi-bg-color);
   border: none !important;
+}
+
+.el-menu-vertical-demo {
+  background-color: var(--yougi-bg-color);
+}
+
+.el-menu-vertical-demo .el-menu-item {
+  background-color: var(--yougi-bg-color);
+}
+
+.el-menu {
+  border: none;
 }
 </style>

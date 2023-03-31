@@ -1,0 +1,9 @@
+@import url('@/styles/css-vars.css');
+
+html {
+    background-color: var(--yougi-bg-color);
+}
+
+body {
+    font-family: "DM Sans", sans-serif !important;
+}

@@ -6,7 +6,7 @@
       popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
   >
     <template #reference>
-      <el-button @click="visible=!visible" icon="Bell" color="#EC4141FF" round/>
+      <el-button class="out-btn" @click="visible=!visible" icon="Bell" round/>
     </template>
     <template #default>
       <div class="breaks-header">
@@ -99,13 +99,21 @@ const getUserAndEventAndAorb = (content: string) => {
   justify-content: center;
   margin-bottom: 20px;
 }
+
 .breaks {
   display: flex;
   flex-direction: column;
 }
+
 .break-notice {
   display: flex;
   flex-direction: row;
   margin-bottom: 20px;
+}
+
+button.out-btn {
+  border: none;
+  background-color: var(--yougi-bg-color);
+  color: var(--yougi-main-color);
 }
 </style>
