@@ -117,15 +117,12 @@ const isLoggedIn = computed(() => !(store.state.user.username===''))
   border: none !important;
 }
 
-.el-menu-vertical-demo {
-  background-color: var(--yougi-bg-color);
-}
-
-.el-menu-vertical-demo .el-menu-item {
-  background-color: var(--yougi-bg-color);
-}
-
 .el-menu {
   border: none;
+}
+
+.el-menu-vertical-demo,
+.el-menu-vertical-demo .el-menu-item{
+  background-color: var(--yougi-bg-color);
 }
 </style>

@@ -73,6 +73,7 @@ watch(isDark, (newVal) => {
   background-color: var(--yougi-bg-color);
   height: 100%;
   color: var(--yougi-main-color);
+  --el-menu-bg-color: var(--yougi-main-color);
 }
 
 .el-menu-demo .el-menu-item p {
@@ -81,10 +82,6 @@ watch(isDark, (newVal) => {
   font-weight: 400;
   margin: 0 32px;
   font-family: "DM Sans", sans-serif;
-}
-
-.el-menu-demo .el-menu-item p:hover {
-  color: inherit;
 }
 
 .func {
