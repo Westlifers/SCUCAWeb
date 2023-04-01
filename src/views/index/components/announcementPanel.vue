@@ -5,6 +5,11 @@
       <p>{{(new Date()).toLocaleDateString()}}</p>
     </div>
 
+    <div class="announcement-statistics">
+      <el-statistic title="Updates" :value="update_count" />
+      <el-statistic title="Announcements" :value="announcement_count" />
+    </div>
+
     <el-scrollbar max-height="600">
       <div class="announcement-body">
         <div v-for="(post, index) in posts" :key="post.title" class="card">
@@ -85,6 +90,25 @@ for (let i = 0; i < posts.length; i++) {
   if (author in avatars) continue
   avatars[posts[i].author] = await get_user_avatar(posts[i].author)
 }
+
+
+// 下面的代码只是为了展示动画效果
+const update_count = ref(0)
+const announcement_count = ref(0)
+const interval1 = setInterval(() => {
+  if (update_count.value >= posts.filter(post=>post.type==='update').length) {
+    clearInterval(interval1)
+    return;
+  }
+  update_count.value+=posts.filter(post=>post.type==='update').length/10;
+}, 100);
+const interval2 = setInterval(() => {
+  if (announcement_count.value >= posts.filter(post=>post.type==='announcement').length) {
+    clearInterval(interval2)
+    return
+  }
+  announcement_count.value+=posts.filter(post=>post.type==='announcement').length/10;
+}, 100)
 </script>
 
 <style scoped>
@@ -129,6 +153,13 @@ for (let i = 0; i < posts.length; i++) {
   font-weight: 400;
   opacity: 0.9;
   margin: 0;
+}
+
+.announcement-statistics {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
 .announcement-body {

@@ -28,6 +28,7 @@ html {
 }
 body {
   background-color: var(--yougi-app-container) !important;
+  user-select: none;
 }
 
 /**修改全局的滚动条*/

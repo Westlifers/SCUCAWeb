@@ -155,14 +155,8 @@ const routes: Array<RouteRecordRaw> = [
 
   {
     path: '/login',
-    component: layout,
-    children: [
-      {
-        path: '',
-        component: loginRegister,
-        name: 'login'
-      }
-    ]
+    component: loginRegister,
+    name: 'login'
   },
 
   {

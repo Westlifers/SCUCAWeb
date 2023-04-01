@@ -59,7 +59,7 @@ if (isLoggedIn.value) {
   position: relative;
   width: 100%;
   background-color: #fff;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
 }
 

@@ -25,7 +25,7 @@ import NotificationPanel from "@/views/index/components/notificationPanel.vue";
 }
 
 .notification-panel {
-  width: 30%;
+  width: 32%;
   transition: all 300ms cubic-bezier(0.19, 1, 0.56, 1);
 }
 
