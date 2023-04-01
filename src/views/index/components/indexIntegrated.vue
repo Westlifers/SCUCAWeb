@@ -6,7 +6,7 @@
 
     <el-col :span="1" v-if="!isMobile" />
 
-    <el-col :span="col">
+    <el-col :span="col_p">
       <notification-panel />
     </el-col>
   </el-row>
@@ -20,7 +20,8 @@ import NotificationPanel from "@/views/index/components/notificationPanel.vue";
 
 // check if device is mobile
 const isMobile = computed(() => window.innerWidth <= 768)
-const col = computed(() => isMobile.value?23:11)
+const col = computed(() => isMobile.value?23:16)
+const col_p = computed(() => isMobile.value?23:7)
 </script>
 
 <style scoped>
@@ -28,5 +29,9 @@ const col = computed(() => isMobile.value?23:11)
   .announcements {
     margin-bottom: 20px;
   }
+}
+
+.el-row {
+  margin-right: 10px;
 }
 </style>
