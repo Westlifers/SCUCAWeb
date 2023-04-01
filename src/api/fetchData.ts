@@ -8,7 +8,8 @@ import {
     RankPaginationData,
     Record,
     Result,
-    Scramble, User,
+    Scramble,
+    User,
     UserParticipationData,
 } from "@/types";
 import {store} from "@/store";

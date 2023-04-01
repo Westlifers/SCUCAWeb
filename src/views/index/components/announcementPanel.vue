@@ -1,64 +1,64 @@
 <template>
   <div class="announcements">
-      <div class="announcement-header">
-        <p>Announcements</p>
-        <p>{{(new Date()).toLocaleDateString()}}</p>
-      </div>
-
-      <el-scrollbar max-height="600">
-        <div class="announcement-body">
-          <div v-for="(post, index) in posts" :key="post.title" class="card">
-            <el-card class="box-card" shadow="hover" :style="{backgroundColor: post.type==='update'?'#e9e7fd':'#fee4cb'}">
-
-
-              <template #header>
-                <div class="card-header">
-                  <div class="card-header-date">
-                    <el-badge :value="post.type==='update'?'更新':'公告'" class="item" :type="post.type==='update'?'success':'primary'">
-                      <span>{{ (new Date(Date.parse(post.date))).toLocaleDateString() }}</span>
-                    </el-badge>
-                    <el-button type="primary" @click="drawer[index] = true"><el-icon><MoreFilled /></el-icon></el-button>
-                  </div>
-                  <div class="el-header-title">
-                    <p>{{ post.title }}</p>
-                  </div>
-                </div>
-              </template>
-
-
-              <div class="card-body">
-                <!--     show only first 30 characters of the content     -->
-                <p>{{ post.content.substring(0, 30) + '...' }}</p>
-              </div>
-
-
-              <el-divider />
-
-
-              <div class="card-footer">
-                <div class="card-footer-info">
-                  <div class="info-author">
-                    <el-avatar :src="avatars[post.author]" size="small" />
-                    <p>{{ post.author }}</p>
-                  </div>
-                  <div class="info-time">
-                    <el-icon><Clock /></el-icon>&nbsp;
-                    <span>{{ (new Date(Date.parse(post.date))).toLocaleTimeString() }}</span>
-                  </div>
-                </div>
-              </div>
-
-
-              <el-drawer v-model="drawer[index]" :direction="drawerDirection" :size="drawerSize">
-                <v-md-preview :text="'# ' + post.title + '\n' + post.content" />
-              </el-drawer>
-
-
-            </el-card>
-          </div>
-        </div>
-      </el-scrollbar>
+    <div class="announcement-header">
+      <p>Announcements</p>
+      <p>{{(new Date()).toLocaleDateString()}}</p>
     </div>
+
+    <el-scrollbar max-height="600">
+      <div class="announcement-body">
+        <div v-for="(post, index) in posts" :key="post.title" class="card">
+          <el-card class="box-card" shadow="hover" :style="{backgroundColor: post.type==='update'?'#e9e7fd':'#fee4cb'}">
+
+
+            <template #header>
+              <div class="card-header">
+                <div class="card-header-date">
+                  <el-badge :value="post.type==='update'?'更新':'公告'" class="item" :type="post.type==='update'?'success':'primary'">
+                    <span>{{ (new Date(Date.parse(post.date))).toLocaleDateString() }}</span>
+                  </el-badge>
+                  <el-button type="primary" @click="drawer[index] = true"><el-icon><MoreFilled /></el-icon></el-button>
+                </div>
+                <div class="el-header-title">
+                  <p>{{ post.title }}</p>
+                </div>
+              </div>
+            </template>
+
+
+            <div class="card-body">
+              <!--     show only first 30 characters of the content     -->
+              <p>{{ post.content.substring(0, 30) + '...' }}</p>
+            </div>
+
+
+            <el-divider />
+
+
+            <div class="card-footer">
+              <div class="card-footer-info">
+                <div class="info-author">
+                  <el-avatar :src="avatars[post.author]" size="small" />
+                  <p>{{ post.author }}</p>
+                </div>
+                <div class="info-time">
+                  <el-icon><Clock /></el-icon>&nbsp;
+                  <span>{{ (new Date(Date.parse(post.date))).toLocaleTimeString() }}</span>
+                </div>
+              </div>
+            </div>
+
+
+            <el-drawer v-model="drawer[index]" :direction="drawerDirection" :size="drawerSize">
+              <v-md-preview :text="'# ' + post.title + '\n' + post.content" />
+            </el-drawer>
+
+
+          </el-card>
+        </div>
+      </div>
+    </el-scrollbar>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -74,7 +74,7 @@ for (let i = 0; i < posts.length; i++) {
 }
 
 // check if the device is mobile, and change drawer direction and size accordingly
-const isMobile = computed(() => window.innerWidth <= 600)
+const isMobile = computed(() => window.innerWidth <= 768)
 const drawerDirection = computed(() => isMobile.value ? 'btt' : 'rtl')
 const drawerSize = computed(() => isMobile.value ? '60%' : '50%')
 
@@ -104,6 +104,23 @@ for (let i = 0; i < posts.length; i++) {
   align-items: center;
   margin-bottom: 24px;
   color: var(--yougi-main-color);
+}
+
+@media screen and (max-width: 768px) {
+  .announcement-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .announcement-header p:first-child {
+    width: 100%;
+    text-align: center;
+  }
+
+  .announcement-header p:nth-child(2) {
+    width: 100%;
+    text-align: right;
+  }
 }
 
 .announcement-header p {

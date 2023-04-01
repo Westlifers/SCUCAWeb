@@ -1,3 +1,5 @@
+<!-- deprecated -->
+
 <template>
   <el-popover
       :visible="visible"
@@ -30,7 +32,7 @@
 import {ref, watch} from "vue";
 import {getAnnouncement} from "@/api/fetchData";
 import {Announcement} from "@/types";
-import {getUserAndEventAndAorb, time_convert} from "@/utils";
+import {getUserAndEventAndAorb} from "@/utils";
 
 const visible = ref(false)
 const width = ref(300)

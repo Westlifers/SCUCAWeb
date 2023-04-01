@@ -100,11 +100,7 @@ import {computed, ref} from "vue";
 import {go_page} from "@/utils";
 import {store} from "@/store";
 
-const isCollapse = ref(false)
-// check if device is mobile
-if (window.innerWidth <= 768) {
-  isCollapse.value = true
-}
+const isCollapse = ref(true)
 
 const isLoggedIn = computed(() => !(store.state.user.username===''))
 </script>

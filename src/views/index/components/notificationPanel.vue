@@ -39,7 +39,7 @@
 <script lang="ts" setup>
 import {Announcement} from "@/types";
 import {getAnnouncement} from "@/api/fetchData";
-import {get_user_avatar, getUserAndEventAndAorb, time_convert} from "@/utils";
+import {get_user_avatar, getUserAndEventAndAorb} from "@/utils";
 
 const breakAnnouncements: Announcement[] = await getAnnouncement('scur break')
 // get every avatar of the user who has a new record, so that we don't need to fetch the avatar every time
@@ -86,7 +86,7 @@ for (const announcement of breakAnnouncements) {
   padding: 16px;
   display: flex;
   align-items: flex-start;
-  width: 90%;
+  width: 89%;
 }
 
 .notification-item-content {

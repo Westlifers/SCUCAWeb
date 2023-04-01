@@ -1,37 +1,46 @@
 <template>
-  <el-row>
-    <el-col :span="col">
-      <announcement-panel />
-    </el-col>
-
-    <el-col :span="1" v-if="!isMobile" />
-
-    <el-col :span="col_p">
-      <notification-panel />
-    </el-col>
-  </el-row>
+  <div class="index-wrapper">
+    <div class="announcement-panel"><announcement-panel /></div>
+    <div class="notification-panel"><notification-panel /></div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 
 import AnnouncementPanel from "@/views/index/components/announcementPanel.vue";
-import {computed} from "vue";
 import NotificationPanel from "@/views/index/components/notificationPanel.vue";
 
-// check if device is mobile
-const isMobile = computed(() => window.innerWidth <= 768)
-const col = computed(() => isMobile.value?23:16)
-const col_p = computed(() => isMobile.value?23:7)
 </script>
 
 <style scoped>
-@media screen and (max-width: 768px) {
-  .announcements {
-    margin-bottom: 20px;
-  }
+.index-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 32px 0 0;
 }
 
-.el-row {
-  margin-right: 10px;
+.announcement-panel {
+  width: 65%;
+}
+
+.notification-panel {
+  width: 30%;
+  transition: all 300ms cubic-bezier(0.19, 1, 0.56, 1);
+}
+
+@media screen and (max-width: 768px) {
+  .index-wrapper {
+    flex-direction: column;
+  }
+
+  .announcement-panel {
+    width: 100%;
+    margin-bottom: 32px;
+  }
+
+  .notification-panel {
+    width: 100%;
+  }
 }
 </style>
