@@ -11,7 +11,7 @@ import rankSuspense from "@/views/rank/RankSuspense.vue";
 import weekCubingSuspense from "@/views/cubing/WeekCubingSuspense.vue";
 import specialCubingSuspense from "@/views/cubing/SpecialCubingSuspense.vue";
 import createCompetitionSuspense from "@/views/createComp/createCompetitionSuspense.vue";
-import announcementSuspense from "@/views/announcement/announcementSuspense.vue";
+import indexSuspense from "@/views/index/indexSuspense.vue";
 import createAnnouncementForm from "@/views/createAnnouncement/createAnnouncementForm.vue";
 import discussionGiscus from "@/views/discussion/discussionGiscus.vue";
 
@@ -28,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
-        component: announcementSuspense,
+        component: indexSuspense,
         name: 'index'
       }
     ]

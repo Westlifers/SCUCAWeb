@@ -81,7 +81,6 @@ watch(isDark, (newVal) => {
   line-height: 24px;
   font-weight: 400;
   margin: 0 32px;
-  font-family: "DM Sans", sans-serif;
 }
 
 .func {
