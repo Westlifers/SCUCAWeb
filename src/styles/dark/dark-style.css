@@ -1,33 +1,28 @@
 @import url('@/styles/dark/css-vars.css');
 
 html.dark {
-    background-color: var(--el-bg-color);
+    background-color: var(--yougi-app-container);
 }
 
 /* 主屏幕显示区域最黑 */
 html.dark .el-main,
 html.dark .container{
-    background-color: var(--yougi-light-black) !important;
+    background-color: var(--yougi-app-container) !important;
 }
 
 /* layout布局区域轻黑 */
 html.dark .el-menu,
 html.dark .el-menu-demo,
 html.dark .el-popover,
-html.dark .el-popper__arrow::before {
-    background-color: var(--el-bg-color) !important;
-}
-
-/* 调整布局区域的按钮的边框 */
 html.dark .func .el-button,
-html.dark #collapse-button {
-    background-color: var(--el-bg-color) !important;
-    border: white 2px solid;
+html.dark #collapse-button,
+html.dark .el-popper__arrow::before {
+    background-color: var(--yougi-app-container) !important;
 }
 
 /* 让左上角logo的hover色与原色保持一致 */
 html.dark .el-menu-demo .el-menu-item {
-    --el-menu-hover-bg-color: var(--el-bg-color);
+    --el-menu-hover-bg-color: var(--yougi-app-container);
 }
 
 /* 保持此第三方编辑器的颜色，这无法改变 */
@@ -38,12 +33,12 @@ html.dark .v-md-textarea-editor textarea {
 
 /* 表头颜色 */
 html.dark table.el-table__header th {
-    background-color: var(--yougi-light-black);
+    background-color: var(--yougi-projects-section);
 }
 
 /* 表格颜色 */
 html.dark table.el-table__body tr {
-    background-color: var(--yougi-light-black-2);
+    background-color: var(--yougi-projects-section);
     --yougi-link-color: #7986EEFF;
 }
 

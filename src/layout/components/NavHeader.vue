@@ -73,7 +73,7 @@ watch(isDark, (newVal) => {
 
 <style scoped>
 .el-menu-demo {
-  background-color: var(--yougi-bg-color);
+  background-color: var(--yougi-app-container);
   height: 100%;
   color: var(--yougi-main-color);
   --el-menu-bg-color: var(--yougi-main-color);
@@ -107,7 +107,7 @@ watch(isDark, (newVal) => {
 }
 
 .el-menu-item {
-  --el-menu-hover-bg-color: var(--yougi-bg-color);
+  --el-menu-hover-bg-color: var(--yougi-app-container);
 }
 
 .el-menu--horizontal {

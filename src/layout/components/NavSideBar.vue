@@ -113,7 +113,7 @@ const isLoggedIn = computed(() => !(store.state.user.username===''))
 #collapse-button {
   width: 100%;
   border-radius: 0;
-  background-color: var(--yougi-bg-color);
+  background-color: var(--yougi-app-container);
   border: none !important;
 }
 
@@ -123,6 +123,6 @@ const isLoggedIn = computed(() => !(store.state.user.username===''))
 
 .el-menu-vertical-demo,
 .el-menu-vertical-demo .el-menu-item{
-  background-color: var(--yougi-bg-color);
+  background-color: var(--yougi-app-container);
 }
 </style>

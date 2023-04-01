@@ -19,7 +19,10 @@
               <p>{{getUserAndEventAndAorb(notification.content).user}}</p>
             </div>
             <div class="notification-item-content-line">
-              <p>{{notification.content}}</p>
+              <p>{{
+                  `${getUserAndEventAndAorb(notification.content).user}打破了${getUserAndEventAndAorb(notification.content).event}的${getUserAndEventAndAorb(notification.content).aorb}纪录，时间${getUserAndEventAndAorb(notification.content).time}`
+                }}
+              </p>
             </div>
             <div class="notification-item-date">
               <p>{{(new Date(notification.date)).toLocaleDateString()}}</p>
@@ -36,7 +39,7 @@
 <script lang="ts" setup>
 import {Announcement} from "@/types";
 import {getAnnouncement} from "@/api/fetchData";
-import {get_user_avatar, getUserAndEventAndAorb} from "@/utils";
+import {get_user_avatar, getUserAndEventAndAorb, time_convert} from "@/utils";
 
 const breakAnnouncements: Announcement[] = await getAnnouncement('scur break')
 // get every avatar of the user who has a new record, so that we don't need to fetch the avatar every time

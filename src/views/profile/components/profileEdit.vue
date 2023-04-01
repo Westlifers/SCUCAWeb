@@ -47,7 +47,7 @@
       </el-form-item>
 
       <div class="tip">
-        <v-md-preview text="> 图片格式仅支持`jpg`、`jpeg`或`png`，图片大小不能超过4MB，上传头像后可能会有几分钟的延迟"></v-md-preview>
+        <v-md-preview text="> 图片格式仅支持`jpg`、`jpeg`或`png`，图片大小不能超过4MB（烦请尽量不要超过2MB），上传头像后可能会有几分钟的延迟，如长时间未刷新，请尝试清除浏览器缓存"></v-md-preview>
       </div>
 
     </el-form>
@@ -175,6 +175,10 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
   height: 178px;
   text-align: center;
   border: 1px solid var(--yougi-main-color);
+}
+
+.tip {
+  text-align: left;
 }
 
 </style>

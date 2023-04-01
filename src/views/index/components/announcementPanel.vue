@@ -159,15 +159,17 @@ for (let i = 0; i < posts.length; i++) {
   line-height: 2em;
   display: flex;
   justify-content: space-between;
+  color: #4A4A4A;
 }
 
 .card-header-date button {
   background-color: transparent;
   border: none;
-  color: var(--yougi-main-color);
+  color: #4A4A4A;
 }
 
 .card-body {
+  color: #4A4A4A;
   font-size: 15px;
   line-height: 24px;
   font-weight: 700;
@@ -175,6 +177,7 @@ for (let i = 0; i < posts.length; i++) {
 }
 
 .card-footer-info {
+  color: #4A4A4A;
   font-size: 14px;
   line-height: 24px;
   font-weight: 500;
@@ -199,5 +202,8 @@ for (let i = 0; i < posts.length; i++) {
   opacity: 0.5;
 }
 
-
+.el-divider {
+  width: 100%;
+  margin-left: 0;
+}
 </style>
