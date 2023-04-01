@@ -9,7 +9,8 @@ import {
     Record,
     Result,
     Scramble,
-    UserParticipationData
+    UserParticipationData,
+    UserProfile
 } from "@/types";
 import {store} from "@/store";
 
@@ -254,4 +255,32 @@ export async function getAnnouncement (type: 'update' | 'scur break' | 'announce
     }
 
     return announcements
+}
+
+
+export async function getProfile(username: string): Promise<UserProfile> {
+    const res = await request({
+        url: `/user/profile/${username}/`,
+    })
+
+    console.log(res)
+
+    return {
+        id: res['id'],
+        username: res['username'],
+        email: res['email'],
+        is_scuer: res['is_scuer'],
+        is_superuser: res['is_superuser'],
+        is_active: res['is_active'],
+        avatar: res['avatar'],
+    }
+}
+
+
+export async function getAvatarToken(key: string): Promise<string> {
+    const res = await request({
+        url: `/qiniu/avatars/token/${key}/`,
+    })
+
+    return res['token']
 }

@@ -11,6 +11,9 @@
         <nav-user />
       </Suspense>
     </div>
+
+    <el-divider direction="vertical" style="height: 70%" />
+
     <div class="user-popover">
       <Suspense>
         <el-badge type="primary" is-dot v-if="is_new_notice" @click="read_new_record">
@@ -31,7 +34,7 @@ import NavUser from "@/layout/components/NavUser.vue";
 import {go_page} from "@/utils";
 import NavBreakNotice from "@/layout/components/NavBreakNotice.vue";
 import {ref, watch} from "vue";
-import { useDark, useToggle } from '@vueuse/core'
+import {useDark, useToggle} from '@vueuse/core'
 import {store, TOGGLE_DARK_MODE} from "@/store";
 
 const isDark = useDark()
@@ -89,6 +92,7 @@ watch(isDark, (newVal) => {
   float: right;
   right: 0;
   flex-direction: row-reverse;
+  align-items: center;
   top: 0;
   height: 56px;
   background-color: inherit;

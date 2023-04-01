@@ -6,8 +6,7 @@
 
 <script lang="ts" setup>
 
-import IndexIntegrated from "@/views/index/components/indexIntegrated.vue";
-</script>
+import IndexIntegrated from "@/views/index/components/indexIntegrated.vue";</script>
 
 <style scoped>
 

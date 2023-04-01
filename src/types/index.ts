@@ -6,6 +6,11 @@ export interface User {
     is_superuser?: boolean,
 }
 
+export interface UserProfile extends User {
+    avatar: string,
+    is_scuer: boolean,
+}
+
 export interface Result {
     username: string,
     event: string,

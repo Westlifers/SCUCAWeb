@@ -6,8 +6,8 @@ import {CLEAR_USER, store} from "@/store";
 
 
 const request = axios.create({
-    // baseURL: 'http://localhost:8000',
-    baseURL: 'https://yougi.top/',
+    baseURL: 'http://localhost:8000',
+    // baseURL: 'https://yougi.top/',
     withCredentials: true
 })
 

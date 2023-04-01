@@ -6,7 +6,10 @@
       popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
   >
     <template #reference>
-      <el-button class="out-btn" @click="visible=!visible" icon="User" round/>
+      <div class="user-avatar">
+        <el-button class="out-btn" @click="visible=!visible;go_page('profile')" icon="User" round/>
+        <p>{{user.username}}</p>
+      </div>
     </template>
     <template #default>
       <div class="hello">
@@ -95,6 +98,8 @@ const width = computed(() => {
 .hello {
   display: flex;
   flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 5px;
 }
 .hello h3 {
   margin-right: 20px;
@@ -104,5 +109,20 @@ button.out-btn {
   border: none;
   background-color: var(--yougi-bg-color);
   color: var(--yougi-main-color);
+}
+
+.user-avatar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.user-avatar p {
+  color: var(--yougi-main-color);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
 }
 </style>

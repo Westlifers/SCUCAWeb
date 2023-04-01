@@ -14,6 +14,7 @@ import createCompetitionSuspense from "@/views/createComp/createCompetitionSuspe
 import indexSuspense from "@/views/index/indexSuspense.vue";
 import createAnnouncementForm from "@/views/createAnnouncement/createAnnouncementForm.vue";
 import discussionGiscus from "@/views/discussion/discussionGiscus.vue";
+import profileEditSuspense from "@/views/profile/profileEditSuspense.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -172,6 +173,18 @@ const routes: Array<RouteRecordRaw> = [
         path: '',
         component: createAnnouncementForm,
         name: 'post'
+      }
+    ]
+  },
+
+  {
+    path: '/profile',
+    component: layout,
+    children: [
+      {
+        path: '',
+        component: profileEditSuspense,
+        name: 'profile'
       }
     ]
   }

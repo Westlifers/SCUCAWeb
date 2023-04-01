@@ -68,3 +68,11 @@ export async function postAnnouncement (data: any) {
         data
     })
 }
+
+export async function postProfile(data: any) {
+    return request({
+        url: '/user/profile/',
+        method: 'post',
+        data
+    })
+}
