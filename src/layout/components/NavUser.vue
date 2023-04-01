@@ -7,8 +7,10 @@
   >
     <template #reference>
       <div class="user-avatar">
-        <el-button class="out-btn" @click="visible=!visible;go_page('profile')" icon="User" round/>
-        <p>{{user.username}}</p>
+        <el-button class="out-btn" @click="visible=!visible;go_page('profile')" round>
+          <el-avatar :src="user.avatar" size="default" />
+          <p>{{user.username}}</p>
+        </el-button>
       </div>
     </template>
     <template #default>
@@ -119,10 +121,11 @@ button.out-btn {
   margin-right: 10px;
 }
 
-.user-avatar p {
+.out-btn span p {
   color: var(--yougi-main-color);
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
+  margin-left: 10px;
 }
 </style>

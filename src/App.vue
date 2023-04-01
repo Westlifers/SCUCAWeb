@@ -13,6 +13,7 @@ export default defineComponent({
 <style>
 html {
   height: 100%;
+
 }
 * {
   margin: 0;
@@ -23,6 +24,10 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  background-color: var(--yougi-app-container) !important;
+}
+body {
+  background-color: var(--yougi-app-container) !important;
 }
 
 /**修改全局的滚动条*/

@@ -262,8 +262,6 @@ export async function getProfile(username: string): Promise<User> {
         url: `/user/profile/${username}/`,
     })
 
-    console.log(res)
-
     return {
         id: res['id'],
         username: res['username'],

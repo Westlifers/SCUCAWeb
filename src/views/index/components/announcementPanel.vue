@@ -36,14 +36,10 @@
 
 
               <div class="card-footer">
-                <div class="card-header-info">
+                <div class="card-footer-info">
                   <div class="info-author">
-                    <el-icon><UserFilled /></el-icon>&nbsp;
-                    <span>{{ post.author }}</span>
-                  </div>
-                  <div class="info-date">
-                    <el-icon><Calendar /></el-icon>&nbsp;
-                    <span>{{ (new Date(Date.parse(post.date))).toLocaleDateString() }}</span>
+                    <el-avatar :src="avatars[post.author]" size="small" />
+                    <p>{{ post.author }}</p>
                   </div>
                   <div class="info-time">
                     <el-icon><Clock /></el-icon>&nbsp;
@@ -68,6 +64,7 @@
 <script lang="ts" setup>
 import {getAnnouncement} from "@/api/fetchData";
 import {computed, Ref, ref} from "vue";
+import {get_user_avatar} from "@/utils";
 
 const posts = await getAnnouncement('ua')
 // add a list of boolean values to control the drawer
@@ -80,6 +77,14 @@ for (let i = 0; i < posts.length; i++) {
 const isMobile = computed(() => window.innerWidth <= 600)
 const drawerDirection = computed(() => isMobile.value ? 'btt' : 'rtl')
 const drawerSize = computed(() => isMobile.value ? '60%' : '50%')
+
+// calculate every author's avatar, so that we don't need to fetch it every time
+const avatars = {}
+for (let i = 0; i < posts.length; i++) {
+  const author = posts[i].author
+  if (author in avatars) continue
+  avatars[posts[i].author] = await get_user_avatar(posts[i].author)
+}
 </script>
 
 <style scoped>
@@ -150,11 +155,6 @@ const drawerSize = computed(() => isMobile.value ? '60%' : '50%')
   margin-bottom: 5px;
 }
 
-.card-header-info {
-  display: flex;
-  flex-direction: column;
-}
-
 .card-header-date {
   line-height: 2em;
   display: flex;
@@ -174,12 +174,30 @@ const drawerSize = computed(() => isMobile.value ? '60%' : '50%')
   opacity: 0.8;
 }
 
-.card-footer {
+.card-footer-info {
   font-size: 14px;
   line-height: 24px;
   font-weight: 500;
-  opacity: 0.5;
+  opacity: 1;
   margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.info-author {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+.info-author p {
+  margin-left: 10px;
+}
+
+.info-time {
+  opacity: 0.5;
+}
+
 
 </style>

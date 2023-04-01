@@ -2,4 +2,22 @@
     --yougi-light-black: #242424FF;
     --yougi-light-black-2: #434343FF;
     --yougi-link-color: #5866D5FF;
+    --yougi-app-container: #1f1d2b;
+    --yougi-app-container: #111827;
+    --yougi-main-color: #fff;
+    --yougi-secondary-color: rgba(255,255,255,.8);
+    --yougi-projects-section: #1f2937;
+    --yougi-link-color: rgba(255,255,255,.8);
+    --yougi-link-color-hover: rgba(195, 207, 244, 0.1);
+    --yougi-link-color-active-bg: rgba(195, 207, 244, 0.2);
+    --yougi-button-bg: #1f2937;
+    --yougi-search-area-bg: #1f2937;
+    --yougi-message-box-hover: #243244;
+    --yougi-message-box-border: rgba(255,255,255,.1);
+    --yougi-star: #ffd92c;
+    --yougi-light-font: rgba(255,255,255,.8);
+    --yougi-more-list-bg: #2f3142;
+    --yougi-more-list-bg-hover: rgba(195, 207, 244, 0.1);
+    --yougi-more-list-shadow: rgba(195, 207, 244, 0.1);
+    --yougi-message-btn: rgba(195, 207, 244, 0.1);
 }

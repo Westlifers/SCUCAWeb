@@ -1,4 +1,5 @@
 import router from "@/router";
+import {getProfile} from "@/api/fetchData";
 
 export function getCookie(cName: string) {
     if (document.cookie.length > 0) {
@@ -49,3 +50,28 @@ export function time_convert(time: number): string {
 
 export const SPECIAL_EVENTS = ['333bld', '444bld', '555bld', '666', '777']
 export const ALL_EVENTS = ['333', '222', '444', '555', '666', '777', '333bld', '333oh', 'clock', 'minx', 'pyra', 'skewb', 'sq1', '444bld', '555bld']
+
+
+export async function get_user_avatar(username: string) {
+    const res = await getProfile(username)
+    return res.avatar?res.avatar:'http://img.yougi.top/default.png'
+}
+
+
+export function getUserAndEventAndAorb(content: string) {
+    const pos_1 = content.indexOf('在')
+    const pos_2 = content.indexOf('了')
+    const pos_3 = content.indexOf('的')
+    const pos_4 = content.indexOf('记录')
+    const pos_5 = content.indexOf('：')
+    const user = content.substring(0, pos_1)
+    const event = content.substring(pos_2 + 1, pos_3)
+    const aorb = content.substring(pos_3 + 1, pos_4)
+    const time = content.substring(pos_5 + 1)
+    return {
+        user: user,
+        event: event,
+        aorb: aorb,
+        time: parseFloat(time) > 0?time_convert(parseFloat(time)):'DNF'
+    }
+}
