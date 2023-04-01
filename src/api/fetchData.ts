@@ -8,9 +8,8 @@ import {
     RankPaginationData,
     Record,
     Result,
-    Scramble,
+    Scramble, User,
     UserParticipationData,
-    UserProfile
 } from "@/types";
 import {store} from "@/store";
 
@@ -258,7 +257,7 @@ export async function getAnnouncement (type: 'update' | 'scur break' | 'announce
 }
 
 
-export async function getProfile(username: string): Promise<UserProfile> {
+export async function getProfile(username: string): Promise<User> {
     const res = await request({
         url: `/user/profile/${username}/`,
     })

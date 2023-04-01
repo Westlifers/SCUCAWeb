@@ -47,7 +47,7 @@
       </el-form-item>
 
       <div class="tip">
-        <v-md-preview text="> 图片格式仅支持`jpg`、`jpeg`或`png`，图片大小不能超过2MB"></v-md-preview>
+        <v-md-preview text="> 图片格式仅支持`jpg`、`jpeg`或`png`，图片大小不能超过4MB，上传头像后可能会有几分钟的延迟"></v-md-preview>
       </div>
 
     </el-form>
@@ -69,8 +69,8 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png' && rawFile.type !== 'image/jpg') {
     ElMessage.error('Avatar picture must be JPG format!')
     return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('Avatar picture size can not exceed 2MB!')
+  } else if (rawFile.size / 1024 / 1024 > 4) {
+    ElMessage.error('Avatar picture size can not exceed 4MB!')
     return false
   }
   return true

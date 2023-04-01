@@ -18,6 +18,8 @@ export const initDefaultUserInfo = (): User => {
     email: '',
     is_active: false,
     is_superuser: false,
+    is_scuer: false,
+    avatar: 'http://img.yougi.top/default.png',
   }
   if (window.localStorage.getItem("userInfo")) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

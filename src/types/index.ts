@@ -4,12 +4,10 @@ export interface User {
     email: string,
     is_active: boolean,
     is_superuser?: boolean,
-}
-
-export interface UserProfile extends User {
     avatar: string,
     is_scuer: boolean,
 }
+
 
 export interface Result {
     username: string,
