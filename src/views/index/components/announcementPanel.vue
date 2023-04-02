@@ -2,7 +2,7 @@
   <div class="announcements">
     <div class="announcement-header">
       <p>Announcements</p>
-      <p>{{(new Date()).toLocaleDateString()}}</p>
+      <p>{{(new Date()).toDateString()}}</p>
     </div>
 
     <div class="announcement-statistics">
@@ -150,7 +150,7 @@ const interval2 = setInterval(() => {
 .announcement-header p {
   font-size: 24px;
   line-height: 32px;
-  font-weight: 400;
+  font-weight: 600;
   opacity: 0.9;
   margin: 0;
 }

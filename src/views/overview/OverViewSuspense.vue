@@ -6,7 +6,8 @@
 
 <script lang="ts" setup>
 
-import CompDisplay from "@/components/competitionDetail/CompDisplay.vue";</script>
+import CompDisplay from "@/components/competitionDetail/CompDisplay.vue"
+</script>
 
 <style scoped>
 

@@ -76,7 +76,7 @@ for (const announcement of breakAnnouncements) {
 .notification-header p {
   font-size: 24px;
   line-height: 32px;
-  font-weight: 400;
+  font-weight: 600;
   opacity: 0.9;
   margin: 0;
 }
