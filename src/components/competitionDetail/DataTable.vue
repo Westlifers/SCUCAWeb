@@ -116,13 +116,13 @@ const width = computed(() => {
   width: 50px;
 }
 
-.el-table {
+:deep(.el-table) {
   --el-table-tr-bg-color: var(--yougi-projects-section)
 }
 
 /* 去除表格底部边框 */
-.el-table__inner-wrapper::before {
-  height: 0;
+:deep(.el-table__inner-wrapper::before) {
+  height: 0 !important;
 }
 
 </style>
