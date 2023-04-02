@@ -20,8 +20,11 @@
       </div>
     </div>
 
-    <div class="results-table">
+    <div class="results-table" v-if="ClassifiedTableData[activeEvent]!==undefined">
       <DataTable :table-data="ClassifiedTableData[activeEvent]" :avatars="avatars"></DataTable>
+    </div>
+    <div class="results-table" v-else>
+      <p>还没有人参加此项目~</p>
     </div>
   </div>
 </template>
@@ -48,6 +51,7 @@ watch(() => props.activeEvent, (newVal) => {
 let tableData: DetailedCompetition
 
 tableData = await getComp(props.comp)
+console.log(tableData)
 
 const ClassifiedTableData = computed(() => classifyTableDataByEvent(tableData))
 
@@ -110,5 +114,12 @@ for (let i = 0; i < tableData.result_set.length; i++) {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.results-table p {
+  font-size: 18px;
+  line-height: 32px;
+  font-weight: 400;
+  opacity: 0.8;
 }
 </style>

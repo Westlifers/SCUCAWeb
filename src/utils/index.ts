@@ -96,9 +96,9 @@ export function classifyTableDataByEvent(tableData: DetailedCompetition): object
 
 export function getSortedEventsFromTableData(tableData: DetailedCompetition): string[] {
     const eventsGot: string[] = []
-    for (const result of tableData.result_set) {
-        if (!(eventsGot.indexOf(result.event) > -1)) {
-            eventsGot.push(result.event)
+    for (const scramble of tableData.scramble_set) {
+        if (!(eventsGot.indexOf(scramble.event) > -1)) {
+            eventsGot.push(scramble.event)
         }
     }
 
