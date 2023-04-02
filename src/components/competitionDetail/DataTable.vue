@@ -1,6 +1,3 @@
-<!-- TODO: 1. 对正在进行的比赛，成绩展示和参加比赛整合在一个页面避免空缺 -->
-<!-- TODO: 2. 美化表格样式 -->
-
 <template>
   <el-table :data="tableData" style="max-width: 920px" :header-cell-style="{background:'var(--yougi-projects-section)'}"
             height="100%">
