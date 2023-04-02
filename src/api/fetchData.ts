@@ -271,6 +271,7 @@ export async function getProfile(username: string): Promise<User> {
         is_superuser: res['is_superuser'],
         is_active: res['is_active'],
         avatar: res['avatar'],
+        description: res['description'],
     }
 }
 

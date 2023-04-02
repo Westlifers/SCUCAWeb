@@ -6,6 +6,7 @@ export interface User {
     is_superuser?: boolean,
     avatar: string,
     is_scuer: boolean,
+    description: string,
 }
 
 

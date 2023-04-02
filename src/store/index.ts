@@ -20,6 +20,7 @@ export const initDefaultUserInfo = (): User => {
     is_superuser: false,
     is_scuer: false,
     avatar: 'http://img.yougi.top/default.png',
+    description: '',
   }
   if (window.localStorage.getItem("userInfo")) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
