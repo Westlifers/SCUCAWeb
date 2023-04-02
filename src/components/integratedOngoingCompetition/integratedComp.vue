@@ -1,11 +1,11 @@
 <template>
   <div class="ongoing-comp-wrapper">
     <div class="comp-panel">
-      <comp-panel :comp="comp" />
+      <comp-panel :comp="comp" :active-event="activeEvent" @set-event="set_event" />
     </div>
 
     <div class="cubing-panel">
-      <cubing-panel :comp="comp" />
+      <cubing-panel :comp="comp" :active-event="activeEvent" />
     </div>
   </div>
 </template>
@@ -13,10 +13,17 @@
 <script lang="ts" setup>
 import CompPanel from "@/components/integratedOngoingCompetition/compPanel/compPanel.vue";
 import CubingPanel from "@/components/integratedOngoingCompetition/cubingPanel/cubingPanel.vue";
+import {ref} from "vue";
+
+const activeEvent = ref('333')
 
 defineProps<{
   comp: string
 }>()
+
+const set_event = (event: string) => {
+  activeEvent.value = event
+}
 </script>
 
 <style scoped>

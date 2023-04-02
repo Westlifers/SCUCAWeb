@@ -4,38 +4,51 @@
       <p>本周成绩</p>
       <div class="selector">
         <el-button icon="ArrowLeft" size="small" round :disabled="events.indexOf(activeEvent) <= 0"
-                   @click="activeEvent=events[events.indexOf(activeEvent) - 1]" />
+                   @click="emits('setEvent', events[events.indexOf(activeEvent) - 1])" />
         <span>{{activeEvent}}</span>
         <el-button icon="ArrowRight" size="small" round :disabled="events.indexOf(activeEvent) >= events.length - 1"
-                   @click="activeEvent=events[events.indexOf(activeEvent) + 1]"/>
+                   @click="emits('setEvent', events[events.indexOf(activeEvent) + 1])"/>
       </div>
     </div>
 
     <div class="results-table">
-      <DataTable :table-data="ClassifiedTableData[activeEvent]"></DataTable>
+      <DataTable :table-data="ClassifiedTableData[activeEvent]" :avatars="avatars"></DataTable>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import {getComp} from "@/api/fetchData";
-import {computed, ref} from "vue";
-import {classifyTableDataByEvent, getSortedEventsFromTableData} from "@/utils";
+import {computed} from "vue";
+import {classifyTableDataByEvent, get_user_avatar, getSortedEventsFromTableData} from "@/utils";
 import DataTable from "@/components/competitionDetail/DataTable.vue";
+import {DetailedCompetition} from "@/types";
 
 const props = defineProps<{
   comp: string
+  activeEvent: string
 }>()
 
-let tableData
+let tableData: DetailedCompetition
 
 tableData = await getComp(props.comp)
-
-const activeEvent = ref('333')
 
 const ClassifiedTableData = computed(() => classifyTableDataByEvent(tableData))
 
 const events = computed(() => getSortedEventsFromTableData(tableData))
+
+const emits = defineEmits<{
+  (e: 'setEvent', event: string): void
+}>()
+
+// calculate every author's avatar, so that we don't need to fetch it every time
+const avatars = {}
+for (let i = 0; i < tableData.result_set.length; i++) {
+  const author = tableData.result_set[i].username
+  if (author in avatars) continue
+  avatars[tableData.result_set[i].username] = await get_user_avatar(tableData.result_set[i].username)
+}
+
 </script>
 
 <style scoped>
@@ -77,7 +90,5 @@ const events = computed(() => getSortedEventsFromTableData(tableData))
 .results-table {
   margin-bottom: 24px;
   height: 85%;
-  display: flex;
-  justify-content: center;
 }
 </style>

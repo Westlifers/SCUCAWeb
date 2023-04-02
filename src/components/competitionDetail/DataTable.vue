@@ -2,7 +2,7 @@
 <!-- TODO: 2. 美化表格样式 -->
 
 <template>
-  <el-table :data="tableData" style="max-width: 920px; min-width: auto" :header-cell-style="{background:'var(--yougi-projects-section)'}"
+  <el-table :data="tableData" style="max-width: 920px" :header-cell-style="{background:'var(--yougi-projects-section)'}"
             height="100%">
 
     <!--  appear for mobile devices  -->
@@ -17,7 +17,14 @@
         </el-table>
       </template>
     </el-table-column>
-    <el-table-column prop="username" label="用户名" :width="maxScrambleCount===5 || isMobile?width:3 * width"/>
+    <el-table-column prop="username" label="用户名" :width="maxScrambleCount===5 || isMobile?width:3 * width" :fixed="!isMobile">
+      <template v-slot:default="scope">
+        <div class="username">
+          <el-avatar :src="avatars[scope.row.username]" size="small"></el-avatar>
+          <p>{{scope.row.username}}</p>
+        </div>
+      </template>
+    </el-table-column>
     <!--  appear for PC  -->
     <el-table-column prop="time_1" label="第一次" :formatter="formatter" :width="width" v-if="!isMobile"/>
     <el-table-column prop="time_2" label="第二次" :formatter="formatter" :width="width" v-if="!isMobile"/>
@@ -95,6 +102,7 @@ const sort_best_count_in_zero = (obj_a, obj_b) => {
 
 const props = defineProps<{
   tableData: Result[]
+  avatars: object
 }>()
 
 // check if device is mobile
@@ -125,4 +133,22 @@ const width = computed(() => {
   height: 0 !important;
 }
 
+:deep(.el-table-fixed-column--left) {
+  --el-bg-color: var(--yougi-projects-section);
+}
+
+.username {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.username p {
+  margin-left: 5px;
+  opacity: 0.8;
+}
+
+:deep(.cell) {
+  opacity: 0.8;
+}
 </style>
