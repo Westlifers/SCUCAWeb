@@ -107,5 +107,8 @@ for (let i = 0; i < tableData.result_set.length; i++) {
 .results-table {
   margin-bottom: 24px;
   height: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

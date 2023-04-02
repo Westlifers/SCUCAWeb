@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" style="max-width: 920px" :header-cell-style="{background:'var(--yougi-projects-section)'}"
+  <el-table :data="tableData" style="max-width: 880px" :header-cell-style="{background:'var(--yougi-projects-section)'}"
             height="100%">
 
     <!--  appear for mobile devices  -->
