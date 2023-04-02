@@ -2,7 +2,8 @@
 <!-- TODO: 2. 美化表格样式 -->
 
 <template>
-  <el-table :data="tableData" style="max-width: 920px" max-height="750" border >
+  <el-table :data="tableData" style="max-width: 920px" :header-cell-style="{background:'var(--yougi-app-container)'}"
+            max-height="750">
 
     <!--  appear for mobile devices  -->
     <el-table-column type="expand" v-if="isMobile">
@@ -110,7 +111,12 @@ const width = computed(() => {
 .item {
   margin-top: 10px;
 }
+
 .badge-value {
   width: 50px;
+}
+
+.el-table {
+  --el-table-tr-bg-color: var(--yougi-app-container)
 }
 </style>

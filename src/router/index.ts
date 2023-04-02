@@ -1,20 +1,18 @@
 import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router'
 import layout from "@/layout/index.vue"
 import aboutUs from "@/views/about/AboutUs.vue";
-import overView from "@/views/overview/OverViewSuspense.vue";
 import loginRegister from "@/views/login/LoginRegister.vue";
 import scuRecord from '@/views/record/RecordSuspense.vue'
 import specialSuspense from "@/views/special/SpecialSuspense.vue";
 import historyListSuspense from "@/views/history/list/HistoryListSuspense.vue";
 import historyDetailSuspense from "@/views/history/detail/HistoryDetailSuspense.vue";
 import rankSuspense from "@/views/rank/RankSuspense.vue";
-import weekCubingSuspense from "@/views/cubing/WeekCubingSuspense.vue";
-import specialCubingSuspense from "@/views/cubing/SpecialCubingSuspense.vue";
 import createCompetitionSuspense from "@/views/createComp/createCompetitionSuspense.vue";
 import indexSuspense from "@/views/index/indexSuspense.vue";
 import createAnnouncementForm from "@/views/createAnnouncement/createAnnouncementForm.vue";
 import discussionGiscus from "@/views/discussion/discussionGiscus.vue";
 import profileEditSuspense from "@/views/profile/profileEditSuspense.vue";
+import weekSuspense from "@/views/week/WeekSuspense.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -37,36 +35,18 @@ const routes: Array<RouteRecordRaw> = [
 
 
   {
-    path: '/thisWeek',
+    path: '/comp',
     component: layout,
     children: [
       {
-        path: 'overview',
-        component: overView,
-        name: 'overview'
+        path: 'week',
+        component: weekSuspense,
+        name: 'week'
       },
       {
-        path: 'cubing',
-        component: weekCubingSuspense,
-        name: 'weekCubing'
-      }
-    ]
-  },
-
-
-  {
-    path: '/special',
-    component: layout,
-    children: [
-      {
-        path: '',
+        path: 'special',
         component: specialSuspense,
         name: 'special'
-      },
-      {
-        path: 'cubing',
-        component: specialCubingSuspense,
-        name: 'specialCubing'
       }
     ]
   },

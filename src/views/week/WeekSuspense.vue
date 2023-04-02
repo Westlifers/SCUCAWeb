@@ -1,6 +1,6 @@
 <template>
   <Suspense>
-    <integrated-comp comp="special"></integrated-comp>
+    <integrated-comp comp="week" />
   </Suspense>
 </template>
 

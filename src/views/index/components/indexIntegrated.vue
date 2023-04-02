@@ -8,9 +8,7 @@
 <script lang="ts" setup>
 
 import AnnouncementPanel from "@/views/index/components/announcementPanel.vue";
-import NotificationPanel from "@/views/index/components/notificationPanel.vue";
-
-</script>
+import NotificationPanel from "@/views/index/components/notificationPanel.vue";</script>
 
 <style scoped>
 .index-wrapper {
