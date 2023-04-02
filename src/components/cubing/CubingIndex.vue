@@ -1,3 +1,5 @@
+<!-- deprecated -->
+
 <template>
   <div class="cubing">
     <cubing-form :comp="comp" v-if="is_form" />

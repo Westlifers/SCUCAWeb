@@ -1,3 +1,5 @@
+<!-- deprecated -->
+
 <template>
   <Suspense>
     <cubing-index comp="special" />

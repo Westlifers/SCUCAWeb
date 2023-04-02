@@ -83,7 +83,24 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="handleSubmit(formRef)" v-if="count===maxScrambleCount" style="width: 100%">提交</el-button>
+          <el-button type="primary" @click="openDialog" style="width: 100%" v-if="count===maxScrambleCount">提交</el-button>
+          <el-dialog v-model="dialogVisible" width="30%" title="确认成绩" style="text-align: left">
+            <p>本次成绩如下：</p>
+            <p>第一次：{{state.resultForm.time_1}}</p>
+            <p>第二次：{{state.resultForm.time_2}}</p>
+            <p>第三次：{{state.resultForm.time_3}}</p>
+            <p v-if="maxScrambleCount===5">第四次：{{state.resultForm.time_4}}</p>
+            <p v-if="maxScrambleCount===5">第五次：{{state.resultForm.time_5}}</p>
+            <p>请检查成绩输入是否正确。</p>
+            <template #footer>
+              <span class="dialog-footer">
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="dialogVisible = false;handleSubmit(formRef)">
+                  确认
+                </el-button>
+              </span>
+            </template>
+          </el-dialog>
         </el-form-item>
 
         <div class="tip">
@@ -120,7 +137,6 @@ import {Scramble} from "@/types";
 import {convert_time, SPECIAL_EVENTS} from "@/utils";
 import {ElMessage, ElNotification, FormInstance} from "element-plus";
 import {postResult} from "@/api/service";
-import router from "@/router";
 
 // 下面是直接复制以前的代码，所以有些变量名可能不太合适，并且可能很混乱。但是这个组件的功能是可以正常使用的。
 
@@ -130,6 +146,7 @@ const props = defineProps<{
 }>()
 
 const count = ref(1)
+const dialogVisible = ref(false)
 
 // 是否是周赛
 const is_normal = computed(() => props.comp==='week')
@@ -266,6 +283,20 @@ watch([count], (value, oldValue) => {
     })
   }
 })
+// check if the form is valid before open the dialog
+const openDialog = () => {
+  formRef.value?.validate((valid) => {
+    if (valid) {
+      dialogVisible.value = true
+    } else {
+      ElMessage({
+        message: '请检查成绩格式！',
+        type: 'error',
+        duration: 2000
+      })
+    }
+  })
+}
 
 const handleSubmit =  (formEl: FormInstance | undefined) => {
   if (!formEl) return

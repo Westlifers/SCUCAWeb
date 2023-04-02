@@ -5,7 +5,16 @@
       <div class="selector">
         <el-button icon="ArrowLeft" size="small" round :disabled="events.indexOf(activeEvent) <= 0"
                    @click="emits('setEvent', events[events.indexOf(activeEvent) - 1])" />
-        <span>{{activeEvent}}</span>
+        <p>
+          <el-select v-model="activeEvent">
+            <el-option
+                v-for="event in events"
+                :key="event"
+                :label="event"
+                :value="event"
+            />
+          </el-select>
+        </p>
         <el-button icon="ArrowRight" size="small" round :disabled="events.indexOf(activeEvent) >= events.length - 1"
                    @click="emits('setEvent', events[events.indexOf(activeEvent) + 1])"/>
       </div>
@@ -19,7 +28,7 @@
 
 <script lang="ts" setup>
 import {getComp} from "@/api/fetchData";
-import {computed} from "vue";
+import {computed, ref, watch} from "vue";
 import {classifyTableDataByEvent, get_user_avatar, getSortedEventsFromTableData} from "@/utils";
 import DataTable from "@/components/competitionDetail/DataTable.vue";
 import {DetailedCompetition} from "@/types";
@@ -28,6 +37,13 @@ const props = defineProps<{
   comp: string
   activeEvent: string
 }>()
+const activeEvent = ref(props.activeEvent)
+watch(activeEvent, (newVal) => {
+  emits('setEvent', newVal)
+})
+watch(() => props.activeEvent, (newVal) => {
+  activeEvent.value = newVal
+})
 
 let tableData: DetailedCompetition
 
@@ -79,12 +95,13 @@ for (let i = 0; i < tableData.result_set.length; i++) {
 .selector {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.selector span {
+.selector p {
   margin-left: 10px;
   margin-right: 10px;
-  width: 50px;
+  width: 100px;
 }
 
 .results-table {
