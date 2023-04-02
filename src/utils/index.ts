@@ -22,7 +22,7 @@ export function go_page(pageName: string) {
 export function convert_time(validatedTimeStr: string): number {
     let time = 0
     validatedTimeStr = validatedTimeStr.split(' ').join('')  // 去空格
-    if (validatedTimeStr == 'DNF' || validatedTimeStr == 'dnf' || validatedTimeStr == '') {
+    if (validatedTimeStr == 'DNF' || validatedTimeStr == 'dnf' || validatedTimeStr == '' || validatedTimeStr == 'd') {
         return 0
     }
     if (validatedTimeStr.indexOf(':') > -1) {
