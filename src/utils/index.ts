@@ -1,5 +1,6 @@
 import router from "@/router";
 import {getProfile} from "@/api/fetchData";
+import {DetailedCompetition} from "@/types";
 
 export function getCookie(cName: string) {
     if (document.cookie.length > 0) {
@@ -74,4 +75,40 @@ export function getUserAndEventAndAorb(content: string) {
         aorb: aorb,
         time: parseFloat(time) > 0?time_convert(parseFloat(time)):'DNF'
     }
+}
+
+
+export function classifyTableDataByEvent(tableData: DetailedCompetition): object {
+    const classifiedData = {}
+    const eventsGot: string[] = []
+    for (const result of tableData.result_set) {
+        if (eventsGot.indexOf(result.event) > -1) {
+            classifiedData[result.event].push(result)
+        } else {
+            classifiedData[result.event] = [result]
+            eventsGot.push(result.event)
+        }
+    }
+
+    return classifiedData
+}
+
+
+export function getSortedEventsFromTableData(tableData: DetailedCompetition): string[] {
+    const eventsGot: string[] = []
+    for (const result of tableData.result_set) {
+        if (!(eventsGot.indexOf(result.event) > -1)) {
+            eventsGot.push(result.event)
+        }
+    }
+
+    // 排序
+    const sorted_events:string[] = []
+    for (const event of ALL_EVENTS) {
+        if (eventsGot.indexOf(event) > -1) {
+            sorted_events.push(event)
+        }
+    }
+
+    return sorted_events
 }

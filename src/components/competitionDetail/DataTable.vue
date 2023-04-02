@@ -2,8 +2,8 @@
 <!-- TODO: 2. 美化表格样式 -->
 
 <template>
-  <el-table :data="tableData" style="max-width: 920px" :header-cell-style="{background:'var(--yougi-app-container)'}"
-            max-height="750">
+  <el-table :data="tableData" style="max-width: 920px; min-width: auto" :header-cell-style="{background:'var(--yougi-projects-section)'}"
+            height="100%">
 
     <!--  appear for mobile devices  -->
     <el-table-column type="expand" v-if="isMobile">
@@ -17,7 +17,7 @@
         </el-table>
       </template>
     </el-table-column>
-    <el-table-column prop="username" label="用户名" :width="width"/>
+    <el-table-column prop="username" label="用户名" :width="maxScrambleCount===5 || isMobile?width:3 * width"/>
     <!--  appear for PC  -->
     <el-table-column prop="time_1" label="第一次" :formatter="formatter" :width="width" v-if="!isMobile"/>
     <el-table-column prop="time_2" label="第二次" :formatter="formatter" :width="width" v-if="!isMobile"/>
@@ -117,6 +117,12 @@ const width = computed(() => {
 }
 
 .el-table {
-  --el-table-tr-bg-color: var(--yougi-app-container)
+  --el-table-tr-bg-color: var(--yougi-projects-section)
 }
+
+/* 去除表格底部边框 */
+.el-table__inner-wrapper::before {
+  height: 0;
+}
+
 </style>
