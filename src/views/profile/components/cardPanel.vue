@@ -2,17 +2,21 @@
   <div class="cards-wrapper" style="--delay: .6s">
     <div class="cards-header">
       <div class="cards-header-date">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+        <el-button size="small" round @click="month--">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
           <path d="M15 18l-6-6 6-6"></path></svg>
-        <div class="title">January 2020</div>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
-          <path d="M9 18l6-6-6-6"></path></svg>
+        </el-button>
+        <div class="title">{{today.toLocaleDateString()}}</div>
+        <el-button size="small" round @click="month++">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+            <path d="M9 18l6-6-6-6"></path></svg>
+        </el-button>
       </div>
     </div>
     <div class="cards card">
       <div class="cards-head">
         <div class="cards-info">
-          <div class="calendar-hour">08.20 <span class="am-pm">pm</span></div>
+          <div class="calendar-hour">{{today.toLocaleTimeString()}}</div>
           <div class="degree">
             <svg viewBox="0 0 512 512">
               <circle cx="330.2" cy="240.1" fill="#feb137" r="78.9"></circle>
@@ -24,7 +28,7 @@
               <path d="M360 335.4a70.8 70.8 0 00-87.4-74A95 95 0 0085 286a85 85 0 00-3.4 170h273a60.4 60.4 0 005.2-120.6z" fill="#d8ecfe"></path>
               <path d="M360 335.4a70.8 70.8 0 00-87.4-74 95 95 0 00-125.7-68.3 95 95 0 0190.6 74.2 70.8 70.8 0 0187.4 74A60.4 60.4 0 01345.6 456h9.2a60.4 60.4 0 005.1-120.6z" fill="#c4e2ff"></path>
             </svg>
-            81.2° F in Sylhet
+            Hello, world!
           </div>
         </div>
         <svg viewBox="0 0 512 512" fill="currentColor">
@@ -42,49 +46,68 @@
         <div class="item">Sun</div>
       </div>
       <div class="items numbers">
-        <div class="item">1</div>
-        <div class="item">2</div>
-        <div class="item">3</div>
-        <div class="item">4</div>
-        <div class="item">5</div>
-        <div class="item">6</div>
-        <div class="item">7</div>
-        <div class="item">8</div>
-        <div class="item">9</div>
-        <div class="item">10</div>
-        <div class="item">11</div>
-        <div class="item">12</div>
-        <div class="item">13</div>
-        <div class="item">14</div>
-        <div class="item">15</div>
-        <div class="item">16</div>
-        <div class="item is-active">17</div>
-        <div class="item">18</div>
-        <div class="item">19</div>
-        <div class="item">20</div>
-        <div class="item">21</div>
-        <div class="item">22</div>
-        <div class="item">23</div>
-        <div class="item">24</div>
-        <div class="item">25</div>
-        <div class="item">26</div>
-        <div class="item">27</div>
-        <div class="item">28</div>
-        <div class="item">29</div>
-        <div class="item">30</div>
-        <div class="item">31</div>
-        <div class="item disable">1</div>
-        <div class="item disable">2</div>
-        <div class="item disable">3</div>
+        <div v-for="day in calendar"
+             :key="day"
+             :class="{item: true, disable: day.isDisabled, 'is-active': day.isToday}"
+        >
+          {{day.date}}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import {computed, ref} from "vue";
+
+const month = ref((new Date()).getMonth());
+const today = computed(() => {
+  const day = new Date()
+  day.setMonth(month.value)
+  return day
+})
+const firstDayOfMonth = computed(() => new Date(today.value.getFullYear(), today.value.getMonth(), 1));
+const lastDayOfMonth = computed(() => new Date(today.value.getFullYear(), today.value.getMonth() + 1, 0));
+
+const firstDay = computed(() => firstDayOfMonth.value.getDay()); // 获取本月第一天是星期几
+const daysInMonth = computed(() => lastDayOfMonth.value.getDate()); // 获取本月总天数
+const lastDayOfLastMonth = computed(() => new Date(today.value.getFullYear(), today.value.getMonth(), 0).getDate());  // 获取上个月最后一天是几号
+const dateToday = computed(() => today.value.getDate()); // 获取今天是几号
+const weeksInMonth = computed(() => Math.ceil((firstDay.value + daysInMonth.value - 1) / 7)); // 计算本月跨越的周数
+interface Calendar {
+  date: number;
+  isToday: boolean;
+  isDisabled: boolean;
+}
+const calendar = computed(() => {
+  const calendar_: Calendar[] = []  // Array sized 7 * number of weeks in month
+  for (let i = 0; i <= weeksInMonth.value * 7; i++) {
+    if (i + 1 - firstDay.value === 0) continue
+    calendar_.push({
+      date: (i + 1 - firstDay.value) < 0?
+          (lastDayOfLastMonth.value + i + 2 - firstDay.value):
+          (i + 1 - firstDay.value) > daysInMonth.value?
+              (i + 1 - firstDay.value - daysInMonth.value):
+              (i + 1 - firstDay.value),
+      isToday: i + 1 - firstDay.value === dateToday.value,
+      isDisabled: i + 1 - firstDay.value < 1 || i + 1 - firstDay.value > daysInMonth.value,
+    })
+  }
+
+  return calendar_
+})
 
 </script>
 
 <style scoped>
-
+.card .days {
+  display: flex;
+  flex-wrap: nowrap;
+}
+:deep(.el-button) {
+  border: none;
+  --el-button-active-bg-color: transparent;
+  --el-button-active-border-color: transparent;
+  --el-button-hover-bg-color: transparent;
+}
 </style>
