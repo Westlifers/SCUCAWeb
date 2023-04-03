@@ -12,7 +12,7 @@
 
     <el-scrollbar max-height="600">
       <div class="announcement-body">
-        <div v-for="(post, index) in posts" :key="post.title" class="card">
+        <div v-for="(post, index) in posts" :key="post.title" class="announcement-card">
           <el-card class="box-card" shadow="hover" :style="{backgroundColor: post.type==='update'?'#e9e7fd':'#fee4cb'}">
 
 
@@ -167,19 +167,19 @@ const interval2 = setInterval(() => {
   flex-wrap: wrap;
 }
 
-.card {
+.announcement-card {
   width: calc(100% / 3 - 16px);
   text-align: left;
   transition: 0.2s;
   padding: 8px;
 }
 @media screen and (max-width: 1300px) {
-  .card {
+  .announcement-card {
     width: calc(100% / 2 - 16px)
   }
 }
 @media screen and (max-width: 1100px) {
-  .card {
+  .announcement-card {
     width: calc(100% - 16px)
   }
 }
