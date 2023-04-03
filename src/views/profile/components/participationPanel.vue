@@ -116,7 +116,7 @@ setInterval(() => {
 }
 
 /* 这一步是保证div下的p在被删除前，保持在原位置（因为父元素布局有空位，abs布局会出现定位错误） */
-.dist div{
+.subtitle-count div{
   display: flex;
   flex-direction: column;
   align-items: center;
