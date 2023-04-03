@@ -793,11 +793,9 @@ body {
   font-weight: normal;
   padding-bottom: 16px;
 }
-.table th:nth-child(n+5) {
-  padding: 0 10px 16px;
-}
+
 .table th:first-child {
-  padding-left: 36px;
+
 }
 .table td {
   font-size: 15px;
@@ -805,10 +803,7 @@ body {
   padding: 8px 0;
 }
 .table td:last-of-type {
-  width: 100px;
-}
-.table td:nth-child(n+5) {
-  padding: 0 10px;
+
 }
 .table td:nth-last-of-type(2) svg {
   width: 16px;
@@ -963,7 +958,7 @@ body {
 }
 @media screen and (max-width: 1200px) {
   .time {
-    display: none;
+
   }
 }
 @media screen and (max-width: 1060px) {
