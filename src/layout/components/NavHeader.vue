@@ -14,7 +14,7 @@
 
     <el-divider direction="vertical" style="height: 70%" />
 
-    <div class="user-popover">
+    <div class="user-popover" v-if="route.path!=='/profile'">
       <el-switch size="large" v-model="isDark" active-icon="Moon" inactive-icon="Sunny" active-color="black" inline-prompt/>
     </div>
   </el-menu>
@@ -27,9 +27,11 @@ import {go_page} from "@/utils";
 import {watch} from "vue";
 import {useDark, useToggle} from '@vueuse/core'
 import {store, TOGGLE_DARK_MODE} from "@/store";
+import {useRoute} from "vue-router";
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+const route = useRoute()
 
 // below is for nav-break-notice previously, but is deprecated now
 

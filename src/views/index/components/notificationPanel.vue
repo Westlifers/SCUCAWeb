@@ -86,7 +86,7 @@ for (const announcement of breakAnnouncements) {
   padding: 16px;
   display: flex;
   align-items: flex-start;
-  width: 89%;
+  width: 100%;
 }
 
 .notification-item-content {
