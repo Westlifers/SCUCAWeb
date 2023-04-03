@@ -483,8 +483,6 @@ body {
   fill: transparent;
   stroke: #4356d6;
   stroke-width: 14;
-  stroke-dasharray: 275;
-  stroke-dashoffset: 235;
   -webkit-animation: pieChart 3.8s linear forwards;
           animation: pieChart 3.8s linear forwards;
 }

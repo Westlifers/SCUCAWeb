@@ -11,9 +11,9 @@
       <div class="account-title">{{store.state.user.is_scuer?'SCUer':'OUTSIDER'}}</div>
     </div>
     <div class="account card">
-      <div class="account-cash">用户编号: {{store.state.user.id}}</div>
-      <div class="account-income">{{store.state.user.description}}</div>
-      <div class="account-iban">{{store.state.user.is_superuser?'管理员':'用户'}}</div>
+      <div class="account-cash">{{store.state.user.is_superuser?'管理员':'用户'}}</div>
+      <div class="account-income">{{store.state.user.email}}</div>
+      <div class="account-iban">用户编号: {{store.state.user.id}}</div>
     </div>
   </div>
 </template>

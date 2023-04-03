@@ -1,7 +1,7 @@
 <template>
   <div class="activity card" style="--delay: .2s">
-    <div class="title">User Activities</div>
-    <div class="subtitle">Hoo - is an adaptive Online Courses Application with a wide range of course directions. The students will have a great possibility to study.</div>
+    <div class="title">账号档案</div>
+    <div class="subtitle">{{store.state.user.description}}</div>
     <div class="activity-links">
       <div class="activity-link active">Current User</div>
       <div class="activity-link notify">User Request</div>
@@ -45,6 +45,7 @@
 
 <script lang="ts" setup>
 
+import {store} from "@/store";
 </script>
 
 <style>
