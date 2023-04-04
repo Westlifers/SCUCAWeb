@@ -1,7 +1,7 @@
 <template>
   <div class="account-wrapper" style="--delay: .8s">
     <div class="account-profile">
-      <img :src="store.state.user.avatar" alt="">
+      <img :src="avatar" alt="">
       <div class="blob-wrap">
         <div class="blob"></div>
         <div class="blob"></div>
@@ -41,6 +41,8 @@ import {store} from "@/store";
 import {ElMessageBox} from "element-plus";
 import {ref} from "vue";
 import ProfileEditDialog from "@/views/profile/components/profileEditDialog.vue";
+import {get_user_avatar} from "@/utils";
+const avatar = await get_user_avatar(store.state.user.username)
 
 const dialogVisible = ref(false)
 const handleClose = (done: () => void) => {

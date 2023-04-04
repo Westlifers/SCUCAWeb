@@ -8,14 +8,14 @@
     <template #reference>
       <div class="user-avatar">
         <el-button class="out-btn" @click="visible=!visible;go_page('profile')" round>
-          <el-avatar :src="user.avatar" size="default" />
-          <p>{{user.username}}</p>
+          <el-avatar :src="avatar" size="default" />
+          <p>{{store.state.user.username}}</p>
         </el-button>
       </div>
     </template>
     <template #default>
       <div class="hello">
-        <h3>{{isLoggedIn?'你好，' + user.username: '请登录'}}</h3>
+        <h3>{{isLoggedIn?'你好，' + store.state.user.username: '请登录'}}</h3>
         <el-button v-if="isLoggedIn" @click="logout_all" round>登出</el-button>
         <el-button v-if="!isLoggedIn" @click="go_page('login')" round>登陆</el-button>
       </div>
@@ -27,11 +27,11 @@
 import {LOG_OUT, store} from "@/store";
 import {computed, ref} from "vue";
 import {logout} from "@/api/service";
-import {go_page} from "@/utils";
+import {get_user_avatar, go_page} from "@/utils";
 import router from "@/router";
 
-const user = computed(() => store.state.user)
-const isLoggedIn = computed(() => user.value['username'] != '')
+const avatar = await get_user_avatar(store.state.user.username)
+const isLoggedIn = computed(() => store.state.user.username !== '')
 
 const visible = ref(false)
 
