@@ -1,12 +1,12 @@
 <template>
   <Suspense>
-    <profile-edit />
+    <profile />
   </Suspense>
 </template>
 
 <script lang="ts" setup>
 
-import ProfileEdit from "@/views/profile/components/profileEdit.vue";</script>
+import Profile from "@/views/profile/components/profileView.vue";</script>
 
 <style scoped>
 

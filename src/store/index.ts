@@ -2,12 +2,13 @@ import {createStore} from 'vuex'
 
 import {User, UserParticipationData} from '@/types'
 import {ElNotification} from "element-plus";
-import {getUserParticipationData} from "@/api/fetchData";
+import {getProfile, getUserParticipationData} from "@/api/fetchData";
 
 export const SET_USER = 'setUser'
 export const LOG_OUT = 'logOut'
 export const CLEAR_USER = 'clearUser'
 export const TOGGLE_DARK_MODE = 'toggleDarkMode'
+export const UPDATE_USER_PROFILE = 'updateUserProfile'
 
 export const UPDATE_USER_PARTICIPATION_DATA = 'updateUserParticipationData'
 
@@ -87,6 +88,10 @@ export const store = createStore({
     },
     toggleDarkMode(state: object | any, isDark: boolean) {
       state.isDark = isDark
+    },
+    async updateUserProfile(state: object | any) {
+      state.user = await getProfile(state.user.username)
+      await window.localStorage.setItem("userInfo", JSON.stringify(state.user))
     }
   },
   actions: {

@@ -11,7 +11,7 @@ import createCompetitionSuspense from "@/views/createComp/createCompetitionSuspe
 import indexSuspense from "@/views/index/indexSuspense.vue";
 import createAnnouncementForm from "@/views/createAnnouncement/createAnnouncementForm.vue";
 import discussionGiscus from "@/views/discussion/discussionGiscus.vue";
-import profileEditSuspense from "@/views/profile/profileEditSuspense.vue";
+import profileEditSuspense from "@/views/profile/profileSuspense.vue";
 import weekSuspense from "@/views/week/WeekSuspense.vue";
 
 const routes: Array<RouteRecordRaw> = [
