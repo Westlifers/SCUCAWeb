@@ -1,7 +1,7 @@
 <template>
   <div class="card transection" style="--delay: 1.2s">
     <div class="transection-header">
-      <div class="head">Transactions</div>
+      <div class="head">本周积分榜</div>
       <div class="head is-wait">View All</div>
     </div>
     <div class="credit-wrapper">

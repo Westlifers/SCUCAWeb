@@ -40,16 +40,11 @@
 </template>
 
 <script lang="ts" setup>
-import {LOG_OUT, store} from "@/store";
-import {computed, ref} from "vue";
-import {logout} from "@/api/service";
-import {go_page, time_convert} from "@/utils";
-import router from "@/router";
+import {computed} from "vue";
+import {time_convert} from "@/utils";
 import {getUserPb} from "@/api/fetchData";
-import {Record, Result} from "@/types";
-import {TableColumnCtx} from "element-plus";
+import {Record} from "@/types";
 
-const user = computed(() => store.state.user)
 const userData: Record = await getUserPb()
 
 interface IntegratedUserData {
@@ -79,5 +74,7 @@ const integratedUserData = computed(() => {
 </script>
 
 <style scoped>
-
+.card {
+  overflow: auto;
+}
 </style>

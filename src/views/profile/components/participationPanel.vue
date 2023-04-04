@@ -34,7 +34,7 @@
       <img class="discount-img" :src="adminAvatar" alt="">
       <div class="discount-detail">
         <div class="discount-name">杨荻</div>
-        <div class="discount-type">cv工程师</div>
+        <div class="discount-type">网站管理员</div>
       </div>
     </div>
     <div class="button offer-button">Donate</div>
@@ -58,13 +58,6 @@ const week_events_finished = computed(() =>
 )
 const week_events_unfinished = computed(() =>
     week_events_all.value.filter((item) => !week_events_finished.value.includes(item))
-)
-// 根据进度，计算相关的项目
-const special_events_all = computed(() =>
-    userParticipationData.value.special.events_all
-)
-const special_events_finished = computed(() =>
-    userParticipationData.value.special.events_finished
 )
 
 const ratio = computed(() => week_events_finished.value.length / week_events_all.value.length)
