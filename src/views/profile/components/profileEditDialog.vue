@@ -65,14 +65,7 @@
 import {getAvatarToken, getProfile} from "@/api/fetchData";
 import {computed, reactive, ref} from "vue";
 import {store, UPDATE_USER_PROFILE} from "@/store";
-import {
-  ElMessage,
-  ElNotification,
-  FormInstance,
-  UploadInstance,
-  UploadProps,
-  UploadUserFile
-} from "element-plus";
+import {ElMessage, ElNotification, FormInstance, UploadInstance, UploadProps, UploadUserFile} from "element-plus";
 import {postProfile} from "@/api/service";
 
 const username = computed(() => store.state.user.username)

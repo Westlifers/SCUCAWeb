@@ -1026,7 +1026,7 @@ body {
 }
 @media screen and (max-width: 720px) {
   .first-box .account-wrapper {
-    display: none;
+    width: 100%;
   }
 
   .first-box .cards-wrapper {

@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" style="max-width: 850px;" border >
+  <el-table :data="tableData" style="max-width: 850px;">
     <el-table-column type="index" width="50">
       <template v-slot="scope">
         <span>{{(page - 1) * 10 + (scope.$index + 1)}}</span>
@@ -40,5 +40,19 @@ const width = computed(() => {
 </script>
 
 <style scoped>
+:deep(.el-table) {
+  --el-table-tr-bg-color: var(--yougi-projects-section)
+}
+/* 去除表格底部边框 */
+:deep(.el-table__inner-wrapper::before) {
+  height: 0 !important;
+}
 
+:deep(.el-table-fixed-column--left) {
+  --el-bg-color: var(--yougi-projects-section);
+}
+/* 表头颜色 */
+:deep(.is-group tr th) {
+  background-color: var(--yougi-projects-section) !important;
+}
 </style>

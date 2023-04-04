@@ -20,7 +20,7 @@
   <el-dialog
       v-model="dialogVisible"
       title="修改档案"
-      width="50%"
+      width="80%"
       :before-close="handleClose"
       center
       append-to-body
