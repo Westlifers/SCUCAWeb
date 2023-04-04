@@ -86,7 +86,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png' && rawFile.type !== 'image/jpg') {
     ElMessage.error('头像应为jpg、jpeg或png格式！')
     return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
+  } else if (rawFile.size / 1024 / 1024 > 4) {
     ElMessage.error('头像大小超过2MB！')
     return false
   }
@@ -96,7 +96,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = async (
     response,
     uploadFile
 ) => {
-  state.profileForm.avatar = 'http://img.yougi.top/' + response.key
+  state.profileForm.avatar = 'https://img.yougi.top/' + response.key
 }
 const key = `avatars/${username.value}`
 const postData = {
