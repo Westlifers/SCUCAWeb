@@ -96,7 +96,9 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = async (
     response,
     uploadFile
 ) => {
-  state.profileForm.avatar = 'https://img.yougi.top/' + response.key
+  state.profileForm.avatar = 'https://img.yougi.top/' + response.key + `?t=${(new Date()).getTime()}`
+  console.log(state.profileForm.avatar)
+  console.log(store.state.user.avatar)
 }
 const key = `avatars/${username.value}`
 const postData = {
@@ -131,7 +133,10 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const req = {
           email: state.profileForm.email,
-          avatar: state.profileForm.avatar + `?t=${(new Date()).getTime()}`,  // remember to add timestamp so that the browser will not cache the image
+          avatar: state.profileForm.avatar===store.state.user.avatar?
+              store.state.user.avatar:
+              `https://img.yougi.top/avatars/${store.state.user.username}` + `?t=${(new Date()).getTime()}`
+          ,  // 如果state中的头像链接和本地储存的链接不一样，说明用户上传了新头像，那么就使用新头像链接，否则仍使用本地储存的头像链接
           description: state.profileForm.description
         }
         const res = await postProfile(req)
