@@ -34,7 +34,6 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
           :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
           :limit="1"
       >
         <el-icon><Plus /></el-icon>
@@ -74,9 +73,6 @@ const fileList = ref<UploadUserFile[]>()
 const uploadRef = ref<UploadInstance>()
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
-const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
-  console.log(uploadFile, uploadFiles)
-}
 
 const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
   dialogImageUrl.value = uploadFile.url!
@@ -97,8 +93,6 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = async (
     uploadFile
 ) => {
   state.profileForm.avatar = 'https://img.yougi.top/' + response.key + `?t=${(new Date()).getTime()}`
-  console.log(state.profileForm.avatar)
-  console.log(store.state.user.avatar)
 }
 const key = `avatars/${username.value}`
 const postData = {

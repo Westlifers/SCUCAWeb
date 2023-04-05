@@ -51,7 +51,6 @@ watch(() => props.activeEvent, (newVal) => {
 let tableData: DetailedCompetition
 
 tableData = await getComp(props.comp)
-console.log(tableData)
 
 const ClassifiedTableData = computed(() => classifyTableDataByEvent(tableData))
 
