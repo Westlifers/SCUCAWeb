@@ -1,6 +1,6 @@
 <template>
   <el-table :data="tableData" style="max-width: 880px" :header-cell-style="{background:'var(--yougi-projects-section)'}"
-            height="100%">
+            height="90%">
 
     <!--  appear for mobile devices  -->
     <el-table-column type="expand" v-if="isMobile">

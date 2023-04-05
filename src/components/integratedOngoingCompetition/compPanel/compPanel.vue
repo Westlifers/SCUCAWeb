@@ -107,6 +107,16 @@ for (let i = 0; i < tableData.result_set.length; i++) {
   width: 100px;
 }
 
+@media screen and (max-width: 600px) {
+  .results-header {
+    flex-direction: column;
+  }
+
+  .results-header p {
+    margin-bottom: 16px;
+  }
+}
+
 .results-table {
   margin-bottom: 24px;
   height: 85%;
