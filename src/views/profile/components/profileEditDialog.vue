@@ -27,7 +27,7 @@
     <el-form-item label="头像" prop="time_2">
       <el-upload
           :ref="uploadRef"
-          action="http://upload-z2.qiniup.com"
+          action="//upload-z2.qiniup.com"
           :data="postData"
           list-type="picture-card"
           :file-list="fileList"
@@ -92,7 +92,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = async (
     response,
     uploadFile
 ) => {
-  state.profileForm.avatar = 'https://img.yougi.top/' + response.key + `?t=${(new Date()).getTime()}`
+  state.profileForm.avatar = 'http://img.yougi.top/' + response.key + `?t=${(new Date()).getTime()}`
 }
 const key = `avatars/${username.value}`
 const postData = {
@@ -129,7 +129,7 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
           email: state.profileForm.email,
           avatar: state.profileForm.avatar===store.state.user.avatar?
               store.state.user.avatar:
-              `https://img.yougi.top/avatars/${store.state.user.username}` + `?t=${(new Date()).getTime()}`
+              `http://img.yougi.top/avatars/${store.state.user.username}` + `?t=${(new Date()).getTime()}`
           ,  // 如果state中的头像链接和本地储存的链接不一样，说明用户上传了新头像，那么就使用新头像链接，否则仍使用本地储存的头像链接
           description: state.profileForm.description
         }

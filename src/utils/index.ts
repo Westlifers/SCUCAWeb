@@ -55,7 +55,7 @@ export const ALL_EVENTS = ['333', '222', '444', '555', '666', '777', '333bld', '
 
 export async function get_user_avatar(username: string) {
     const res = await getProfile(username)
-    return res.avatar?res.avatar:'https://img.yougi.top/default.png'
+    return res.avatar?res.avatar:'http://img.yougi.top/default.png'
 }
 
 
