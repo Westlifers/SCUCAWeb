@@ -28,9 +28,9 @@
             <td>
               <span class="time">{{result.event}}</span>
             </td>
-            <td>{{time_convert(result.avg)}}</td>
+            <td>{{result.avg<=0?'DNF':time_convert(result.avg)}}</td>
             <td>{{result.dateAvg}}</td>
-            <td>{{time_convert(result.best)}}</td>
+            <td>{{result.best<=0?'DNF':time_convert(result.best)}}</td>
             <td>{{result.dateBest}}</td>
           </tr>
         </tbody>
