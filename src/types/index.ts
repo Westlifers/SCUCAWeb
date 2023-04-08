@@ -109,3 +109,9 @@ export interface Announcement {
     author: string
     type: string
 }
+
+
+export interface Score {
+    username: string
+    score: number
+}

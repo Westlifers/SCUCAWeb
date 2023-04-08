@@ -8,6 +8,7 @@ import {
     RankPaginationData,
     Record,
     Result,
+    Score,
     Scramble,
     User,
     UserParticipationData,
@@ -282,4 +283,21 @@ export async function getAvatarToken(key: string): Promise<string> {
     })
 
     return res['token']
+}
+
+
+export async function getScoreRank(): Promise<Score[]> {
+    const res: Array<object> = await request({
+        url: '/competition/week/score/',
+    })
+
+    const scores: Score[] = []
+    for (const score of res) {
+        scores.push({
+            username: score['username'],
+            score: score['score'],
+        })
+    }
+
+    return scores
 }

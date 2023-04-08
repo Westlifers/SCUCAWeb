@@ -42,6 +42,7 @@ import {ElMessageBox} from "element-plus";
 import {ref} from "vue";
 import ProfileEditDialog from "@/views/profile/components/profileEditDialog.vue";
 import {get_user_avatar} from "@/utils";
+
 const avatar = await get_user_avatar(store.state.user.username)
 
 const dialogVisible = ref(false)
