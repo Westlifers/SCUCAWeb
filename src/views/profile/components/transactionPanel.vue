@@ -10,7 +10,7 @@
         >
           <el-icon><QuestionFilled /></el-icon>
           <template #content>
-            <v-md-preview :text="helpText"/>
+            <v-md-preview :text="helpText" style="flex-wrap: wrap"/>
           </template>
         </el-tooltip>
       </div>
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <el-dialog title="积分榜" v-model="dialogVisible"  width="30%" append-to-body>
+  <el-dialog title="积分榜" v-model="dialogVisible" :width="is_mobile?'80%':'30%'" append-to-body>
     <div class="dialog-score-wrapper">
       <div class="credit-wrapper" v-for="user in users" :key="user.username">
         <el-avatar :src="!user.profile.avatar?'http://img.yougi.top/default.png':user.profile.avatar"
@@ -58,9 +58,12 @@
 <script lang="ts" setup>
 import {getProfile, getScoreRank} from "@/api/fetchData";
 import {Score} from "@/types";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 
 const dialogVisible = ref(false)
+const is_mobile = computed(() => {
+  return window.innerWidth <= 768
+})
 
 const scoreRank: Score[] = await getScoreRank()
 // get all usernames
@@ -74,7 +77,10 @@ for (let i = 0; i < scoreRank.length; i++) {
   })
 }
 
-const helpText = '$$ \\text{积分规则(beta测试): 按每项目平均成绩对应的NR倒序排名进行累加，结果除以100，保留两位小数。其中NR数据只取前95\\%} ' +
+const helpText = '$$ \\text{积分规则(beta测试): } \\\\ ' +
+    '\\text{按每项目平均成绩对应的NR倒序排名进行累加} \\\\' +
+    '\\text{再除以100} \\\\ ' +
+    '\\text{其中NR数据只取前95\\%}' +
     '\\\\ Score = \\frac{1}{100} \\sum_\\text{e for event} NR_{0.95}^{-}(e) \\\\ ' +
     '\\text{超出NR95\\%范围，分数不再增加或减少} $$'
 
@@ -109,5 +115,10 @@ const helpText = '$$ \\text{积分规则(beta测试): 按每项目平均成绩�
 }
 .transection .credit-wrapper:nth-child(4) .credit-money {
   color: #CD7F32;
+}
+
+:deep(.github-markdown-body p span span span) {
+  font-size: 15px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
 }
 </style>

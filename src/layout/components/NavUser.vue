@@ -1,7 +1,6 @@
 <template>
   <el-popover
-      placement="top"
-      :width="250"
+      placement="left"
       trigger="hover"
       popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
   >
@@ -15,7 +14,6 @@
     </template>
     <template #default>
       <div class="hello">
-        <h3>{{isLoggedIn?'你好，' + store.state.user.username: '请登录'}}</h3>
         <el-button v-if="isLoggedIn" @click="logout_all" round>登出</el-button>
         <el-button v-if="!isLoggedIn" @click="go_page('login')" round>登陆</el-button>
       </div>
@@ -49,9 +47,6 @@ const logout_all = async () => {
   flex-wrap: nowrap;
   align-items: center;
   margin-bottom: 5px;
-}
-.hello h3 {
-  margin-right: 20px;
 }
 
 button.out-btn {
