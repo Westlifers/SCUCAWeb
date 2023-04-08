@@ -698,15 +698,14 @@ body {
   position: relative;
 }
 .account-cash:before {
-  content: "";
+  content: "Edit";
+  font-size: 10px;
   position: absolute;
-  width: 5px;
   height: 5px;
-  background: #9b9ca7;
   right: 10px;
-  border-radius: 50%;
-  box-shadow: -10px 0 0 0 #9b9ca7, 10px 0 0 0 #9b9ca7;
   top: 24px;
+  display: flex;
+  flex-wrap: nowrap;
 }
 .account-income {
   font-size: 14px;

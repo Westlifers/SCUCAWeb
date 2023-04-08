@@ -10,7 +10,7 @@
         >
           <el-icon><QuestionFilled /></el-icon>
           <template #content>
-            <v-md-preview :text="helpText" style="flex-wrap: wrap"/>
+            积分功能尚处于测试阶段，具体算法见首页公告
           </template>
         </el-tooltip>
       </div>
@@ -77,13 +77,6 @@ for (let i = 0; i < scoreRank.length; i++) {
   })
 }
 
-const helpText = '$$ \\text{积分规则(beta测试): } \\\\ ' +
-    '\\text{按每项目平均成绩对应的NR倒序排名进行累加} \\\\' +
-    '\\text{再除以100} \\\\ ' +
-    '\\text{其中NR数据只取前95\\%}' +
-    '\\\\ Score = \\frac{1}{100} \\sum_\\text{e for event} NR_{0.95}^{-}(e) \\\\ ' +
-    '\\text{超出NR95\\%范围，分数不再增加或减少} $$'
-
 </script>
 
 <style scoped>
@@ -117,8 +110,4 @@ const helpText = '$$ \\text{积分规则(beta测试): } \\\\ ' +
   color: #CD7F32;
 }
 
-:deep(.github-markdown-body p span span span) {
-  font-size: 15px;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
-}
 </style>

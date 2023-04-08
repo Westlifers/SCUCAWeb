@@ -1,6 +1,6 @@
 <template>
   <div class="activity card" style="--delay: .2s">
-    <div class="title">账号档案</div>
+    <div class="title">个人简介</div>
     <div class="subtitle">{{store.state.user.description}}</div>
     <div class="activity-links">
       <div class="activity-link active">Latest Record</div>
