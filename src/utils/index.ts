@@ -112,3 +112,42 @@ export function getSortedEventsFromTableData(tableData: DetailedCompetition): st
 
     return sorted_events
 }
+
+
+// adjust twisty.js event name to local event name
+export function translateEvent(event: string): string {
+    switch (event) {
+        case '333':
+            return '3x3x3'
+        case '222':
+            return '2x2x2'
+        case '444':
+            return '4x4x4'
+        case '555':
+            return '5x5x5'
+        case '666':
+            return '6x6x6'
+        case '777':
+            return '7x7x7'
+        case '333bld':
+            return '3x3x3'
+        case '333oh':
+            return '3x3x3'
+        case 'clock':
+            return 'clock'
+        case 'minx':
+            return 'megaminx'
+        case 'pyra':
+            return 'pyraminx'
+        case 'skewb':
+            return 'skewb'
+        case 'sq1':
+            return 'square1'
+        case '444bld':
+            return '4x4x4'
+        case '555bld':
+            return '5x5x5'
+    }
+
+    return event
+}

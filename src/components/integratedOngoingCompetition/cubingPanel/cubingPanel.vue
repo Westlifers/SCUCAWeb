@@ -19,10 +19,21 @@
 
         <template #header>
           <span>{{props.activeEvent}}</span>
+          <el-button-group>
+            <el-switch v-model="imgVisible" active-text="显示结果" inactive-text="隐藏结果" inline-prompt style="padding-right: 5px" />
+            <el-switch v-model="is3d" active-text="3D" inactive-text="2D" inline-prompt />
+          </el-button-group>
         </template>
 
         <div class="scramble-content">
           {{scrambleOfEvent[count - 1]}}
+          <!--     ignore the following warning, it's inevitable     -->
+          <twisty-player
+              v-if="imgVisible"
+              :puzzle="translateEvent(activeEvent)"
+              :alg="scrambleOfEvent[count - 1]"
+              :visualization="is3d? '3D' : '2D'"
+          />
         </div>
 
         <div class="scramble-footer">
@@ -134,9 +145,10 @@ import {computed, reactive, ref, watch} from "vue";
 import {getComp} from "@/api/fetchData";
 import {store, UPDATE_USER_PARTICIPATION_DATA} from "@/store";
 import {Scramble} from "@/types";
-import {convert_time, SPECIAL_EVENTS} from "@/utils";
+import {convert_time, SPECIAL_EVENTS, translateEvent} from "@/utils";
 import {ElMessage, ElNotification, FormInstance} from "element-plus";
 import {postResult} from "@/api/service";
+import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 
 // 下面是直接复制以前的代码，所以有些变量名可能不太合适，并且可能很混乱。但是这个组件的功能是可以正常使用的。
 
@@ -147,6 +159,8 @@ const props = defineProps<{
 
 const count = ref(1)
 const dialogVisible = ref(false)
+const imgVisible = ref(false)
+const is3d = ref(false)
 
 // 是否是周赛
 const is_normal = computed(() => props.comp==='week')
@@ -380,6 +394,9 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
 }
 
 .scramble-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: #4A4A4A;
   margin-bottom: 24px;
   font-size: 16px;
@@ -502,5 +519,11 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
   100% {
     transform: translate(0px, 0px);
   }
+}
+
+:deep(.el-card__header) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

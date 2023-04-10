@@ -53,6 +53,7 @@
       </span>
     </template>
   </el-dialog>
+
 </template>
 
 <script lang="ts" setup>
@@ -87,27 +88,37 @@ for (let i = 0; i < scoreRank.length; i++) {
   margin-bottom: 10px;
 }
 
+.credit-type {
+  text-align: left;
+}
+
 .head.is-wait {
   cursor: pointer;
 }
 
 .credit-wrapper:nth-child(1) .credit-money {
   color: #FFD700;
+  font-size: 20px;
 }
 .credit-wrapper:nth-child(2) .credit-money {
   color: #C0C0C0;
+  font-size: 18px;
 }
 .credit-wrapper:nth-child(3) .credit-money {
   color: #CD7F32;
+  font-size: 16px;
 }
 .transection .credit-wrapper:nth-child(2) .credit-money {
   color: #FFD700;
+  font-size: 20px;
 }
 .transection .credit-wrapper:nth-child(3) .credit-money {
   color: #C0C0C0;
+  font-size: 18px;
 }
 .transection .credit-wrapper:nth-child(4) .credit-money {
   color: #CD7F32;
+  font-size: 16px;
 }
 
 </style>
