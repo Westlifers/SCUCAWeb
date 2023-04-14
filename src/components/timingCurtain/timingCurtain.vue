@@ -98,6 +98,7 @@ const determine_timing_type = () => {
   }
 
   is_finished.value = false
+  timing_type.value = ''  // 清除选择，防止下次计时时有焦点
 }
 
 const emits = defineEmits<{

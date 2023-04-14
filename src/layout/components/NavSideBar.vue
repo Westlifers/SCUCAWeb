@@ -19,7 +19,6 @@
         <el-icon><Grid /></el-icon>
         <template #title>正赛</template>
       </el-menu-item>
-
     </el-sub-menu>
 
 
@@ -46,15 +45,27 @@
     </el-menu-item>
 
 
-    <el-menu-item index="6" @click="go_page('create')">
-      <el-icon><Management /></el-icon>
-      <template #title>发布比赛</template>
-    </el-menu-item>
+    <el-sub-menu index="6">
+      <template #title>
+        <el-icon><Management /></el-icon>
+        <span>管理</span>
+      </template>
+
+      <el-menu-item index="6-1" @click="go_page('create')">
+        <el-icon><Management /></el-icon>
+        <template #title>发布比赛</template>
+      </el-menu-item>
+
+      <el-menu-item index="6-2" @click="go_page('post')">
+        <el-icon><FolderAdd /></el-icon>
+        <template #title>发布通知</template>
+      </el-menu-item>
+    </el-sub-menu>
 
 
-    <el-menu-item index="7" @click="go_page('post')">
-      <el-icon><FolderAdd /></el-icon>
-      <template #title>发布通知</template>
+    <el-menu-item index="7" @click="go_page('practice')">
+      <el-icon><PictureRounded /></el-icon>
+      <template #title>练习</template>
     </el-menu-item>
 
 

@@ -151,3 +151,39 @@ export function translateEvent(event: string): string {
 
     return event
 }
+export function translateEventForScramble(event: string): string {
+    switch (event) {
+        case '333':
+            return '333'
+        case '222':
+            return '222'
+        case '444':
+            return '444'
+        case '555':
+            return '555'
+        case '666':
+            return '666'
+        case '777':
+            return '777'
+        case '333bld':
+            return '333bf'
+        case '333oh':
+            return '333oh'
+        case 'clock':
+            return 'clock'
+        case 'minx':
+            return 'minx'
+        case 'pyra':
+            return 'pyram'
+        case 'skewb':
+            return 'skewb'
+        case 'sq1':
+            return 'sq1'
+        case '444bld':
+            return '444bf'
+        case '555bld':
+            return '555bf'
+    }
+
+    return event
+}

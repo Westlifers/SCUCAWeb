@@ -13,6 +13,7 @@ import createAnnouncementForm from "@/views/createAnnouncement/createAnnouncemen
 import discussionGiscus from "@/views/discussion/discussionGiscus.vue";
 import profileEditSuspense from "@/views/profile/profileSuspense.vue";
 import weekSuspense from "@/views/week/WeekSuspense.vue";
+import practiceViewSuspense from "@/views/practice/practiceViewSuspense.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -161,7 +162,22 @@ const routes: Array<RouteRecordRaw> = [
         name: 'profile'
       }
     ]
-  }
+  },
+
+
+  {
+    path: '/practice',
+    component: layout,
+    children: [
+      {
+        path: '',
+        component: practiceViewSuspense,
+        name: 'practice'
+      }
+    ]
+  },
+
+
 ]
 
 const router = createRouter({
