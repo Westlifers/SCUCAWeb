@@ -57,7 +57,7 @@
           <el-input
               v-model="state.resultForm.time_1"
               class="w-50 m-2"
-              placeholder="Type your result"
+              placeholder="Your result"
               disabled
           />
         </el-form-item>
@@ -66,6 +66,7 @@
           <el-input
               v-model="state.resultForm.time_2"
               class="w-50 m-2"
+              placeholder="Your result"
               disabled
           />
         </el-form-item>
@@ -74,7 +75,7 @@
           <el-input
               v-model="state.resultForm.time_3"
               class="w-50 m-2"
-              placeholder="Type your result"
+              placeholder="Your result"
               disabled
           />
         </el-form-item>
@@ -83,7 +84,7 @@
           <el-input
               v-model="state.resultForm.time_4"
               class="w-50 m-2"
-              placeholder="Type your result"
+              placeholder="Your result"
               disabled
           />
         </el-form-item>
@@ -92,7 +93,7 @@
           <el-input
               v-model="state.resultForm.time_5"
               class="w-50 m-2"
-              placeholder="Type your result"
+              placeholder="Your result"
               disabled
           />
         </el-form-item>
@@ -227,7 +228,15 @@ const maxScrambleCount = computed(() => {
     return 5
   }
 })
-watch([maxScrambleCount], () => count.value = 1)
+// 切换项目时清除表单
+watch(() => props.activeEvent, () => {
+  count.value = 1
+  state.resultForm.time_1 = ''
+  state.resultForm.time_2 = ''
+  state.resultForm.time_3 = ''
+  state.resultForm.time_4 = ''
+  state.resultForm.time_5 = ''
+})
 // 是否是特殊项目
 const is_special = computed(() => maxScrambleCount.value === 3)
 const scrambleOfEvent = computed(() => {

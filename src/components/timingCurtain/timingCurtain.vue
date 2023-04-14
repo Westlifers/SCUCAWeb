@@ -2,9 +2,9 @@
   <teleport to="body">
     <div class="timing-curtain" v-if="is_timing || is_inspection || is_finished" @click="stimulate_space">
       <div class="timing-curtain__content">
-        <div v-if="is_inspection">{{inspecting_time}}</div>
-        <div v-if="is_timing">{{time_convert(parseFloat(time.toFixed(3)))}}</div>
-        <div v-if="is_finished">{{inspecting_time<-2?'DNF':`${time_convert(parseFloat(time.toFixed(3)))}${inspecting_time<0?'+':''}`}}</div>
+        <div class="inspection" v-if="is_inspection">{{inspecting_time<0?(inspecting_time<-2?'DNF':'+2'):inspecting_time.toFixed(0)}}</div>
+        <div class="timing" v-if="is_timing">{{time_convert(parseFloat(time.toFixed(3)))}}</div>
+        <div class="determine" v-if="is_finished">{{inspecting_time<-2?'DNF':`${time_convert(parseFloat(time.toFixed(3)))}${inspecting_time<0?'+':''}`}}</div>
         <el-radio-group v-model="timing_type" @change="determine_timing_type" v-if="is_finished">
           <el-radio-button label="1">无惩罚</el-radio-button>
           <el-radio-button label="2">+2</el-radio-button>
@@ -39,14 +39,14 @@ const keyDown = (key) => {
       is_inspection.value = true
       inspecting_time.value = 15
       const inspection_timer = setInterval(() => {
-        inspecting_time.value--
+        inspecting_time.value -= 0.02
         // clear inspection timer
         if (!is_inspection.value) {
-          clearInterval(inspection_timer)
           is_inspection.value = false
           is_timing.value = true
+          clearInterval(inspection_timer)
         }
-      }, 1000)
+      }, 20)
       return
     }
 
@@ -147,5 +147,9 @@ watch(() => props.state, stimulate_space)
 
 :deep(.el-radio-button__inner) {
   color: #333;
+}
+
+.inspection {
+  color: red;
 }
 </style>
