@@ -2,7 +2,7 @@
   "name": "scucaweb",
   "author": "Yougi",
   "description": "A simple website for SCUCA's competition",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

@@ -1,12 +1,12 @@
 <template>
-  <div class="cubing">
+  <div class="cubing" tabindex="-1">
 
 
     <div class="cubing-header">
       <p>参加比赛</p>
       <div class="selector" v-if="events_available.indexOf(activeEvent) > -1">
         <el-button icon="ArrowLeft" size="small" round :disabled="count <= 1"
-                   @click="count--" />
+                   @click="count--"/>
         <span>{{count}}</span>
         <el-button icon="ArrowRight" size="small" round :disabled="count >= maxScrambleCount"
                    @click="count++"/>
@@ -25,7 +25,7 @@
           </el-button-group>
         </template>
 
-        <div class="scramble-content">
+        <div class="scramble-content" @click="curtain_state++">
           {{scrambleOfEvent[count - 1]}}
           <!--     ignore the following warning, it's inevitable     -->
           <twisty-player
@@ -58,6 +58,7 @@
               v-model="state.resultForm.time_1"
               class="w-50 m-2"
               placeholder="Type your result"
+              disabled
           />
         </el-form-item>
 
@@ -65,7 +66,7 @@
           <el-input
               v-model="state.resultForm.time_2"
               class="w-50 m-2"
-              placeholder="Type your result"
+              disabled
           />
         </el-form-item>
 
@@ -74,6 +75,7 @@
               v-model="state.resultForm.time_3"
               class="w-50 m-2"
               placeholder="Type your result"
+              disabled
           />
         </el-form-item>
 
@@ -82,6 +84,7 @@
               v-model="state.resultForm.time_4"
               class="w-50 m-2"
               placeholder="Type your result"
+              disabled
           />
         </el-form-item>
 
@@ -90,6 +93,7 @@
               v-model="state.resultForm.time_5"
               class="w-50 m-2"
               placeholder="Type your result"
+              disabled
           />
         </el-form-item>
 
@@ -113,12 +117,6 @@
             </template>
           </el-dialog>
         </el-form-item>
-
-        <div class="tip">
-          <v-md-preview text="> 成绩格式为m:s.ms，成绩超过60s的，分钟后不要输入空格或中文冒号
-          正确示范：DNF, 1:23.45, 2:4, 3:05.67, 4.29, 5等等
-          如DNF请直接输入DNF, dnf, d或0"></v-md-preview>
-        </div>
       </el-form>
     </div>
 
@@ -137,6 +135,13 @@
     </div>
 
 
+    <timing-curtain
+        @timing-over="set_time"
+        :state="curtain_state"
+        v-if="events_available.indexOf(activeEvent) > -1 && state.resultForm[`time_${count}`] === ''"
+    />
+
+
   </div>
 </template>
 
@@ -145,10 +150,21 @@ import {computed, reactive, ref, watch} from "vue";
 import {getComp} from "@/api/fetchData";
 import {store, UPDATE_USER_PARTICIPATION_DATA} from "@/store";
 import {Scramble} from "@/types";
-import {convert_time, SPECIAL_EVENTS, translateEvent} from "@/utils";
+import {convert_time, SPECIAL_EVENTS, time_convert, translateEvent} from "@/utils";
 import {ElMessage, ElNotification, FormInstance} from "element-plus";
 import {postResult} from "@/api/service";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
+import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
+
+const curtain_state = ref(1)
+const set_time = (time: number) => {
+  if (time === 0) {
+    state.resultForm[`time_${count.value}`] = 'DNF'
+    return
+  }
+  state.resultForm[`time_${count.value}`] = time_convert(convert_time(time.toFixed(3))).replace(/\s*/g,"")
+}
+
 
 // 下面是直接复制以前的代码，所以有些变量名可能不太合适，并且可能很混乱。但是这个组件的功能是可以正常使用的。
 
@@ -431,10 +447,6 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
 
 .scramble-container {
   margin-bottom: 24px;
-}
-
-.tip {
-  text-align: left;
 }
 
 .finished-content p{
