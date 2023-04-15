@@ -1,7 +1,7 @@
 <template>
   <div class="practice-container">
     <div class="practice-side-bar">
-      <practice-side-bar />
+      <practice-side-bar :timing-state="timingState" :scramble="scramble" @set-time="setTime" />
     </div>
 
     <div class="practice-content">
@@ -46,7 +46,6 @@
     </div>
   </div>
 
-  <timing-curtain state="timingState" @timing-over="setTime" />
 </template>
 
 <script lang="ts" setup>
@@ -56,7 +55,6 @@ import {randomScrambleForEvent} from "cubing/scramble"
 import {Ref, ref} from "vue";
 import {time_convert, translateEvent, translateEventForScramble} from "@/utils";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
-import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
 
 const event:Ref<string> = ref('333')
 const scramble:Ref<string> = ref((await randomScrambleForEvent(translateEventForScramble(event.value))).toString())
@@ -74,13 +72,34 @@ const setScramble = (s) => {
 const updateScramble = async () => {
   scramble.value = (await randomScrambleForEvent(translateEventForScramble(event.value))).toString()
 }
-const setTime = (t) => {
+const setTime = async (t) => {
   time.value = t
+  await updateScramble()
 }
 
 </script>
 
 <style scoped>
+.practice-container {
+width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.practice-side-bar {
+  width: 25%;
+  height: 100%;
+}
+.practice-content {
+  width: 75%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .scramble-img {
   position: absolute;
   bottom: 0;

@@ -115,3 +115,12 @@ export interface Score {
     username: string
     score: number
 }
+
+
+export interface StoredTime {
+    time: number
+    scramble: string
+    date: number  // timestamp
+    note: string
+    punishment: number  // 0: no punishment, -1: DNF, positive: 2, 4, etc.
+}

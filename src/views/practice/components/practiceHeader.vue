@@ -11,7 +11,8 @@
         />
       </el-select>
 
-      <el-button @click="updateScramble">Update Scramble</el-button>
+      <!--   DO NOT use button in case that it keeps focus and pressing space makes it refresh   -->
+      <div class="stimulate-button" @click="updateScramble"><el-icon><Refresh /></el-icon></div>
     </div>
 
     <p>
@@ -63,6 +64,18 @@ watch(() => props.scramble, (s) => {
   align-items: center;
 }
 
+.stimulate-button {
+  width: 50px;
+  height: 30px;
+  background-color: #409EFF;
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .select-bar {
   display: flex;
   flex-direction: row;
@@ -72,6 +85,8 @@ watch(() => props.scramble, (s) => {
 
 .practice-header-container p {
   font-size: 18px;
+  font-weight: 500;
+  opacity: 1;
   margin: 10px 10px 10px 10px;
 }
 

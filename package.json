@@ -17,6 +17,7 @@
     "core-js": "^3.8.3",
     "cubing": "^0.36.1",
     "element-plus": "^2.2.33",
+    "idb-keyval": "^6.2.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
