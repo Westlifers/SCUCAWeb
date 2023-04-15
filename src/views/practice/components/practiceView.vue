@@ -81,11 +81,11 @@ const setTime = async (t) => {
 
 <style scoped>
 .practice-container {
-width: 100%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
 }
 .practice-side-bar {
   width: 25%;
@@ -94,6 +94,7 @@ width: 100%;
 .practice-content {
   width: 75%;
   height: 100%;
+  max-height: calc(100vh - 150px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,5 +141,9 @@ width: 100%;
   :deep(.select-bar) {
     flex-direction: column;
   }
+}
+
+.practice-header {
+  position: absolute;
 }
 </style>

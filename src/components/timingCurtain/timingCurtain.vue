@@ -2,7 +2,7 @@
   <teleport to="body">
     <div class="timing-curtain" v-if="is_timing || is_inspection || is_finished" @click="stimulate_space">
       <div class="timing-curtain__content">
-        <div class="inspection" v-if="is_inspection">{{inspecting_time<0?(inspecting_time<-2?'DNF':'+2'):inspecting_time.toFixed(0)}}</div>
+        <div class="inspection" :style="{color: is_pre_timing?'green':'red'}" v-if="is_inspection">{{inspecting_time<0?(inspecting_time<-2?'DNF':'+2'):inspecting_time.toFixed(0)}}</div>
         <div class="timing" v-if="is_timing">{{time_convert(parseFloat(time.toFixed(3)))}}</div>
         <div class="determine" v-if="is_finished">{{inspecting_time<-2?'DNF':`${time_convert(parseFloat(time.toFixed(3)))}${inspecting_time<0?'+':''}`}}</div>
         <el-radio-group v-model="timing_type" @change="determine_timing_type" v-if="is_finished">
@@ -19,10 +19,11 @@
 import {computed, ref, watch} from "vue";
 import {time_convert} from "@/utils";
 
-const is_inspection = ref(false)
-const is_timing = ref(false)
+const is_inspection = ref(false)  // 按下空格，观察中
+const is_pre_timing = ref(false)  // 按下空格，等待延迟启动
+const is_timing = ref(false)  // 松开空格，计时中
 const inspecting_time = ref(0)
-const is_finished = ref(false)
+const is_finished = ref(false)  // 计时结束
 const time = ref(0)
 const time_stamp = ref((new Date()).getTime())
 const timing_type = ref('')  // 1 for no punishment, 2 for 2 seconds, 3 for DNF
@@ -30,6 +31,33 @@ const timing_type = ref('')  // 1 for no punishment, 2 for 2 seconds, 3 for DNF
 document.addEventListener('keydown', (e) => {
   keyDown(e)
 })
+document.addEventListener('keyup', (e) => {
+  keyUp(e)
+})
+
+const keyUp = (key) => {
+  if (is_pre_timing.value && key.code === 'Space') {
+    // if user press space, and we are at inspection, start timing and stop inspection
+    is_inspection.value = false
+    is_pre_timing.value = false
+    is_timing.value = true
+    time.value = 0
+    time_stamp.value = (new Date()).getTime()
+    const timing_timer = setInterval(() => {
+      time.value += 0.017  // 17ms 是浏览器的最高刷新频率
+      // clear timing timer
+      if (!is_timing.value) {
+        clearInterval(timing_timer)
+        // determine punishment caused by inspection time exceeding 15 seconds
+        if (inspecting_time.value < 0) {
+          time.value += 2  // 2 seconds
+        }
+        is_timing.value = false
+      }
+    }, 17)
+    return
+  }
+}
 
 const keyDown = (key) => {
 
@@ -51,24 +79,7 @@ const keyDown = (key) => {
     }
 
     else if (is_inspection.value) {
-      // if user press space, and we are at inspection, start timing and stop inspection
-      is_inspection.value = false
-      is_timing.value = true
-      time.value = 0
-      time_stamp.value = (new Date()).getTime()
-      const timing_timer = setInterval(() => {
-        time.value += 0.017  // 17ms 是浏览器的最高刷新频率
-        // clear timing timer
-        if (!is_timing.value) {
-          clearInterval(timing_timer)
-          // determine punishment caused by inspection time exceeding 15 seconds
-          if (inspecting_time.value < 0) {
-            time.value += 2  // 2 seconds
-          }
-          is_timing.value = false
-        }
-      }, 17)
-      return
+      is_pre_timing.value = true
     }
   }
 
@@ -84,25 +95,30 @@ const keyDown = (key) => {
 }
 
 const determine_timing_type = () => {
+  let punishment = 0
   if (inspecting_time.value < -2) {
     // exit with DNF
-    emits("timing-over", 0)
+    emits("timing-over", {time: time.value, punishment: -1})
     return
+  } else if (inspecting_time.value < 0) {
+    punishment += 2
   }
+
   if (timing_type.value === '1') {
-    emits('timing-over', time.value)
+    emits('timing-over', {time: time.value, punishment: punishment})
   } else if (timing_type.value === '2') {
-    emits('timing-over', time.value + 2)
+    emits('timing-over', {time: time.value + 2, punishment: punishment + 2})
   } else if (timing_type.value === '3') {
-    emits('timing-over', 0)
+    emits('timing-over', {time: time.value, punishment: -1})
   }
 
   is_finished.value = false
   timing_type.value = ''  // 清除选择，防止下次计时时有焦点
+  return;
 }
 
 const emits = defineEmits<{
-  (e: 'timing-over', time: number): void
+  (e: 'timing-over', time: object): void
 }>()
 const props = defineProps<{
   state: number

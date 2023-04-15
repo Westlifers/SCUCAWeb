@@ -158,7 +158,9 @@ import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
 
 const curtain_state = ref(1)
-const set_time = (time: number) => {
+const set_time = (time_) => {
+  let time = time_.punishment === -1?0:time_.time
+
   if (time === 0) {
     state.resultForm[`time_${count.value}`] = 'DNF'
     return

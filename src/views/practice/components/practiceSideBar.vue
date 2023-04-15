@@ -33,7 +33,7 @@
     </div>
 
 
-    <el-table :data="general_statistic">
+    <el-table :data="general_statistic" height="300">
       <el-table-column label="" prop="title" />
       <el-table-column label="当前" prop="current" :formatter="formatter" />
       <el-table-column label="最好" prop="best" />
@@ -50,7 +50,7 @@
 
       <el-table-column prop="time" label="时间">
         <template v-slot="scope">
-          {{scope.row.time===0?'DNF':time_convert(scope.row.time)}}
+          {{scope.row.punishment===-1?'DNF':time_convert(scope.row.time)}}{{scope.row.punishment > 0?'+':''}}
         </template>
       </el-table-column>
 
@@ -131,25 +131,21 @@ const setGroup = (g) => {
   })
 }
 const setTime = (t) => {
-  emits('setTime', t)
+  emits('setTime', t.time)
+  const now = (new Date()).getTime()
+  const result = {
+    time: t.time,
+    scramble: props.scramble,
+    date: now,
+    note: '',
+    punishment: t.punishment,
+  }
   // store time to indexedDB
   update(group.value, (times) => {
-    times.push({
-      time: t,
-      scramble: props.scramble,
-      date: (new Date()).getTime(),
-      note: '',
-      punishment: 0,
-    })
+    times.push(result)
     return times
   })
-  groupDetail.value.unshift({  // use unshift to add to the front of the list
-    time: t,
-    scramble: props.scramble,
-    date: (new Date()).getTime(),
-    note: '',
-    punishment: 0,
-  })
+  groupDetail.value.unshift(result)
 }
 const emits = defineEmits<{
   (event: 'setTime', t: number): void
@@ -200,10 +196,7 @@ const statistics = computed(() => {
       ao12: ao(12),
       ao100: ao(100),
       ao1000: ao(1000),
-      best: groupDetail.value.map((t: StoredTime) => t.time).sort((a, b) => {
-        a = a === 0 ? Infinity : a; b = b === 0 ? Infinity : b;
-        return a - b
-      })[0].toFixed(3)
+      best: Math.min(...groupDetail.value.map((t: StoredTime) => t.time).filter(t => t>0)).toFixed(3),
     }
   }
 
