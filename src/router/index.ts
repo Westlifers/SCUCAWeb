@@ -14,6 +14,7 @@ import discussionGiscus from "@/views/discussion/discussionGiscus.vue";
 import profileEditSuspense from "@/views/profile/profileSuspense.vue";
 import weekSuspense from "@/views/week/WeekSuspense.vue";
 import practiceViewSuspense from "@/views/practice/practiceViewSuspense.vue";
+import roomSuspense from "@/views/room/roomSuspense.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -134,11 +135,13 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
 
+
   {
     path: '/login',
     component: loginRegister,
     name: 'login'
   },
+
 
   {
     path: '/post',
@@ -151,6 +154,7 @@ const routes: Array<RouteRecordRaw> = [
       }
     ]
   },
+
 
   {
     path: '/profile',
@@ -176,6 +180,23 @@ const routes: Array<RouteRecordRaw> = [
       }
     ]
   },
+
+
+  {
+    path: '/pk',
+    component: layout,
+    children: [
+      // {
+      //   path: '',
+      //   component: roomListSuspense,
+      //   name: 'pk'
+      // }
+      {
+        path: 'room/:roomId/:event',
+        component: roomSuspense,
+      }
+    ]
+  }
 
 
 ]
