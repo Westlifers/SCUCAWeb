@@ -131,7 +131,8 @@ const is_mobile = computed(() => {
 const stimulate_space = () => {
   if (!is_mobile.value) return
   // stimulate a space key down event
-  keyDown({code: 'Space'})
+  keyDown({code: 'Space'});
+  keyUp({code: 'Space'})
 }
 // state change means user clicked the scramble panel, so start inspection
 watch(() => props.state, stimulate_space)
