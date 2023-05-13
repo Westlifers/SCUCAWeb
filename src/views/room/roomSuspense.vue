@@ -6,12 +6,28 @@
 
       <div class="room_left_bar__player_list">
         <div class="room_left_bar__player_list__title">
+          <el-button type="danger" @click="exit">退出房间</el-button>
           <p>玩家列表</p>
         </div>
         <div class="room_left_bar__player_list__list">
           <el-scrollbar>
-            <div v-for="player in playerList.slice(0, playerList.length-1)" :key="player" class="room_left_bar__player_list__list__player">
-              <p>{{player}}: {{playerResults[player]}}</p>
+            <div v-for="player in playerList" :key="player" class="room_left_bar__player_list__list__player">
+              <el-popover
+                  placement="right"
+                  width="200"
+                  trigger="hover"
+              >
+                <template #reference>
+                  <p>{{player}}: {{playerResults[player][playerResults[player].length-1]>0?playerResults[player][playerResults[player].length-1]:'DNF'}}</p>
+                </template>
+                <div class="room_left_bar__player_list__list__player__popover">
+                  <el-scrollbar>
+                    <div v-for="result in playerResults[player]" :key="result" class="room_left_bar__player_list__list__player__popover__result">
+                      <p>{{result>0?time_convert(result):'DNF'}}</p>
+                    </div>
+                  </el-scrollbar>
+                </div>
+              </el-popover>
             </div>
           </el-scrollbar>
         </div>
@@ -48,6 +64,7 @@
         <div class="room_header__left">
           <p>{{roomId}}</p>
           <p>{{event}}</p>
+          <p>第{{round}}轮</p>
         </div>
       </div>
 
@@ -111,7 +128,7 @@
 //     'time': 23.4,
 //     'sender': 'Alice'
 //
-//   And five types of messages from server to client:
+//   And four types of messages from server to client:
 //     1. chat_message: a message from server
 //   {
 //     'type': 'chat_message',
@@ -122,21 +139,17 @@
 //   {
 //     'type': 'new_round',
 //       'scramble': 'ABCD',
+//       'round': 1,
 //   }
-//   3. join: a new player joins the room
-//   {
-//     'type': 'join',
-//       'player': 'Alice',
-//   }
-//   4. leave: a player leaves the room
-//   {
-//     'type': 'leave',
-//       'player': 'Alice',
-//   }
-//   5. player_list: the player list, sent when a new player joins the room
+//   3. player_list: the player list, sent when a new player joins the room
 //   {
 //     'type': 'player_list',
 //       'players': ['Alice', 'Bob', 'Carol'],
+//   }
+//   4. results_of_this_round: the results of this round, sent when a new player joins the room halfway of a round
+//   {
+//     'type': 'results_of_this_round',
+//       'results': {'Alice': 23.4, 'Bob': 24.5},
 //   }
 import router from "@/router";
 import {Ref, ref, watch} from "vue";
@@ -150,6 +163,7 @@ const scramble: Ref<string> = ref('');
 const playerList: Ref<string[]> = ref([]);
 const playerResults: Ref<object> = ref({});
 const messageList: Ref<object[]> = ref([]);
+const round: Ref<number> = ref(0);
 const time: Ref<number> = ref(0);
 const timingState: Ref<number> = ref(0);
 const finished: Ref<boolean> = ref(false);
@@ -159,7 +173,7 @@ const is3d: Ref<boolean> = ref(false);
 
 const roomId = router.currentRoute.value.params.roomId;
 const event = router.currentRoute.value.params.event;
-//const baseUrl = "ws://127.0.0.1:8000/ws/pk/";
+// const baseUrl = "ws://127.0.0.1:8000/ws/pk/";
 const baseUrl = "wss://yougi.top/ws/pk/";
 const pkSocket = new WebSocket(baseUrl + roomId + "/" + event + "/");
 
@@ -178,6 +192,7 @@ pkSocket.onmessage = (event) => {
       break;
     case 'new_round':
       scramble.value = message['scramble'];
+      round.value = message['round'];
       finished.value = false;
       break;
     case 'player_list':
@@ -185,6 +200,15 @@ pkSocket.onmessage = (event) => {
       break;
     case 'finish':
       playerResults.value[message['sender']].push(time_convert(message['time']));
+      break;
+    case 'results_of_this_round':
+      playerResults.value = message['results'];
+      // 补充其他人的成绩为空
+      for (let player of playerList.value) {
+        if (!(player in playerResults.value)) {
+          playerResults.value[player] = [];
+        }
+      }
       break;
     default:
       console.error('Unrecognized message type: ' + message['type']);
@@ -211,19 +235,33 @@ const send_finish = () => {
     'time': time.value
   }));
 };
-watch(playerList, (newPlayerList) => {
-  for (let player of newPlayerList) {
-    if (!(player in playerResults.value)) {
-      playerResults.value[player] = [];
+watch(playerList, (newPlayerList, oldPlayerList) => {
+  if (newPlayerList.length > oldPlayerList.length) {
+    // add player who joined
+    for (let player of newPlayerList) {
+      if (!(oldPlayerList.indexOf(player) > -1)) {
+        console.log(player)
+        playerResults.value[player] = [];
+      }
     }
-  }
-  // remove players who left
-  for (let player in playerResults.value) {
-    if (!newPlayerList.includes(player)) {
-      delete playerResults.value[player];
+  } else {
+    // remove player who left
+    for (let player of oldPlayerList) {
+      if (!(newPlayerList.indexOf(player) > -1)) {
+        delete playerResults.value[player];
+      }
     }
   }
 });
+
+// close the websocket when the user leaves the page
+window.onbeforeunload = function() {
+  pkSocket.close();
+};
+const exit = () => {
+  pkSocket.close();
+  router.push({path: '/pk'});
+}
 
 
 
@@ -268,6 +306,16 @@ setInterval(() => {
   justify-content: flex-start;
   align-items: stretch;
   height: 80%;
+}
+.room_left_bar__player_list__title {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+.room_left_bar__player_list__title button {
+  font-size: 12px;
+  margin-bottom: 10px;
 }
 .room_left_bar__player_list__title p {
   font-size: 20px;
@@ -330,6 +378,11 @@ setInterval(() => {
 }
 .room_header__left p:first-child {
   font-size: 30px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+.room_header__left p:nth-child(2) {
+  font-size: 20px;
   font-weight: bold;
   margin-right: 20px;
 }
