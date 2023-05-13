@@ -15,6 +15,7 @@ import profileEditSuspense from "@/views/profile/profileSuspense.vue";
 import weekSuspense from "@/views/week/WeekSuspense.vue";
 import practiceViewSuspense from "@/views/practice/practiceViewSuspense.vue";
 import roomSuspense from "@/views/room/roomSuspense.vue";
+import roomListSuspense from "@/views/room/roomListSuspense.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -186,11 +187,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/pk',
     component: layout,
     children: [
-      // {
-      //   path: '',
-      //   component: roomListSuspense,
-      //   name: 'pk'
-      // }
+      {
+        path: '',
+        component: roomListSuspense,
+        name: 'pk'
+      },
       {
         path: 'room/:roomId/:event',
         component: roomSuspense,

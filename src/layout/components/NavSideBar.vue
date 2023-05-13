@@ -63,13 +63,19 @@
     </el-sub-menu>
 
 
-    <el-menu-item index="7" @click="go_page('practice')">
+    <el-menu-item index="7" @click="go_page('pk')">
+      <el-icon><Timer /></el-icon>
+      <template #title>实时PK</template>
+    </el-menu-item>
+
+
+    <el-menu-item index="8" @click="go_page('practice')">
       <el-icon><PictureRounded /></el-icon>
       <template #title>练习</template>
     </el-menu-item>
 
 
-    <el-menu-item index="8" @click="go_page('about')">
+    <el-menu-item index="9" @click="go_page('about')">
       <el-icon><InfoFilled /></el-icon>
       <template #title>关于</template>
     </el-menu-item>

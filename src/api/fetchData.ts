@@ -7,7 +7,7 @@ import {
     OmittedResultBest,
     RankPaginationData,
     Record,
-    Result,
+    Result, Room,
     Score,
     Scramble,
     User,
@@ -300,4 +300,29 @@ export async function getScoreRank(): Promise<Score[]> {
     }
 
     return scores
+}
+
+
+export async function getRoomList(): Promise<Room[]> {
+    const res: Array<object> = await request({
+        url: '/rooms/',
+    })
+
+    const rooms: Room[] = []
+    for (const room of res) {
+        const players = room['players'].split(';')
+        players.pop()
+        const finished_players = room['finished_players'].split(';')
+        finished_players.pop()
+        const room_: Room = {
+            room_name: room['room_name'],
+            event: room['event'],
+            players: players,
+            finished_players: finished_players,
+            round: room['round'],
+        }
+        rooms.push(room_)
+    }
+
+    return rooms
 }

@@ -124,3 +124,12 @@ export interface StoredTime {
     note: string
     punishment: number  // 0: no punishment, -1: DNF, positive: 2, 4, etc.
 }
+
+
+export interface Room {
+    room_name: string
+    event: string
+    players: string[]
+    finished_players: string[]
+    round: number
+}
