@@ -5,7 +5,7 @@
       <el-table :data="roomList" :header-cell-style="{'text-align':'center'}" :cell-style="{'text-align':'center'}">
         <el-table-column prop="room_name" label="房间名">
           <template v-slot="scope">
-            <router-link to="/pk/room/{{scope.row.room_name}}/{{scope.row.event}}">{{scope.row.room_name}}</router-link>
+            <router-link :to="`/pk/room/${scope.row.room_name}/${scope.row.event}`">{{scope.row.room_name}}</router-link>
           </template>
         </el-table-column>
         <el-table-column prop="event" label="项目"></el-table-column>
