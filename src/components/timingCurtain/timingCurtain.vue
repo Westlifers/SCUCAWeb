@@ -5,11 +5,14 @@
         <div class="inspection" :style="{color: is_pre_timing?'green':'red'}" v-if="is_inspection">{{inspecting_time<0?(inspecting_time<-2?'DNF':'+2'):inspecting_time.toFixed(0)}}</div>
         <div class="timing" v-if="is_timing">{{time_convert(parseFloat(time.toFixed(3)))}}</div>
         <div class="determine" v-if="is_finished">{{inspecting_time<-2?'DNF':`${time_convert(parseFloat(time.toFixed(3)))}${inspecting_time<0?'+':''}`}}</div>
-        <el-radio-group v-model="timing_type" @change="determine_timing_type" v-if="is_finished">
-          <el-radio-button label="1">无惩罚</el-radio-button>
-          <el-radio-button label="2">+2</el-radio-button>
-          <el-radio-button label="3">DNF</el-radio-button>
-        </el-radio-group>
+        <div class="determine_timing_type" v-if="is_finished">
+          <el-radio-group v-model="timing_type" @change="determine_timing_type">
+            <el-radio-button label="1">无惩罚</el-radio-button>
+            <el-radio-button label="2">+2</el-radio-button>
+            <el-radio-button label="3">DNF</el-radio-button>
+          </el-radio-group>
+          <p class="space_tip">无惩罚可按空格跳过选择；观察惩罚已自动记入</p>
+        </div>
       </div>
     </div>
   </teleport>
@@ -80,6 +83,24 @@ const keyDown = (key) => {
 
     else if (is_inspection.value) {
       is_pre_timing.value = true
+    }
+
+    else if (is_finished.value) {
+      // 新增空格无惩罚，下面的代码是抄的determine_timing_type，所以有重复
+      let punishment = 0
+      if (inspecting_time.value < -2) {
+        // exit with DNF
+        emits("timing-over", {time: time.value, punishment: -1})
+        return
+      } else if (inspecting_time.value < 0) {
+        punishment += 2
+      }
+
+      emits('timing-over', {time: time.value, punishment: punishment})
+
+      is_finished.value = false
+      timing_type.value = ''  // 清除选择，防止下次计时时有焦点
+      return;
     }
   }
 
@@ -169,5 +190,16 @@ watch(() => props.state, stimulate_space)
 
 .inspection {
   color: red;
+}
+
+.determine_timing_type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.space_tip {
+  color: #333;
+  font-size: 20px;
 }
 </style>

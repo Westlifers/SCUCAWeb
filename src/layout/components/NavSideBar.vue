@@ -39,43 +39,37 @@
     </el-menu-item>
 
 
-    <el-menu-item index="5" @click="go_page('discussion')">
-      <el-icon><ChatSquare /></el-icon>
-      <template #title>讨论中心</template>
-    </el-menu-item>
-
-
-    <el-sub-menu index="6">
+    <el-sub-menu index="5">
       <template #title>
         <el-icon><Management /></el-icon>
         <span>管理</span>
       </template>
 
-      <el-menu-item index="6-1" @click="go_page('create')">
+      <el-menu-item index="5-1" @click="go_page('create')">
         <el-icon><Management /></el-icon>
         <template #title>发布比赛</template>
       </el-menu-item>
 
-      <el-menu-item index="6-2" @click="go_page('post')">
+      <el-menu-item index="5-2" @click="go_page('post')">
         <el-icon><FolderAdd /></el-icon>
         <template #title>发布通知</template>
       </el-menu-item>
     </el-sub-menu>
 
 
-    <el-menu-item index="7" @click="go_page('pk')">
+    <el-menu-item index="6" @click="go_page('pk')">
       <el-icon><Timer /></el-icon>
       <template #title>实时PK</template>
     </el-menu-item>
 
 
-    <el-menu-item index="8" @click="go_page('practice')">
+    <el-menu-item index="7" @click="go_page('practice')">
       <el-icon><PictureRounded /></el-icon>
       <template #title>练习</template>
     </el-menu-item>
 
 
-    <el-menu-item index="9" @click="go_page('about')">
+    <el-menu-item index="8" @click="go_page('about')">
       <el-icon><InfoFilled /></el-icon>
       <template #title>关于</template>
     </el-menu-item>

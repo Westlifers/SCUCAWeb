@@ -166,6 +166,11 @@ const set_time = (time_) => {
     return
   }
   state.resultForm[`time_${count.value}`] = time_convert(convert_time(time.toFixed(3))).replace(/\s*/g,"")
+
+  // 自动进入下一个打乱
+  if (count.value < maxScrambleCount.value) {
+    count.value += 1
+  }
 }
 
 
