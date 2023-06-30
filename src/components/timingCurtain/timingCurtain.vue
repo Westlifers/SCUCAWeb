@@ -31,10 +31,29 @@ const time = ref(0)
 const time_stamp = ref((new Date()).getTime())
 const timing_type = ref('')  // 1 for no punishment, 2 for 2 seconds, 3 for DNF
 
+// 按ESC则重置计时
 document.addEventListener('keydown', (e) => {
-  keyDown(e)
+  if (e.code === 'Escape') {
+    is_inspection.value = false
+    is_pre_timing.value = false
+    is_timing.value = false
+    is_finished.value = false
+    inspecting_time.value = 0
+    time.value = 0
+    timing_type.value = ''
+    // sleep a while to prevent the timeInterval in keyDown to change is_timing.value to true
+    setTimeout(() => {
+      is_timing.value = false
+    }, 20)
+  }
+  else {
+    keyDown(e)
+  }
 })
 document.addEventListener('keyup', (e) => {
+  if (e.code === 'Escape') {
+    return
+  }
   keyUp(e)
 })
 
@@ -63,7 +82,6 @@ const keyUp = (key) => {
 }
 
 const keyDown = (key) => {
-
   if (key.code === 'Space') {
     // if user press space, and we are not at any state, start inspection
     if (!is_inspection.value && !is_timing.value && !is_finished.value) {
