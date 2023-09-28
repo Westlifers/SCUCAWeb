@@ -12,7 +12,8 @@ const request = axios.create({
 })
 
 request.interceptors.request.use((config) => {
-    // Django SessionAuthentication need csrf token
+    // Django SessionAuthentication needs csrf token
+    // fucked
     config.headers['X-CSRFToken'] = getCookie('csrftoken')
     return config
 })
