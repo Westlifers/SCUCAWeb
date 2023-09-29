@@ -1,0 +1,5 @@
+@import url('@/styles/css-vars.css');
+
+html {
+    background-color: var(--yougi-bg-color);
+}
