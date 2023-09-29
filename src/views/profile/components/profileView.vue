@@ -34,5 +34,5 @@ isDark.value = true
 </script>
 
 <style>
-@import url('@/views/profile/components/style.css');
+@import url('@/assets/style.css');
 </style>
