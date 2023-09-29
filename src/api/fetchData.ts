@@ -52,7 +52,8 @@ export async function getComp (compId: string): Promise<DetailedCompetition> {
                 avg: result_req['avg'],
                 best: result_req['best'],
                 is_avg_scur: result_req['is_avg_scur'],
-                is_best_scur: result_req['is_best_scur']
+                is_best_scur: result_req['is_best_scur'],
+                date: result_req['date']
             }
             result_set.push(result)
         }
@@ -327,3 +328,15 @@ export async function getRoomList(): Promise<Room[]> {
 
     return rooms
 }
+
+
+export async function getAllResultOfUser(): Promise<Result[]> {
+    const store = localStore()
+    const res: object = await request({
+        url: `/user-with-result/${store.user.username}/`
+    })
+
+    const result_set = res['result_set']
+    return result_set as Result[]
+}
+

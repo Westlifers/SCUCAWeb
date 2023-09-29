@@ -21,7 +21,8 @@ export interface Result {
     avg: number,
     best: number,
     is_avg_scur: boolean,
-    is_best_scur: boolean
+    is_best_scur: boolean,
+    date: string
 }
 
 
