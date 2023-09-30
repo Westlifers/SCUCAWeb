@@ -1,5 +1,5 @@
 <template>
-  <div class="account-wrapper" style="--delay: .8s">
+  <div class="account-wrapper" style="--delay: .2s">
     <div class="account-profile">
       <img :src="avatar" alt="">
       <div class="blob-wrap">

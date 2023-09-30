@@ -1,5 +1,5 @@
 <template>
-  <div class="card transection" style="--delay: 1.2s">
+  <div class="card transection" style="--delay: .6s">
     <div class="transection-header">
       <div class="head">
         本周积分榜

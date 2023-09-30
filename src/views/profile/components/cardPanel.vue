@@ -1,5 +1,5 @@
 <template>
-  <div class="cards-wrapper" style="--delay: .6s">
+  <div class="cards-wrapper" style="--delay: .3s">
     <div class="cards-header">
       <div class="cards-header-date">
         <el-button size="small" round @click="month--">

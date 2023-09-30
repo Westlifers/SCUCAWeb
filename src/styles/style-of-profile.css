@@ -951,6 +951,14 @@ body {
     width: 66%;
   }
 
+  .third-box {
+    flex-wrap: wrap;
+  }
+  .third-box .cards-wrapper {
+      width: 100%;
+      margin-top: 40px;
+  }
+
   .transection {
     margin-top: 40px;
     max-width: none;
@@ -983,6 +991,10 @@ body {
 }
 @media screen and (max-width: 930px) {
   .second-box .cards-wrapper {
+    width: 100%;
+  }
+
+  .third-box .cards-wrapper {
     width: 100%;
   }
 

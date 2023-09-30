@@ -1,5 +1,5 @@
 <template>
-  <div class="discount card" style="--delay: .4s">
+  <div class="discount card" style="--delay: .2s">
     <div class="title">周赛参与进度</div>
     <div class="discount-wrapper">
       <div class="discount-info">

@@ -1,5 +1,5 @@
 <template>
-  <div class="activity card" style="--delay: .2s">
+  <div class="activity card" style="--delay: .1s">
     <div class="title">个人简介</div>
     <div class="subtitle">{{store.user.description}}</div>
     <div class="activity-links">

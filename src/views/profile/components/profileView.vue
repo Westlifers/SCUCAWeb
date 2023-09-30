@@ -15,6 +15,10 @@
 
       <transaction-panel />
     </div>
+
+    <div class="user-box third-box">
+      <statistic-panel />
+    </div>
   </div>
 </template>
 
@@ -26,6 +30,7 @@ import PbPanel from "@/views/profile/components/pbPanel.vue";
 import CardPanel from "@/views/profile/components/cardPanel.vue";
 import TransactionPanel from "@/views/profile/components/transactionPanel.vue";
 import {useDark, useToggle} from "@vueuse/core";
+import StatisticPanel from "@/views/profile/components/statisticPanel.vue";
 
 // 强制切换夜间模式
 const isDark = useDark()
