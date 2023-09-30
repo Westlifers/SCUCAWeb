@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@kangc/v-md-editor": "^2.3.17",
+    "@types/echarts": "^4.9.19",
     "axios": "^1.5.1",
     "cubing": "^0.43.4",
     "echarts": "^5.4.3",
