@@ -1,23 +1,20 @@
 <script setup lang="ts">
-import {ref, onMounted, onUnmounted, shallowRef} from 'vue';
+import {ref, onMounted, onUnmounted, shallowRef, watch} from 'vue';
 import * as echarts from 'echarts';
 import {getAllResultOfUser} from "@/api/fetchData";
 import {time_convert} from "@/utils";
+import {useDark} from "@vueuse/core";
 
 const chart = ref()
 const chartInstance = shallowRef()  // 我tm不知道为什么用shallowRef，见https://blog.csdn.net/weixin_43272781/article/details/123961543
-const chartType = ref<'avg' | 'best'>('avg')
 const result_set = await getAllResultOfUser()
+const isDark = useDark()
+const isAvg = ref(true)
 
-
-const toggleChartType = () => {
-    chartType.value = chartType.value === 'avg' ? 'best' : 'avg'
-    updateChart()
-}
 
 const init = () => {
     // 基于准备好的dom，初始化echarts实例
-    chartInstance.value = echarts.init(chart.value as HTMLDivElement)
+    chartInstance.value = echarts.init(chart.value as HTMLDivElement, isDark.value ? 'dark' : 'light');
     updateChart()
 }
 
@@ -31,7 +28,7 @@ const updateChart = () => {
         const data = date.map(
             (date) => {
                 const result = result_set.find((item) => item.event === event && item.date === date)
-                return result ? (chartType.value === 'avg' ? result.avg : result.best) : null
+                return result ? (isAvg.value ? result.avg : result.best) : null
             }
         )
         return {
@@ -45,6 +42,7 @@ const updateChart = () => {
 
     // 指定图表的配置项和数据
     const option = {
+        backgroundColor: '',
         title: {
             text: '成绩统计'
         },
@@ -62,7 +60,6 @@ const updateChart = () => {
                         <span style="font-weight: bold">${value===undefined?'-':time_convert(value)}</span>
                     `
                 });
-                console.log(seriesInfo)
                 return `
                     ${date}<br/>
                     <div style="display: grid; grid-template-columns: 30px 30px 100px">
@@ -77,7 +74,7 @@ const updateChart = () => {
         },
         yAxis: {
             type: 'value',
-            name: chartType.value === 'avg' ? '平均成绩' : '最佳成绩',
+            name: isAvg.value ? '平均成绩' : '最佳成绩',
             //会自动获取当前所有数据中最大值和最小值来作为y轴的底点和顶点
             min: 'dataMin',
             max: 'dataMax',
@@ -102,14 +99,26 @@ onUnmounted(() => {
         echarts.dispose(chart.value)
     }
 })
+
+watch(isDark, () => {
+    if (chartInstance.value) {
+        chartInstance.value.dispose()
+    }
+    init()
+})
+watch(isAvg, () => {
+    updateChart()
+})
 </script>
 
 <template>
   <div class="cards-wrapper" style="--delay: .7s">
     <div class="cards-header">
-      <div>
-        <el-button @click="toggleChartType">切换成绩类型</el-button>
+      <div class="cards-view">
+        <el-icon size="40"><DataAnalysis /></el-icon>
+        数据分析
       </div>
+      <el-switch v-model="isAvg" active-text="平均" inactive-text="单次" inactive-color="#13ce66" inline-prompt/>
     </div>
     <div class="cards card">
       <div ref="chart" style="width: 100%; height: 400px;"></div>
@@ -118,5 +127,13 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+.cards-header {
+    display: flex;
+    justify-content: space-between;
+}
 
+.cards-view {
+    display: flex;
+    align-items: center;
+}
 </style>
