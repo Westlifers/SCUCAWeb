@@ -31,8 +31,8 @@
 
 <script lang="ts" setup>
 import {getComp} from "@/api/fetchData";
-import {computed, ref, watch} from "vue";
 import type {Ref} from "vue";
+import {computed, ref, watch} from "vue";
 import {classifyTableDataByEvent, get_user_avatar, getSortedEventsFromTableData} from "@/utils";
 import DataTable from "@/components/competitionDetail/DataTable.vue";
 import type {apiUsedEventName, DetailedCompetition} from "@/types";

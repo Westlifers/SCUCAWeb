@@ -64,8 +64,8 @@
 import {getAvatarToken, getProfile} from "@/api/fetchData";
 import {computed, reactive, ref} from "vue";
 import {localStore} from "@/store";
-import {ElMessage, ElNotification} from "element-plus";
 import type {FormInstance, UploadInstance, UploadProps, UploadUserFile} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 import {postProfile} from "@/api/service";
 
 const store = localStore()

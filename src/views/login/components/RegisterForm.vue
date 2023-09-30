@@ -47,8 +47,8 @@
 
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
-import {ElNotification} from "element-plus";
 import type {FormInstance} from "element-plus";
+import {ElNotification} from "element-plus";
 import {register} from "@/api/service";
 import router from "@/router";
 

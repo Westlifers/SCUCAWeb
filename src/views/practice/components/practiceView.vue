@@ -52,8 +52,8 @@
 import PracticeHeader from "@/views/practice/components/practiceHeader.vue";
 import PracticeSideBar from "@/views/practice/components/practiceSideBar.vue";
 import {randomScrambleForEvent} from "cubing/scramble"
-import {ref} from "vue";
 import type {Ref} from "vue";
+import {ref} from "vue";
 import {time_convert, translateEvent, translateEventForScramble} from "@/utils";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import type {apiUsedEventName} from "@/types";

@@ -152,8 +152,8 @@
 //       'results': {'Alice': 23.4, 'Bob': 24.5},
 //   }
 import router from "@/router";
-import {ref, watch} from "vue";
 import type {Ref} from "vue";
+import {ref, watch} from "vue";
 import {ElMessage} from "element-plus";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
 import {time_convert, translateEvent} from "@/utils";

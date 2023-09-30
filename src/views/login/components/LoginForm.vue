@@ -40,8 +40,8 @@
 import {reactive, ref} from "vue";
 import type {User} from "@/types";
 import {localStore} from "@/store";
-import {ElNotification} from "element-plus";
 import type {FormInstance} from "element-plus";
+import {ElNotification} from "element-plus";
 import {login} from "@/api/service";
 import router from "@/router";
 

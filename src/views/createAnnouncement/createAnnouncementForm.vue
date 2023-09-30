@@ -35,8 +35,8 @@
 
 <script lang="ts" setup>
 import {computed, reactive, ref} from "vue";
-import {ElNotification} from "element-plus";
 import type {FormInstance} from "element-plus";
+import {ElNotification} from "element-plus";
 import {localStore} from "@/store";
 import {postAnnouncement} from "@/api/service";
 
