@@ -18,4 +18,18 @@
     --yougi-search-area-bg: #fff;
     --yougi-star: #1ff1c2e;
     --yougi-message-btn: #fff;
+
+    --profile-bg-color: #252954;
+    --profile-color: black;
+    --profile-card-header-bg-color: #D5DEFFFF;
+    --profile-card-bg-color: #D5DEFFFF;
+    --profle-card-bg: radial-gradient(circle, #d5deff 0%, #c4cff8 100%);
+    --profle-destination-card-bg-color: #1a1d3a;
+    --profle-destination-card-bg-1: linear-gradient(45deg, #a6b7f3 0%, #90a3ea 100%);
+    --profle-destination-card-bg-2: linear-gradient(325deg, #a6b7f3 0%, #90a3ea 100%);
+    --profile-point-color: black;
+    --profile-credit-type-color: black;
+    --profile-active-link-color: black;
+    --profile-quote-bg-color: #98aaea;
+    --profile-quote-color: #3b3b3b;
 }

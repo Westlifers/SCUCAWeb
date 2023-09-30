@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
+@import url("@/styles/css-vars.css");
 :root {
   --delay: 0s;
 }
@@ -23,8 +24,8 @@ img {
 
 body {
   font-family: "Inter", sans-serif;
-  background-color: #252954;
-  color: #9b9ca7;
+  background-color: var(--profile-bg-color);
+  color: var(--profile-color);
 }
 
 .wrapper {
@@ -236,7 +237,8 @@ body {
 }
 .user-box .cards-header .cards-button,
 .user-box .cards-view .cards-button {
-  background: #15193c;
+  background: var(--profile-quote-bg-color);
+  color: var(--profile-quote-color);
   padding: 10px 16px;
   margin-right: 0;
 }
@@ -275,8 +277,8 @@ body {
 }
 
 .card {
-  background: #1a2049;
-  background: radial-gradient(circle, #1a2049 0%, #13162f 100%);
+  background: var(--profile-card-bg-color);
+  background: var(--profle-card-bg);
   padding: 40px 30px;
   border-radius: 6px;
   display: flex;
@@ -342,7 +344,7 @@ body {
   -webkit-text-stroke: 0.3px;
 }
 .activity-link.active {
-  color: #bebec4;
+  color: var(--profile-active-link-color);
   font-weight: 500;
 }
 .activity-link.active:before {
@@ -361,16 +363,16 @@ body {
   margin-top: auto;
 }
 .destination-card {
-  background: #1a1d3a;
-  background: linear-gradient(45deg, #1a1d3a 0%, #212752 100%);
+  background: var(--profle-destination-card-bg-color);
+  background: var(--profle-destination-card-bg-1);
   padding: 20px;
   width: 100%;
   border-radius: 6px;
 }
 .destination-card + .destination-card {
   margin-left: 20px;
-  background: #1a1d3a;
-  background: linear-gradient(325deg, #1a1d3a 0%, #212752 100%);
+  background: var(--profle-destination-card-bg-color);
+  background: var(--profle-destination-card-bg-2);
 }
 .destination-profile {
   display: flex;
@@ -405,7 +407,7 @@ body {
 
 .point {
   font-size: 14px;
-  color: #bebec4;
+  color: var(--profile-point-color);
   font-weight: 500;
 }
 
@@ -520,7 +522,7 @@ body {
 }
 
 .cards-header {
-  background: #10122b;
+  background: var(--profile-card-header-bg-color);
   border-radius: 6px 6px 0 0;
   padding: 20px 45px;
   font-size: 14px;
@@ -533,7 +535,7 @@ body {
 }
 .cards-header-date svg {
   color: #4154d1;
-  background: #14183c;
+  background: transparent;
   border-radius: 50%;
   padding: 5px;
   width: 30px;
@@ -903,7 +905,7 @@ body {
   font-weight: normal;
 }
 .credit-type {
-  color: #e7e8ea;
+  color: var(--profile-credit-type-color);
   margin-bottom: 6px;
 }
 

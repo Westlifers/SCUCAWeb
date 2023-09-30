@@ -30,9 +30,8 @@ import {useDark, useToggle} from "@vueuse/core";
 // 强制切换夜间模式
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
-isDark.value = true
 </script>
 
 <style>
-@import url('@/assets/style.css');
+@import url('@/styles/style-of-profile.css');
 </style>

@@ -98,7 +98,7 @@ for (let i = 0; i < scoreRank.length; i++) {
 }
 
 .credit-wrapper:nth-child(1) .credit-money {
-  color: #FFD700;
+  color: #e1cc5b;
   font-size: 20px;
 }
 .credit-wrapper:nth-child(2) .credit-money {
@@ -110,7 +110,7 @@ for (let i = 0; i < scoreRank.length; i++) {
   font-size: 16px;
 }
 .transection .credit-wrapper:nth-child(2) .credit-money {
-  color: #FFD700;
+  color: #e1cc5b;
   font-size: 20px;
 }
 .transection .credit-wrapper:nth-child(3) .credit-money {
