@@ -9,6 +9,7 @@ const chart = ref()
 const chartInstance = shallowRef()  // 我tm不知道为什么用shallowRef，否则点击legend会报错，见https://blog.csdn.net/weixin_43272781/article/details/123961543
 const isDark = useDark()
 const isAvg = ref(true)
+const showAvgLine = ref(false)
 
 const props = defineProps<{
     result_set: Result[]
@@ -39,7 +40,10 @@ const updateChart = () => {
             type: 'line',
             data: data,
             smooth: true,
-            connectNulls: true
+            connectNulls: true,
+            markLine: {
+                data: showAvgLine.value?[{ type: 'average', name: 'Avg' }]:null
+            }
         };
     });
 
@@ -112,7 +116,7 @@ watch(isDark, () => {
     }
     init()
 })
-watch(isAvg, () => {
+watch([isAvg, showAvgLine], () => {
     updateChart()
 })
 
@@ -122,10 +126,18 @@ window.addEventListener('resize', () => chartInstance.value.resize())
 </script>
 
 <template>
-  <el-switch v-model="isAvg" active-text="平均" inactive-text="单次" inactive-color="#13ce66" inline-prompt/>
+  <div class="switch-group">
+    <el-switch v-model="isAvg" active-text="平均" inactive-text="单次" inactive-color="#13ce66" inline-prompt/>
+    <el-switch v-model="showAvgLine" active-text="显示均值线" inactive-text="隐藏均值线" inline-prompt/>
+  </div>
   <div ref="chart" style="width: 100%; height: 400px;"></div>
 </template>
 
 <style scoped>
-
+.switch-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
 </style>
