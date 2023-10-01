@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref, onMounted, onUnmounted, shallowRef, watch} from 'vue';
 import * as echarts from 'echarts';
-import {time_convert} from "@/utils";
+import {convert_time_num2str} from "@/utils";
 import {useDark} from "@vueuse/core";
 import type {Result} from "@/types";
 
@@ -61,7 +61,7 @@ const updateChart = () => {
                     return `
                         <span>${marker}</span>
                         <span>${event}</span>
-                        <span style="font-weight: bold">${value===undefined?'-':time_convert(value)}</span>
+                        <span style="font-weight: bold">${value===undefined?'-':convert_time_num2str(value)}</span>
                     `
                 });
                 return `
@@ -83,7 +83,7 @@ const updateChart = () => {
             min: 'dataMin',
             max: 'dataMax',
             axisLabel: {
-                formatter: time_convert
+                formatter: convert_time_num2str
             },
         },
         legend: {

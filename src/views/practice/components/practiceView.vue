@@ -17,7 +17,7 @@
 
       <div class="practice-main">
         <div class="practice-time" @click="timingState++">
-          {{time===0?'DNF':time_convert(time)}}
+          {{ time === 0 ? 'DNF' : convert_time_num2str(time) }}
         </div>
         <div class="scramble-img">
           <twisty-player
@@ -54,7 +54,7 @@ import PracticeSideBar from "@/views/practice/components/practiceSideBar.vue";
 import {randomScrambleForEvent} from "cubing/scramble"
 import type {Ref} from "vue";
 import {ref} from "vue";
-import {time_convert, translateEvent, translateEventForScramble} from "@/utils";
+import {convert_time_num2str, translateEvent, translateEventForScramble} from "@/utils";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import type {apiUsedEventName} from "@/types";
 

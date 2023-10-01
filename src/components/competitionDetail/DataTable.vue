@@ -33,20 +33,20 @@
       <template v-slot:default="scope">
         <el-badge value="SCUR" class="item" v-if="scope.row.is_avg_scur">
           <div class="badge-value">
-            {{scope.row.avg > 0 ? time_convert(scope.row.avg) : 'DNF'}}
+            {{ scope.row.avg > 0 ? convert_time_num2str(scope.row.avg) : 'DNF' }}
           </div>
         </el-badge>
-        <div v-else>{{scope.row.avg > 0 ? time_convert(scope.row.avg) : 'DNF'}}</div>
+        <div v-else>{{ scope.row.avg > 0 ? convert_time_num2str(scope.row.avg) : 'DNF' }}</div>
       </template>
     </el-table-column>
     <el-table-column prop="best" label="最佳" :width="width" :sortable="true" :sort-method="sort_best_count_in_zero">
       <template v-slot:default="scope">
         <el-badge value="SCUR" class="item" v-if="scope.row.is_best_scur">
           <div class="badge-value">
-            {{time_convert(scope.row.best)}}
+            {{ convert_time_num2str(scope.row.best) }}
           </div>
         </el-badge>
-        <div v-else>{{time_convert(scope.row.best)}}</div>
+        <div v-else>{{ convert_time_num2str(scope.row.best) }}</div>
       </template>
     </el-table-column>
 
@@ -56,13 +56,13 @@
 <script lang="ts" setup>
 import type {TableColumnCtx} from "element-plus";
 import type {Result} from "@/types";
-import {SPECIAL_EVENTS, time_convert} from "@/utils";
+import {SPECIAL_EVENTS, convert_time_num2str} from "@/utils";
 import {computed} from "vue";
 
 
 const formatter = (row: Result, column: TableColumnCtx<Result>) => {
   const val = row[column.property]
-  return val>0?time_convert(val):'DNF'
+  return val>0?convert_time_num2str(val):'DNF'
 }
 
 const maxScrambleCount = computed(() => {

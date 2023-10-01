@@ -16,12 +16,12 @@
 <script lang="ts" setup>
 import type {TableColumnCtx} from "element-plus";
 import type {OmittedResultAvgWithCompId, OmittedResultBestWithCompId, Result} from "@/types";
-import {time_convert} from "@/utils";
+import {convert_time_num2str} from "@/utils";
 import {computed} from "vue";
 
 const formatter = (row: Result, column: TableColumnCtx<Result>) => {
   const val = row[column.property]
-  return val>0?time_convert(val):'DNF'
+  return val>0?convert_time_num2str(val):'DNF'
 }
 
 defineProps<{

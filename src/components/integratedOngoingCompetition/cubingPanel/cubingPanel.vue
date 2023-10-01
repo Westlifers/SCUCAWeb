@@ -151,7 +151,7 @@ import {computed, reactive, ref, watch} from "vue";
 import {getComp} from "@/api/fetchData";
 import {localStore} from "@/store";
 import type {apiUsedEventName, Scramble} from "@/types";
-import {convert_time, SPECIAL_EVENTS, time_convert, translateEvent} from "@/utils";
+import {convert_time_str2num, SPECIAL_EVENTS, convert_time_num2str, translateEvent} from "@/utils";
 import type {FormInstance} from "element-plus";
 import {ElMessage, ElNotification} from "element-plus";
 import {postResult} from "@/api/service";
@@ -167,7 +167,7 @@ const set_time = (time_) => {
     state.resultForm[`time_${count.value}`] = 'DNF'
     return
   }
-  state.resultForm[`time_${count.value}`] = time_convert(convert_time(time.toFixed(3))).replace(/\s*/g,"")
+  state.resultForm[`time_${count.value}`] = convert_time_num2str(convert_time_str2num(time.toFixed(3))).replace(/\s*/g,"")
 
   // 自动进入下一个打乱
   if (count.value < maxScrambleCount.value) {
@@ -354,11 +354,11 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
       const req = {
         competition: compId.value,
         event: props.activeEvent,
-        time_1: convert_time(state.resultForm.time_1),
-        time_2: convert_time(state.resultForm.time_2),
-        time_3: convert_time(state.resultForm.time_3),
-        time_4: convert_time(state.resultForm.time_4),
-        time_5: convert_time(state.resultForm.time_5),
+        time_1: convert_time_str2num(state.resultForm.time_1),
+        time_2: convert_time_str2num(state.resultForm.time_2),
+        time_3: convert_time_str2num(state.resultForm.time_3),
+        time_4: convert_time_str2num(state.resultForm.time_4),
+        time_5: convert_time_str2num(state.resultForm.time_5),
       }
       try {
         const data = await postResult(req)

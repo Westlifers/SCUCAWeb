@@ -28,9 +28,9 @@
             <td>
               <span class="time">{{result.event}}</span>
             </td>
-            <td>{{result.avg<=0?'DNF':time_convert(result.avg)}}</td>
+            <td>{{ result.avg <= 0 ? 'DNF' : convert_time_num2str(result.avg) }}</td>
             <td>{{result.dateAvg}}</td>
-            <td>{{result.best<=0?'DNF':time_convert(result.best)}}</td>
+            <td>{{ result.best <= 0 ? 'DNF' : convert_time_num2str(result.best) }}</td>
             <td>{{result.dateBest}}</td>
           </tr>
         </tbody>
@@ -41,7 +41,7 @@
 
 <script lang="ts" setup>
 import {computed} from "vue";
-import {time_convert} from "@/utils";
+import {convert_time_num2str} from "@/utils";
 import {getUserPb} from "@/api/fetchData";
 import type {Record} from "@/types";
 

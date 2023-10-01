@@ -23,7 +23,7 @@
                 <div class="room_left_bar__player_list__list__player__popover">
                   <el-scrollbar>
                     <div v-for="result in playerResults[player]" :key="result" class="room_left_bar__player_list__list__player__popover__result">
-                      <p>{{result>0?time_convert(result):'DNF'}}</p>
+                      <p>{{ result > 0 ? convert_time_num2str(result) : 'DNF' }}</p>
                     </div>
                   </el-scrollbar>
                 </div>
@@ -70,7 +70,7 @@
 
       <div class="room_main">
         <div class="room_main__time">
-          <p>{{time===0?'DNF':time_convert(time)}}</p>
+          <p>{{ time === 0 ? 'DNF' : convert_time_num2str(time) }}</p>
         </div>
         <div class="room_main__scramble_img">
           <twisty-player
@@ -156,7 +156,7 @@ import type {Ref} from "vue";
 import {ref, watch} from "vue";
 import {ElMessage} from "element-plus";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
-import {time_convert, translateEvent} from "@/utils";
+import {convert_time_num2str, translateEvent} from "@/utils";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import type {apiUsedEventName} from "@/types";
 
@@ -202,7 +202,7 @@ pkSocket.onmessage = (event) => {
       playerList.value = message['players'];
       break;
     case 'finish':
-      playerResults.value[message['sender']].push(time_convert(message['time']));
+      playerResults.value[message['sender']].push(convert_time_num2str(message['time']));
       break;
     case 'results_of_this_round':
       playerResults.value = message['results'];

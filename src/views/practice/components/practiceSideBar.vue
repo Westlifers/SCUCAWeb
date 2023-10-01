@@ -50,19 +50,19 @@
 
       <el-table-column prop="time" label="时间">
         <template v-slot="scope">
-          {{scope.row.punishment===-1?'DNF':time_convert(scope.row.time)}}{{scope.row.punishment > 0?'+':''}}
+          {{ scope.row.punishment === -1 ? 'DNF' : convert_time_num2str(scope.row.time) }}{{ scope.row.punishment > 0 ? '+' : '' }}
         </template>
       </el-table-column>
 
       <el-table-column label="ao5">
         <template v-slot="scope">
-          {{statistics.ao5[scope.$index] > -1 ? (statistics.ao5[scope.$index]===0?'DNF':time_convert(statistics.ao5[scope.$index])) : ''}}
+          {{ statistics.ao5[scope.$index] > -1 ? (statistics.ao5[scope.$index] === 0 ? 'DNF' : convert_time_num2str(statistics.ao5[scope.$index])) : '' }}
         </template>
       </el-table-column>
 
       <el-table-column label="ao12">
         <template v-slot="scope">
-          {{statistics.ao12[scope.$index] > -1 ? (statistics.ao12[scope.$index]===0?'DNF':time_convert(statistics.ao12[scope.$index])) : ''}}
+          {{ statistics.ao12[scope.$index] > -1 ? (statistics.ao12[scope.$index] === 0 ? 'DNF' : convert_time_num2str(statistics.ao12[scope.$index])) : '' }}
         </template>
       </el-table-column>
     </el-table>
@@ -77,7 +77,7 @@ import {del, get, keys, set, update} from 'idb-keyval';
 import {computed, ref} from "vue";
 import type {StoredTime} from "@/types";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
-import {time_convert} from "@/utils";
+import {convert_time_num2str} from "@/utils";
 import {Close, Plus} from "@element-plus/icons-vue";
 import {ElNotification} from "element-plus";
 
@@ -93,7 +93,7 @@ const formatter = (row, column) => {
   const val = row[column.property]
     console.log(val)
   if (val == Infinity || isNaN(val) || val === -1) return '无'
-  return val>0?time_convert(val):'DNF'
+  return val>0?convert_time_num2str(val):'DNF'
 }
 
 const createGroup = async () => {
