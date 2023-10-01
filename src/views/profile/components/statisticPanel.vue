@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import LineDateTime from "@/views/profile/components/charts/lineDateTime.vue";
-import {shallowRef} from "vue";
+import {ref, shallowRef} from "vue";
 import {getAllResultOfUser} from "@/api/fetchData";
 import PieEvents from "@/views/profile/components/charts/pieEvents.vue";
 
 const result_set = await getAllResultOfUser()
-const chart = shallowRef(LineDateTime)
-const allCharts = shallowRef([
-  {
-      'chartComponent': LineDateTime,
-      'description': '各项目成绩关于日期折线图'
-  },
-  {
-    'chartComponent': PieEvents,
-    'description': '各项目占比饼图'
-  }
-])
+const chart = ref('LineDateTime')  // el-select似乎不能使用shallowRef/ref包装对象来作为选择结果，所以拐了个弯，用字符串到字典去对应
+const allCharts = shallowRef({
+    'LineDateTime': {
+       'chartComponent': LineDateTime,
+       'description': '各项目成绩关于日期折线图'
+    },
+    'PieEvents': {
+        'chartComponent': PieEvents,
+        'description': '各项目占比饼图'
+    }
+})
 
 </script>
 
@@ -28,15 +28,15 @@ const allCharts = shallowRef([
       </div>
       <el-select v-model="chart" placeholder="请选择图表">
         <el-option
-          v-for="comp in allCharts"
-          :key="comp.chartComponent"
-          :label="comp.description"
-          :value="comp.chartComponent"
+          v-for="(val, key) in allCharts"
+          :key="key"
+          :label="val.description"
+          :value="key"
         />
       </el-select>
     </div>
     <div class="cards card">
-      <component :is="chart as string" :result_set="result_set" />
+      <component :is="allCharts[chart].chartComponent" :result_set="result_set" />
     </div>
   </div>
 </template>
