@@ -74,6 +74,10 @@ export interface Record {
     best: OmittedResultBest[]
 }
 
+export interface RecordWithScore extends Record {
+    score: number
+}
+
 
 export interface OmittedResultAvgWithCompId extends OmittedResultAvg {
     compId: string

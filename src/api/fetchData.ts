@@ -6,7 +6,7 @@ import type {
     OmittedResultAvg,
     OmittedResultBest,
     RankPaginationData,
-    Record,
+    Record, RecordWithScore,
     Result,
     Room,
     Score,
@@ -181,7 +181,7 @@ export async function getUserParticipationData (): Promise<UserParticipationData
     }
 }
 
-export async function getUserPb (): Promise<Record> {
+export async function getUserPb (): Promise<RecordWithScore> {
     const res = await request({
         url: '/user/data/',
         method: 'get'
@@ -195,9 +195,10 @@ export async function getUserPb (): Promise<Record> {
         delete result['compId']
     }
 
-    const pb: Record = {
+    const pb: RecordWithScore = {
         avg: [],
-        best: []
+        best: [],
+        score: 0
     }
 
     for (const result of res['avg']) {
@@ -219,6 +220,8 @@ export async function getUserPb (): Promise<Record> {
         }
         pb.best.push(result_)
     }
+
+    pb.score = res['score']
 
     return pb
 }

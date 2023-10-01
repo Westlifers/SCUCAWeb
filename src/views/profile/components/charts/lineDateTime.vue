@@ -48,7 +48,6 @@ const updateChart = () => {
                     : [null, dictOfDate2Competition[date]]
             }
         )
-        console.log(pre_data)
         // now pre_data is like [[10.5, '周赛1'], [20, '周赛1'], null, [9.8, '周赛2'], ...], ordered by date
 
         let data

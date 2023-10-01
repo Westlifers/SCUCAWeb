@@ -9,7 +9,7 @@
         个人PB
       </div>
       <div class="cards-button button">
-        Keep cubing, and keep moving!
+        Keep cubing, and keep moving! 你的总积分：<p style="color: rgb(225,204,91)">{{userData.score}}</p>
       </div>
     </div>
     <div class="cards card">
@@ -43,9 +43,9 @@
 import {computed} from "vue";
 import {convert_time_num2str} from "@/utils";
 import {getUserPb} from "@/api/fetchData";
-import type {Record} from "@/types";
+import type {RecordWithScore} from "@/types";
 
-const userData: Record = await getUserPb()
+const userData: RecordWithScore = await getUserPb()
 
 interface IntegratedUserData {
   dateAvg: string,
