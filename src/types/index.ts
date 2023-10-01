@@ -22,7 +22,8 @@ export interface Result {
     best: number,
     is_avg_scur: boolean,
     is_best_scur: boolean,
-    date: string
+    date: string,
+    competition: string,
 }
 
 

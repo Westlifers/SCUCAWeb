@@ -54,7 +54,8 @@ export async function getComp (compId: string): Promise<DetailedCompetition> {
                 best: result_req['best'],
                 is_avg_scur: result_req['is_avg_scur'],
                 is_best_scur: result_req['is_best_scur'],
-                date: result_req['date']
+                date: result_req['date'],
+                competition: result_req['competition'],
             }
             result_set.push(result)
         }

@@ -10,6 +10,7 @@ const chartInstance = shallowRef()  // 我tm不知道为什么用shallowRef，�
 const isDark = useDark()
 const isAvg = ref(true)
 const showAvgLine = ref(false)
+const isXaxisDate = ref(true)
 
 const props = defineProps<{
     result_set: Result[]
@@ -24,17 +25,50 @@ const init = () => {
 
 const updateChart = () => {
     const uniqueEvents = Array.from(new Set(props.result_set.map((item) => item.event))); // 获取唯一事件类型
+    const dictOfDate2Competition = props.result_set.reduce((acc, cur) => {
+        acc[cur.date] = cur.competition
+        return acc
+    }, {})
     const date = Array.from(new Set(props.result_set.map((item) => item.date))).sort((a, b) => {
-        return new Date(a).getTime() - new Date(b).getTime()
-    }) // 获取唯一日期
+        const dateA = new Date(a)
+        const dateB = new Date(b)
+        return dateA.getTime() - dateB.getTime()
+    })
+    const competitions = Array.from(new Set(props.result_set.map((item) => item.competition)))
 
     const seriesData = uniqueEvents.map((event) => {
-        const data = date.map(
+        const pre_data = date.map(
             (date) => {
                 const result = props.result_set.find((item) => item.event === event && item.date === date)
-                return result ? (isAvg.value ? result.avg : result.best) : null
+                return result
+                    ? (isAvg.value
+                            ? [result.avg, result.competition]
+                            : [result.best, result.competition]
+                    )
+                    : [null, dictOfDate2Competition[date]]
             }
         )
+        console.log(pre_data)
+        // now pre_data is like [[10.5, '周赛1'], [20, '周赛1'], null, [9.8, '周赛2'], ...], ordered by date
+
+        let data
+        if (!isXaxisDate.value) {
+            // 此时横轴为competition，而data中competition相同的必然相邻，以此我们将它们按competition合并。注意要按data中的顺序来，否则时间顺序就错乱了
+            data = Object.values(pre_data.reduce((acc, cur) => {
+                const now_competition = cur[1]
+                if (!(now_competition in acc)) {
+                    acc[now_competition] = cur[0]
+                }
+                else if (now_competition in acc && cur[0] !== null) {
+                    acc[now_competition] = cur[0]
+                }
+                return acc
+            }, {}))
+        }
+        else {
+            data = pre_data.map((item) => item[0]===null?null:item[0])
+        }
+
         return {
             name: event,
             type: 'line',
@@ -78,7 +112,7 @@ const updateChart = () => {
         },
         xAxis: {
             type: 'category',
-            data: date
+            data: isXaxisDate.value?date:competitions,
         },
         yAxis: {
             type: 'value',
@@ -116,7 +150,7 @@ watch(isDark, () => {
     }
     init()
 })
-watch([isAvg, showAvgLine], () => {
+watch([isAvg, showAvgLine, isXaxisDate], () => {
     updateChart()
 })
 
@@ -128,6 +162,7 @@ window.addEventListener('resize', () => chartInstance.value.resize())
 <template>
   <div class="switch-group">
     <el-switch v-model="isAvg" active-text="平均" inactive-text="单次" inactive-color="#13ce66" inline-prompt/>
+    <el-switch v-model="isXaxisDate" active-text="按时间" inactive-text="按比赛" inactive-color="#00ce66" inline-prompt/>
     <el-switch v-model="showAvgLine" active-text="显示均值线" inactive-text="隐藏均值线" inline-prompt/>
   </div>
   <div ref="chart" style="width: 100%; height: 400px;"></div>
