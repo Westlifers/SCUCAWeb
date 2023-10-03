@@ -40,7 +40,6 @@ app.use(VMdPreview)
 app.use(createPinia())
 app.use(router)
 for (const name in ElIcons) {
-    // @ts-ignore
     app.component(name, ElIcons[name]);
 }
 
