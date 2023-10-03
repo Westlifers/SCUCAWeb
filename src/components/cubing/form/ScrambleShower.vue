@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 
-import {Scramble} from "@/types";
+import type {Scramble} from "@/types";
 import {computed, ref, watch} from "vue";
 import SubmitForm from "@/components/cubing/form/SubmitForm.vue";
 import {SPECIAL_EVENTS} from "@/utils";

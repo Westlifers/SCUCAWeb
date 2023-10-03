@@ -3,8 +3,8 @@
     <div class="timing-curtain" v-if="is_timing || is_inspection || is_finished" @click="stimulate_space">
       <div class="timing-curtain__content">
         <div class="inspection" :style="{color: is_pre_timing?'green':'red'}" v-if="is_inspection">{{inspecting_time<0?(inspecting_time<-2?'DNF':'+2'):inspecting_time.toFixed(0)}}</div>
-        <div class="timing" v-if="is_timing">{{time_convert(parseFloat(time.toFixed(3)))}}</div>
-        <div class="determine" v-if="is_finished">{{inspecting_time<-2?'DNF':`${time_convert(parseFloat(time.toFixed(3)))}${inspecting_time<0?'+':''}`}}</div>
+        <div class="timing" v-if="is_timing">{{ convert_time_num2str(parseFloat(time.toFixed(3))) }}</div>
+        <div class="determine" v-if="is_finished">{{ inspecting_time < -2 ? 'DNF' : `${convert_time_num2str(parseFloat(time.toFixed(3)))}${inspecting_time < 0 ? '+' : ''}` }}</div>
         <div class="determine_timing_type" v-if="is_finished">
           <el-radio-group v-model="timing_type" @change="determine_timing_type">
             <el-radio-button label="1">无惩罚</el-radio-button>
@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 import {computed, ref, watch} from "vue";
-import {time_convert} from "@/utils";
+import {convert_time_num2str} from "@/utils";
 
 const is_inspection = ref(false)  // 按下空格，观察中
 const is_pre_timing = ref(false)  // 按下空格，等待延迟启动

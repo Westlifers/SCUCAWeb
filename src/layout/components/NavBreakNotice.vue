@@ -31,7 +31,7 @@
 <script lang="ts" setup>
 import {ref, watch} from "vue";
 import {getAnnouncement} from "@/api/fetchData";
-import {Announcement} from "@/types";
+import type {Announcement} from "@/types";
 import {getUserAndEventAndAorb} from "@/utils";
 
 const visible = ref(false)

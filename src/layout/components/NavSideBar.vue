@@ -82,11 +82,12 @@
 
 import {computed, ref} from "vue";
 import {go_page} from "@/utils";
-import {store} from "@/store";
+import {localStore} from "@/store";
 
 const isCollapse = ref(true)
+const store = localStore()
 
-const isLoggedIn = computed(() => !(store.state.user.username===''))
+const isLoggedIn = computed(() => !(store.user.username===''))
 </script>
 
 <style scoped>

@@ -24,17 +24,17 @@
 </template>
 
 <script lang="ts" setup>
-import {Record, Result} from "@/types";
+import type {Record, Result} from "@/types";
 import {getScuRecord} from "@/api/fetchData";
 import {computed} from "vue";
-import {TableColumnCtx} from "element-plus";
-import {ALL_EVENTS, time_convert} from "@/utils";
+import type {TableColumnCtx} from "element-plus";
+import {ALL_EVENTS, convert_time_num2str} from "@/utils";
 
 const record: Record = await getScuRecord()
 
 const formatter = (row: Result, column: TableColumnCtx<Result>) => {
   const val = row[column.property]
-  return val>0?time_convert(val):val===-1?'':'DNF'
+  return val>0?convert_time_num2str(val):val===-1?'':'DNF'
 }
 
 interface integratedData {

@@ -1,5 +1,5 @@
 <template>
-  <div class="discount card" style="--delay: .4s">
+  <div class="discount card" style="--delay: .2s">
     <div class="title">周赛参与进度</div>
     <div class="discount-wrapper">
       <div class="discount-info">
@@ -43,12 +43,14 @@
 
 <script lang="ts" setup>
 import {computed, ref} from "vue";
-import {store, UPDATE_USER_PARTICIPATION_DATA} from "@/store";
+import {localStore} from "@/store";
 import {get_user_avatar} from "@/utils";
 
+const store = localStore()
+
 // 获取用户进度
-await store.commit(UPDATE_USER_PARTICIPATION_DATA)
-const userParticipationData = computed(() => store.state.userParticipation)
+await store.updateUserParticipationData()
+const userParticipationData = computed(() => store.userParticipation)
 // 根据进度，计算相关的项目
 const week_events_all = computed(() =>
     userParticipationData.value.week.events_all

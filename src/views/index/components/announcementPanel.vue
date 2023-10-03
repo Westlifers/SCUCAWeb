@@ -68,7 +68,8 @@
 
 <script lang="ts" setup>
 import {getAnnouncement} from "@/api/fetchData";
-import {computed, Ref, ref} from "vue";
+import type {Ref} from "vue";
+import {computed, ref} from "vue";
 import {get_user_avatar} from "@/utils";
 
 const posts = await getAnnouncement('ua')

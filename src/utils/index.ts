@@ -1,6 +1,6 @@
 import router from "@/router";
 import {getProfile} from "@/api/fetchData";
-import {DetailedCompetition} from "@/types";
+import type {apiUsedEventName, DetailedCompetition, twistyUsedEventName} from "@/types";
 
 export function getCookie(cName: string) {
     if (document.cookie.length > 0) {
@@ -19,7 +19,7 @@ export function go_page(pageName: string) {
     router.push({name: pageName})
 }
 
-export function convert_time(validatedTimeStr: string): number {
+export function convert_time_str2num(validatedTimeStr: string): number {
     let time = 0
     validatedTimeStr = validatedTimeStr.split(' ').join('')  // 去空格
     if (validatedTimeStr == 'DNF' || validatedTimeStr == 'dnf' || validatedTimeStr == '' || validatedTimeStr == 'd') {
@@ -39,7 +39,7 @@ export function convert_time(validatedTimeStr: string): number {
     return time
 }
 
-export function time_convert(time: number): string {
+export function convert_time_num2str(time: number): string {
     const min = Math.floor(time / 60)
     let sec = (time % 60).toFixed(3)
     // if sec < 10 and min > 0, add 0 before sec
@@ -73,7 +73,7 @@ export function getUserAndEventAndAorb(content: string) {
         user: user,
         event: event,
         aorb: aorb,
-        time: parseFloat(time) > 0?time_convert(parseFloat(time)):'DNF'
+        time: parseFloat(time) > 0?convert_time_num2str(parseFloat(time)):'DNF'
     }
 }
 
@@ -94,7 +94,7 @@ export function classifyTableDataByEvent(tableData: DetailedCompetition): object
 }
 
 
-export function getSortedEventsFromTableData(tableData: DetailedCompetition): string[] {
+export function getSortedEventsFromTableData(tableData: DetailedCompetition): apiUsedEventName[] {
     const eventsGot: string[] = []
     for (const scramble of tableData.scramble_set) {
         if (!(eventsGot.indexOf(scramble.event) > -1)) {
@@ -110,12 +110,12 @@ export function getSortedEventsFromTableData(tableData: DetailedCompetition): st
         }
     }
 
-    return sorted_events
+    return sorted_events as apiUsedEventName[]
 }
 
 
 // adjust twisty.js event name to local event name
-export function translateEvent(event: string): string {
+export function translateEvent(event: apiUsedEventName): twistyUsedEventName {
     switch (event) {
         case '333':
             return '3x3x3'
@@ -149,9 +149,8 @@ export function translateEvent(event: string): string {
             return '5x5x5'
     }
 
-    return event
 }
-export function translateEventForScramble(event: string): string {
+export function translateEventForScramble(event: apiUsedEventName): string {
     switch (event) {
         case '333':
             return '333'
@@ -185,5 +184,4 @@ export function translateEventForScramble(event: string): string {
             return '555bf'
     }
 
-    return event
 }

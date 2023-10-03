@@ -38,13 +38,15 @@
 
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
-import {User} from "@/types";
-import {SET_USER, store} from "@/store";
-import {ElNotification, FormInstance} from "element-plus";
+import type {User} from "@/types";
+import {localStore} from "@/store";
+import type {FormInstance} from "element-plus";
+import {ElNotification} from "element-plus";
 import {login} from "@/api/service";
 import router from "@/router";
 
 const loginFormRef = ref<FormInstance>()
+const store = localStore()
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const validatePassword = (rule: any, value: string, callback: Function) => {
@@ -99,9 +101,7 @@ const handleLogin = (formEl: FormInstance | undefined) => {
           description: data.description,
         };
 
-        store.commit(SET_USER, {
-          user,
-        });
+        store.setUser(user);
         window.localStorage.setItem("userInfo", JSON.stringify(user))
         ElNotification({
           title: '成功',

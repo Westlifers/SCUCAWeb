@@ -35,11 +35,13 @@
 
 <script lang="ts" setup>
 import {computed, reactive, ref} from "vue";
-import {ElNotification, FormInstance} from "element-plus";
-import {store} from "@/store";
+import type {FormInstance} from "element-plus";
+import {ElNotification} from "element-plus";
+import {localStore} from "@/store";
 import {postAnnouncement} from "@/api/service";
 
-const isSuperUser = computed(() => store.state.user.is_superuser)
+const store = localStore()
+const isSuperUser = computed(() => store.user.is_superuser)
 
 const formRef = ref<FormInstance>()
 

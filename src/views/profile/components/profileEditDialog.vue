@@ -63,11 +63,14 @@
 <script lang="ts" setup>
 import {getAvatarToken, getProfile} from "@/api/fetchData";
 import {computed, reactive, ref} from "vue";
-import {store, UPDATE_USER_PROFILE} from "@/store";
-import {ElMessage, ElNotification, FormInstance, UploadInstance, UploadProps, UploadUserFile} from "element-plus";
+import {localStore} from "@/store";
+import type {FormInstance, UploadInstance, UploadProps, UploadUserFile} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 import {postProfile} from "@/api/service";
 
-const username = computed(() => store.state.user.username)
+const store = localStore()
+
+const username = computed(() => store.user.username)
 const profile = await getProfile(username.value)
 const fileList = ref<UploadUserFile[]>()
 const uploadRef = ref<UploadInstance>()
@@ -127,9 +130,9 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const req = {
           email: state.profileForm.email,
-          avatar: state.profileForm.avatar===store.state.user.avatar?
-              store.state.user.avatar:
-              `http://img.yougi.top/avatars/${store.state.user.username}` + `?t=${(new Date()).getTime()}`
+          avatar: state.profileForm.avatar===store.user.avatar?
+              store.user.avatar:
+              `http://img.yougi.top/avatars/${store.user.username}` + `?t=${(new Date()).getTime()}`
           ,  // 如果state中的头像链接和本地储存的链接不一样，说明用户上传了新头像，那么就使用新头像链接，否则仍使用本地储存的头像链接
           description: state.profileForm.description
         }
@@ -141,7 +144,7 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
         })
         // update the store and local storage of user profile
         window.location.reload()
-        store.commit(UPDATE_USER_PROFILE)
+        await store.updateUserProfile()
       }
       catch (e) {
         ElNotification({

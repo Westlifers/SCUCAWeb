@@ -1,7 +1,7 @@
 <template>
-  <div class="activity card" style="--delay: .2s">
+  <div class="activity card" style="--delay: .1s">
     <div class="title">个人简介</div>
-    <div class="subtitle">{{store.state.user.description}}</div>
+    <div class="subtitle">{{store.user.description}}</div>
     <div class="activity-links">
       <div class="activity-link active">Latest Record</div>
     </div>
@@ -29,10 +29,12 @@
 
 <script lang="ts" setup>
 
-import {store} from "@/store";
-import {Announcement} from "@/types";
+import {localStore} from "@/store";
+import type {Announcement} from "@/types";
 import {getAnnouncement, getProfile} from "@/api/fetchData";
 import {get_user_avatar, getUserAndEventAndAorb} from "@/utils";
+
+const store = localStore()
 
 const breakAnnouncements: Announcement[] = (await getAnnouncement('scur break')).slice(0, 2)
 // get profile of the user who has a new record, so that we don't need to fetch every time

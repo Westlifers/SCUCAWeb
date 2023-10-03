@@ -18,9 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import {ref} from "vue";
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const version = ref(require("../../../package.json").version)
+import {version} from "../../../package.json"
 </script>
 
 <style scoped>

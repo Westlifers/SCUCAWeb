@@ -23,7 +23,7 @@
                 <div class="room_left_bar__player_list__list__player__popover">
                   <el-scrollbar>
                     <div v-for="result in playerResults[player]" :key="result" class="room_left_bar__player_list__list__player__popover__result">
-                      <p>{{result>0?time_convert(result):'DNF'}}</p>
+                      <p>{{ result > 0 ? convert_time_num2str(result) : 'DNF' }}</p>
                     </div>
                   </el-scrollbar>
                 </div>
@@ -70,7 +70,7 @@
 
       <div class="room_main">
         <div class="room_main__time">
-          <p>{{time===0?'DNF':time_convert(time)}}</p>
+          <p>{{ time === 0 ? 'DNF' : convert_time_num2str(time) }}</p>
         </div>
         <div class="room_main__scramble_img">
           <twisty-player
@@ -152,11 +152,13 @@
 //       'results': {'Alice': 23.4, 'Bob': 24.5},
 //   }
 import router from "@/router";
-import {Ref, ref, watch} from "vue";
+import type {Ref} from "vue";
+import {ref, watch} from "vue";
 import {ElMessage} from "element-plus";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
-import {time_convert, translateEvent} from "@/utils";
+import {convert_time_num2str, translateEvent} from "@/utils";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
+import type {apiUsedEventName} from "@/types";
 
 const message: Ref<string> = ref('');
 const scramble: Ref<string> = ref('');
@@ -172,7 +174,8 @@ const imgVisible: Ref<boolean> = ref(true);
 const is3d: Ref<boolean> = ref(false);
 
 const roomId = router.currentRoute.value.params.roomId;
-const event = router.currentRoute.value.params.event;
+const event = router.currentRoute.value.params.event as apiUsedEventName  // 此路由只能是项目名
+
 // const baseUrl = "ws://127.0.0.1:8000/ws/pk/";
 const baseUrl = "wss://yougi.top/ws/pk/";
 const pkSocket = new WebSocket(baseUrl + roomId + "/" + event + "/");
@@ -199,7 +202,7 @@ pkSocket.onmessage = (event) => {
       playerList.value = message['players'];
       break;
     case 'finish':
-      playerResults.value[message['sender']].push(time_convert(message['time']));
+      playerResults.value[message['sender']].push(convert_time_num2str(message['time']));
       break;
     case 'results_of_this_round':
       playerResults.value = message['results'];

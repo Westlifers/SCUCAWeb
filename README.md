@@ -1,28 +1,46 @@
-# scucaweb
+# scucawebvite
 
-## 项目介绍
-本项目是基于Vue.js和Element-plus开发的前端项目，主要用于四川大学魔方协会 
-(Sichuan University Cube Association, SCUCA) 周赛的日常使用。
+This template should help get you started developing with Vue 3 in Vite.
 
-### 主要功能
-1. 基础的注册登录功能，账号注册需经管理员审核通过后才可登录
-2. 查看周赛打乱，并上传周赛成绩
-3. 查看周赛各位项目排名
-4. 查看SCUCA记录
-5. 查看SCUCA历史成绩排行
-6. 查询历史比赛的成绩
+## Recommended IDE Setup
 
-### 管理员功能
-1. 发布比赛
-2. 发布公告（支持Markdown语法）
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## 项目本地安装和运行
-```
-git clone https://github.com/Westlifers/SCUCAWeb
-cd SCUCAWeb
+## Type Support for `.vue` Imports in TS
+
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+
+If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+
+1. Disable the built-in TypeScript Extension
+    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
+    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
+2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Project Setup
+
+```sh
 npm install
-npm run serve
 ```
 
-## 如发现bug或有相关建议，请提交issue或联系网站管理员（qq：2585687459）。
+### Compile and Hot-Reload for Development
 
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```

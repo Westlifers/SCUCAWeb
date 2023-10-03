@@ -61,13 +61,15 @@
 
 <script lang="ts" setup>
 import {computed, reactive, ref} from 'vue'
-import {ElNotification, FormInstance} from "element-plus";
+import type {FormInstance} from "element-plus";
+import {ElNotification} from "element-plus";
 import {postResult} from "@/api/service";
-import {convert_time, SPECIAL_EVENTS} from "@/utils";
-import {store, UPDATE_USER_PARTICIPATION_DATA} from "@/store";
+import {convert_time_str2num, SPECIAL_EVENTS} from "@/utils";
+import {localStore} from "@/store";
 import router from "@/router";
 
 const formRef = ref<FormInstance>()
+const store = localStore()
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const resultValidator = (rule: any, value: string, callback: Function) => {
@@ -127,11 +129,11 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
       const req = {
         competition: props.compId,
         event: props.event,
-        time_1: convert_time(state.resultForm.time_1),
-        time_2: convert_time(state.resultForm.time_2),
-        time_3: convert_time(state.resultForm.time_3),
-        time_4: convert_time(state.resultForm.time_4),
-        time_5: convert_time(state.resultForm.time_5),
+        time_1: convert_time_str2num(state.resultForm.time_1),
+        time_2: convert_time_str2num(state.resultForm.time_2),
+        time_3: convert_time_str2num(state.resultForm.time_3),
+        time_4: convert_time_str2num(state.resultForm.time_4),
+        time_5: convert_time_str2num(state.resultForm.time_5),
       }
       try {
         const data = await postResult(req)
@@ -140,7 +142,7 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
           message: '提交成功！',
           type: 'success',
         })
-        store.commit(UPDATE_USER_PARTICIPATION_DATA)
+        await store.updateUserParticipationData()
         if (props.is_normal) {
           await router.push({name: 'overview'})
         }

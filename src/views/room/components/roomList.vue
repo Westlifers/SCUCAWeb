@@ -52,10 +52,10 @@
 
 <script setup lang="ts">
 import {getRoomList} from "@/api/fetchData";
-import {Room} from "@/types";
+import type {Room} from "@/types";
 import {ref} from "vue";
 import {ALL_EVENTS} from "@/utils";
-import {FormInstance} from "element-plus";
+import type {FormInstance} from "element-plus";
 import router from "@/router";
 
 const roomList: Room[] = await getRoomList();

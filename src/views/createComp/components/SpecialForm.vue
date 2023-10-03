@@ -35,7 +35,8 @@
 
 <script lang="ts" setup>
 import {reactive, ref} from 'vue'
-import {ElNotification, FormInstance} from "element-plus";
+import type {FormInstance} from "element-plus";
+import {ElNotification} from "element-plus";
 import {createCompetition} from "@/api/service";
 import {ALL_EVENTS} from "@/utils";
 

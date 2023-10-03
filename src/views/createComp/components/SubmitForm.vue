@@ -14,9 +14,11 @@
 import {computed, ref} from "vue";
 import SpecialForm from "@/views/createComp/components/SpecialForm.vue";
 import WeekForm from "@/views/createComp/components/WeekForm.vue";
-import {store} from "@/store";
+import {localStore} from "@/store";
 
-const isAdmin = computed(() => store.state.user.is_superuser)
+const store = localStore()
+
+const isAdmin = computed(() => store.user.is_superuser)
 const activeName = ref('week')
 </script>
 

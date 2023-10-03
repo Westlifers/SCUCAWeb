@@ -1,5 +1,5 @@
 <template>
-  <div class="cards-wrapper" style="--delay: 1s">
+  <div class="cards-wrapper" style="--delay: .5s">
     <div class="cards-header">
       <div class="cards-view">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
@@ -9,7 +9,7 @@
         个人PB
       </div>
       <div class="cards-button button">
-        Keep cubing, and keep moving!
+        Keep cubing, and keep moving! 你的总积分：<p style="color: rgb(225,204,91)">{{userData.score}}</p>
       </div>
     </div>
     <div class="cards card">
@@ -28,9 +28,9 @@
             <td>
               <span class="time">{{result.event}}</span>
             </td>
-            <td>{{result.avg<=0?'DNF':time_convert(result.avg)}}</td>
+            <td>{{ result.avg <= 0 ? 'DNF' : convert_time_num2str(result.avg) }}</td>
             <td>{{result.dateAvg}}</td>
-            <td>{{result.best<=0?'DNF':time_convert(result.best)}}</td>
+            <td>{{ result.best <= 0 ? 'DNF' : convert_time_num2str(result.best) }}</td>
             <td>{{result.dateBest}}</td>
           </tr>
         </tbody>
@@ -41,11 +41,11 @@
 
 <script lang="ts" setup>
 import {computed} from "vue";
-import {time_convert} from "@/utils";
+import {convert_time_num2str} from "@/utils";
 import {getUserPb} from "@/api/fetchData";
-import {Record} from "@/types";
+import type {RecordWithScore} from "@/types";
 
-const userData: Record = await getUserPb()
+const userData: RecordWithScore = await getUserPb()
 
 interface IntegratedUserData {
   dateAvg: string,

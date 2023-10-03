@@ -1,8 +1,8 @@
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import {ElMessage} from "element-plus";
 import router from "@/router";
 import {getCookie, go_page} from "@/utils";
-import {CLEAR_USER, store} from "@/store";
+import {localStore} from "@/store";
 
 
 const request = axios.create({
@@ -20,7 +20,7 @@ request.interceptors.request.use((config) => {
 
 
 request.interceptors.response.use(
-    (response: AxiosResponse) => {
+    (response) => {
         const data = response.data
         console.log('response => ', response)
         if (data.status === '401') {
@@ -65,7 +65,8 @@ request.interceptors.response.use(
             })
         }
         if (response && (response.status === 403 || response.status === 401)) {
-            store.commit(CLEAR_USER)
+            const store = localStore()
+            await store.clearUser()
             return go_page('login')
         }
         return Promise.reject(message)

@@ -13,15 +13,17 @@
 <script lang="ts" setup>
 import CompPanel from "@/components/integratedOngoingCompetition/compPanel/compPanel.vue";
 import CubingPanel from "@/components/integratedOngoingCompetition/cubingPanel/cubingPanel.vue";
+import type {Ref} from "vue";
 import {ref} from "vue";
+import type {apiUsedEventName} from "@/types";
 
-const activeEvent = ref('333')
+const activeEvent: Ref<apiUsedEventName> = ref<apiUsedEventName>('333')
 
 defineProps<{
   comp: string
 }>()
 
-const set_event = (event: string) => {
+const set_event = (event: apiUsedEventName) => {
   activeEvent.value = event
 }
 </script>

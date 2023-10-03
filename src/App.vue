@@ -6,39 +6,39 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-  name: 'App',
+    name: 'App',
 });
 </script>
 
 <style>
 html {
-  height: 100%;
+    height: 100%;
 
 }
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 #app {
-  font-family: "DM Sans", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  background-color: var(--yougi-app-container) !important;
+    font-family: "DM Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    background-color: var(--yougi-app-container) !important;
 }
 body {
-  background-color: var(--yougi-app-container) !important;
-  user-select: none;
+    background-color: var(--yougi-app-container) !important;
+    user-select: none;
 }
 
 /**修改全局的滚动条*/
 /**滚动条的宽度*/
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+    width: 8px;
+    height: 8px;
 }
 ::-webkit-scrollbar-thumb {
     background-color: #eaecf1;
     border-radius: 3px;
-  }
+}
 </style>

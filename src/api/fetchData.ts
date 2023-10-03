@@ -1,19 +1,20 @@
 import request from "@/api/index";
-import {
+import type {
     Announcement,
     DetailedCompetition,
     OmittedCompetition,
     OmittedResultAvg,
     OmittedResultBest,
     RankPaginationData,
-    Record,
-    Result, Room,
+    Record, RecordWithScore,
+    Result,
+    Room,
     Score,
     Scramble,
     User,
     UserParticipationData,
 } from "@/types";
-import {store} from "@/store";
+import {localStore} from "@/store";
 
 export async function getComp (compId: string): Promise<DetailedCompetition> {
     let res
@@ -52,7 +53,9 @@ export async function getComp (compId: string): Promise<DetailedCompetition> {
                 avg: result_req['avg'],
                 best: result_req['best'],
                 is_avg_scur: result_req['is_avg_scur'],
-                is_best_scur: result_req['is_best_scur']
+                is_best_scur: result_req['is_best_scur'],
+                date: result_req['date'],
+                competition: result_req['competition'],
             }
             result_set.push(result)
         }
@@ -178,22 +181,24 @@ export async function getUserParticipationData (): Promise<UserParticipationData
     }
 }
 
-export async function getUserPb (): Promise<Record> {
+export async function getUserPb (): Promise<RecordWithScore> {
     const res = await request({
         url: '/user/data/',
         method: 'get'
     })
 
-    const username = store.state.user.username
+    const store = localStore()
+    const username = store.user.username
 
     for (const result of res['avg']){
         result['username'] = username
         delete result['compId']
     }
 
-    const pb: Record = {
+    const pb: RecordWithScore = {
         avg: [],
-        best: []
+        best: [],
+        score: 0
     }
 
     for (const result of res['avg']) {
@@ -215,6 +220,8 @@ export async function getUserPb (): Promise<Record> {
         }
         pb.best.push(result_)
     }
+
+    pb.score = res['score']
 
     return pb
 }
@@ -326,3 +333,15 @@ export async function getRoomList(): Promise<Room[]> {
 
     return rooms
 }
+
+
+export async function getAllResultOfUser(): Promise<Result[]> {
+    const store = localStore()
+    const res: object = await request({
+        url: `/user-with-result/${store.user.username}/`
+    })
+
+    const result_set = res['result_set']
+    return result_set as Result[]
+}
+

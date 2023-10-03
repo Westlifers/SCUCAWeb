@@ -21,7 +21,9 @@ export interface Result {
     avg: number,
     best: number,
     is_avg_scur: boolean,
-    is_best_scur: boolean
+    is_best_scur: boolean,
+    date: string,
+    competition: string,
 }
 
 
@@ -70,6 +72,10 @@ export interface OmittedResultBest extends OmittedResult {
 export interface Record {
     avg: OmittedResultAvg[]
     best: OmittedResultBest[]
+}
+
+export interface RecordWithScore extends Record {
+    score: number
 }
 
 
@@ -133,3 +139,7 @@ export interface Room {
     finished_players: string[]
     round: number
 }
+
+
+export type apiUsedEventName = "333" | "222" | "444" | "555" | "666" | "777" | "333bld" | "333oh" | "clock" | "minx" | "pyra" | "skewb" | "sq1" | "444bld" | "555bld"
+export type twistyUsedEventName =  "3x3x3" | "custom" | "2x2x2" | "4x4x4" | "5x5x5" | "6x6x6" | "7x7x7" | "40x40x40" | "megaminx" | "pyraminx" | "square1" | "skewb" | "clock"

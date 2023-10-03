@@ -1,5 +1,5 @@
 <template>
-  <div class="cards-wrapper" style="--delay: .6s">
+  <div class="cards-wrapper" style="--delay: .3s">
     <div class="cards-header">
       <div class="cards-header-date">
         <el-button size="small" round @click="month--">
@@ -60,7 +60,7 @@
 <script lang="ts" setup>
 import {computed, ref} from "vue";
 
-const month = ref((new Date()).getMonth());
+const month = ref((new Date()).getMonth())
 const today = computed(() => {
   const day = new Date()
   day.setMonth(month.value)
@@ -97,6 +97,12 @@ const calendar = computed(() => {
   return calendar_
 })
 
+// update today every 0.5s manually
+setInterval(() => {
+    month.value++
+    month.value--
+}, 500)
+
 </script>
 
 <style scoped>
@@ -106,6 +112,7 @@ const calendar = computed(() => {
 }
 :deep(.el-button) {
   border: none;
+  --el-button-bg-color: transparent;
   --el-button-active-bg-color: transparent;
   --el-button-active-border-color: transparent;
   --el-button-hover-bg-color: transparent;

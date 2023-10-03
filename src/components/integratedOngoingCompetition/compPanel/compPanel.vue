@@ -31,16 +31,17 @@
 
 <script lang="ts" setup>
 import {getComp} from "@/api/fetchData";
+import type {Ref} from "vue";
 import {computed, ref, watch} from "vue";
 import {classifyTableDataByEvent, get_user_avatar, getSortedEventsFromTableData} from "@/utils";
 import DataTable from "@/components/competitionDetail/DataTable.vue";
-import {DetailedCompetition} from "@/types";
+import type {apiUsedEventName, DetailedCompetition} from "@/types";
 
 const props = defineProps<{
   comp: string
-  activeEvent: string
+  activeEvent: apiUsedEventName
 }>()
-const activeEvent = ref(props.activeEvent)
+const activeEvent: Ref<apiUsedEventName> = ref<apiUsedEventName>(props.activeEvent)
 watch(activeEvent, (newVal) => {
   emits('setEvent', newVal)
 })
@@ -57,7 +58,7 @@ const ClassifiedTableData = computed(() => classifyTableDataByEvent(tableData))
 const events = computed(() => getSortedEventsFromTableData(tableData))
 
 const emits = defineEmits<{
-  (e: 'setEvent', event: string): void
+  (e: 'setEvent', event: apiUsedEventName): void
 }>()
 
 // calculate every author's avatar, so that we don't need to fetch it every time

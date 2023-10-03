@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import {Announcement} from "@/types";
+import type {Announcement} from "@/types";
 import {getAnnouncement} from "@/api/fetchData";
 import {get_user_avatar, getUserAndEventAndAorb} from "@/utils";
 

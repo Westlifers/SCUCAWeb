@@ -42,18 +42,20 @@
 import {computed, ref} from "vue";
 import LoginForm from "@/views/login/components/LoginForm.vue";
 import RegisterForm from "@/views/login/components/RegisterForm.vue";
-import {store} from "@/store";
+import {localStore} from "@/store";
 import router from "@/router";
 
 const signUpMode = ref(false)
+const store = localStore()
 
 // redirect to home page if user is already logged in
-const isLoggedIn = computed(() => store.state.user.username !== '')
+const isLoggedIn = computed(() => store.user.username !== '')
 if (isLoggedIn.value) {
   console.log('已登录，重定向')
   router.push({name: 'index'})
 }
 </script>
+
 <style scoped>
 .container {
   position: relative;

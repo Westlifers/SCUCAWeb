@@ -1,4 +1,5 @@
-import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router'
+import type {RouteRecordRaw} from 'vue-router'
+import {createRouter, createWebHashHistory} from 'vue-router'
 import layout from "@/layout/index.vue"
 import aboutUs from "@/views/about/AboutUs.vue";
 import loginRegister from "@/views/login/LoginRegister.vue";
@@ -10,7 +11,6 @@ import rankSuspense from "@/views/rank/RankSuspense.vue";
 import createCompetitionSuspense from "@/views/createComp/createCompetitionSuspense.vue";
 import indexSuspense from "@/views/index/indexSuspense.vue";
 import createAnnouncementForm from "@/views/createAnnouncement/createAnnouncementForm.vue";
-import discussionGiscus from "@/views/discussion/discussionGiscus.vue";
 import profileEditSuspense from "@/views/profile/profileSuspense.vue";
 import weekSuspense from "@/views/week/WeekSuspense.vue";
 import practiceViewSuspense from "@/views/practice/practiceViewSuspense.vue";
@@ -110,18 +110,6 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
 
-
-  {
-    path: '/discussion',
-    component: layout,
-    children: [
-      {
-        path: '',
-        component: discussionGiscus,
-        name: 'discussion'
-      }
-    ]
-  },
 
 
   {

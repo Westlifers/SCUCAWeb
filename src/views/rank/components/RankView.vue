@@ -34,8 +34,9 @@
 <script lang="ts" setup>
 import {getRank} from "@/api/fetchData";
 import DataTable from "@/views/rank/components/DataTable.vue";
-import {computed, Ref, ref, watch} from "vue";
-import {RankPaginationData} from "@/types";
+import type {Ref} from "vue";
+import {computed, ref, watch} from "vue";
+import type {RankPaginationData} from "@/types";
 import {ALL_EVENTS} from "@/utils";
 
 // contributed by ChatGPT, cheers for AI!

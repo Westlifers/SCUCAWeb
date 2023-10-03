@@ -1,5 +1,5 @@
 <template>
-  <div class="account-wrapper" style="--delay: .8s">
+  <div class="account-wrapper" style="--delay: .2s">
     <div class="account-profile">
       <img :src="avatar" alt="">
       <div class="blob-wrap">
@@ -7,13 +7,13 @@
         <div class="blob"></div>
         <div class="blob"></div>
       </div>
-      <div class="account-name">{{store.state.user.username}}</div>
-      <div class="account-title">{{store.state.user.is_scuer?'SCUer':'OUTSIDER'}}</div>
+      <div class="account-name">{{store.user.username}}</div>
+      <div class="account-title">{{store.user.is_scuer?'SCUer':'OUTSIDER'}}</div>
     </div>
     <div class="account card" @click="dialogVisible = true">
-      <div class="account-cash">{{store.state.user.is_superuser?'管理员':'Cuber'}}</div>
-      <div class="account-income">{{store.state.user.email}}</div>
-      <div class="account-iban">用户编号: {{store.state.user.id}}</div>
+      <div class="account-cash">{{store.user.is_superuser?'管理员':'Cuber'}}</div>
+      <div class="account-income">{{store.user.email}}</div>
+      <div class="account-iban">用户编号: {{store.user.id}}</div>
     </div>
   </div>
 
@@ -37,13 +37,14 @@
 
 <script lang="ts" setup>
 
-import {store} from "@/store";
+import {localStore} from "@/store";
 import {ElMessageBox} from "element-plus";
 import {ref} from "vue";
 import ProfileEditDialog from "@/views/profile/components/profileEditDialog.vue";
 import {get_user_avatar} from "@/utils";
 
-const avatar = await get_user_avatar(store.state.user.username)
+const store = localStore()
+const avatar = await get_user_avatar(store.user.username)
 
 const dialogVisible = ref(false)
 const handleClose = (done: () => void) => {

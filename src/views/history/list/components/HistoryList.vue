@@ -18,8 +18,8 @@
 
 <script lang="ts" setup>
 import {getCompetitionList} from "@/api/fetchData";
-import {Result} from "@/types";
-import {TableColumnCtx} from "element-plus";
+import type {Result} from "@/types";
+import type {TableColumnCtx} from "element-plus";
 
 const tableData = await getCompetitionList()
 

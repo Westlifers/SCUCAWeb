@@ -1,5 +1,5 @@
 <template>
-  <div class="card transection" style="--delay: 1.2s">
+  <div class="card transection" style="--delay: .6s">
     <div class="transection-header">
       <div class="head">
         本周积分榜
@@ -58,7 +58,7 @@
 
 <script lang="ts" setup>
 import {getProfile, getScoreRank} from "@/api/fetchData";
-import {Score} from "@/types";
+import type {Score} from "@/types";
 import {computed, ref} from "vue";
 
 const dialogVisible = ref(false)
@@ -68,7 +68,8 @@ const is_mobile = computed(() => {
 
 const scoreRank: Score[] = await getScoreRank()
 // get all usernames
-const users: object[] = []
+
+const users: {profile, username, score}[] = []
 for (let i = 0; i < scoreRank.length; i++) {
   const profile = await getProfile(scoreRank[i].username)
   users.push({
@@ -97,7 +98,7 @@ for (let i = 0; i < scoreRank.length; i++) {
 }
 
 .credit-wrapper:nth-child(1) .credit-money {
-  color: #FFD700;
+  color: #e1cc5b;
   font-size: 20px;
 }
 .credit-wrapper:nth-child(2) .credit-money {
@@ -109,7 +110,7 @@ for (let i = 0; i < scoreRank.length; i++) {
   font-size: 16px;
 }
 .transection .credit-wrapper:nth-child(2) .credit-money {
-  color: #FFD700;
+  color: #e1cc5b;
   font-size: 20px;
 }
 .transection .credit-wrapper:nth-child(3) .credit-money {

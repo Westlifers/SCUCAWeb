@@ -18,23 +18,24 @@
 <script lang="ts" setup>
 
 import {computed, ref} from "vue";
-import {store, UPDATE_USER_PARTICIPATION_DATA} from "@/store";
+import {localStore} from "@/store";
 import {getComp} from "@/api/fetchData";
-import {Scramble} from "@/types";
+import type {Scramble} from "@/types";
 import ScrambleShower from "@/components/cubing/form/ScrambleShower.vue";
 import {go_page} from "@/utils";
 
-const isLoggedIn = computed(() => !(store.state.user.username === ''))
+const store = localStore()
+const isLoggedIn = computed(() => !(store.user.username === ''))
 
 // 是否是周赛
 const is_normal = computed(() => props.comp==='week')
 // 异步获取当前比赛数据
 const compData = is_normal.value?await getComp('week'):await getComp('special')
 // 请求更新用户进度
-store.commit(UPDATE_USER_PARTICIPATION_DATA)
+store.updateUserParticipationData()
 
 // 获取用户进度
-const userParticipationData = computed(() => store.state.userParticipation)
+const userParticipationData = computed(() => store.userParticipation)
 // 根据进度，计算相关的项目
 const events_all = computed(() =>
     is_normal.value?

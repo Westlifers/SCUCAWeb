@@ -38,7 +38,7 @@
 
         <div class="scramble-footer">
           <p>Progress</p>
-          <el-progress :percentage="count/maxScrambleCount*100" :show-text="false" :status="count===maxScrambleCount?'success':''" />
+          <el-progress :percentage="count/maxScrambleCount*100" :show-text="false" :status="count===maxScrambleCount?'success':'exception'" />
           <p>{{`${count} / ${maxScrambleCount}`}}</p>
         </div>
 
@@ -123,7 +123,7 @@
 
     <div class="finished" v-else>
       <div class="finished-header account-profile">
-        <img :src="store.state.user.avatar" alt="" >
+        <img :src="store.user.avatar" alt="" >
         <div class="blob-wrap">
           <div class="blob"></div>
           <div class="blob"></div>
@@ -149,15 +149,17 @@
 <script lang="ts" setup>
 import {computed, reactive, ref, watch} from "vue";
 import {getComp} from "@/api/fetchData";
-import {store, UPDATE_USER_PARTICIPATION_DATA} from "@/store";
-import {Scramble} from "@/types";
-import {convert_time, SPECIAL_EVENTS, time_convert, translateEvent} from "@/utils";
-import {ElMessage, ElNotification, FormInstance} from "element-plus";
+import {localStore} from "@/store";
+import type {apiUsedEventName, Scramble} from "@/types";
+import {convert_time_str2num, SPECIAL_EVENTS, convert_time_num2str, translateEvent} from "@/utils";
+import type {FormInstance} from "element-plus";
+import {ElMessage, ElNotification} from "element-plus";
 import {postResult} from "@/api/service";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
 
 const curtain_state = ref(1)
+const store = localStore()
 const set_time = (time_) => {
   let time = time_.punishment === -1?0:time_.time
 
@@ -165,7 +167,7 @@ const set_time = (time_) => {
     state.resultForm[`time_${count.value}`] = 'DNF'
     return
   }
-  state.resultForm[`time_${count.value}`] = time_convert(convert_time(time.toFixed(3))).replace(/\s*/g,"")
+  state.resultForm[`time_${count.value}`] = convert_time_num2str(convert_time_str2num(time.toFixed(3))).replace(/\s*/g,"")
 
   // 自动进入下一个打乱
   if (count.value < maxScrambleCount.value) {
@@ -178,7 +180,7 @@ const set_time = (time_) => {
 
 const props = defineProps<{
   comp: string
-  activeEvent: string
+  activeEvent: apiUsedEventName
 }>()
 
 const count = ref(1)
@@ -191,10 +193,10 @@ const is_normal = computed(() => props.comp==='week')
 // 异步获取当前比赛数据
 const compData = is_normal.value?await getComp('week'):await getComp('special')
 // 请求更新用户进度
-store.commit(UPDATE_USER_PARTICIPATION_DATA)
+store.updateUserParticipationData()
 
 // 获取用户进度
-const userParticipationData = computed(() => store.state.userParticipation)
+const userParticipationData = computed(() => store.userParticipation)
 // 根据进度，计算相关的项目
 const events_all = computed(() =>
     is_normal.value?
@@ -352,11 +354,11 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
       const req = {
         competition: compId.value,
         event: props.activeEvent,
-        time_1: convert_time(state.resultForm.time_1),
-        time_2: convert_time(state.resultForm.time_2),
-        time_3: convert_time(state.resultForm.time_3),
-        time_4: convert_time(state.resultForm.time_4),
-        time_5: convert_time(state.resultForm.time_5),
+        time_1: convert_time_str2num(state.resultForm.time_1),
+        time_2: convert_time_str2num(state.resultForm.time_2),
+        time_3: convert_time_str2num(state.resultForm.time_3),
+        time_4: convert_time_str2num(state.resultForm.time_4),
+        time_5: convert_time_str2num(state.resultForm.time_5),
       }
       try {
         const data = await postResult(req)
@@ -365,7 +367,7 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
           message: '提交成功！',
           type: 'success',
         })
-        store.commit(UPDATE_USER_PARTICIPATION_DATA)
+        store.updateUserParticipationData()
         window.location.reload()
       }
       catch (e) {

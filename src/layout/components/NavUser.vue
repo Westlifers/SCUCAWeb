@@ -8,7 +8,7 @@
       <div class="user-avatar">
         <el-button class="out-btn" @click="visible=!visible;go_page('profile')" round>
           <el-avatar :src="avatar" size="default" />
-          <p>{{store.state.user.username}}</p>
+          <p>{{store.user.username}}</p>
         </el-button>
       </div>
     </template>
@@ -22,20 +22,22 @@
 </template>
 
 <script lang="ts" setup>
-import {LOG_OUT, store} from "@/store";
+import {localStore} from "@/store";
 import {computed, ref} from "vue";
 import {logout} from "@/api/service";
 import {get_user_avatar, go_page} from "@/utils";
 import router from "@/router";
 
-const avatar = await get_user_avatar(store.state.user.username)
-const isLoggedIn = computed(() => store.state.user.username !== '')
+const store = localStore()
+
+const avatar = await get_user_avatar(store.user.username)
+const isLoggedIn = computed(() => store.user.username !== '')
 
 const visible = ref(false)
 
 const logout_all = async () => {
   await logout()
-  store.commit(LOG_OUT)
+  await store.logOut()
   await router.push({name: 'login'})
 }
 
