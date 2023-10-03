@@ -143,3 +143,9 @@ export interface Room {
 
 export type apiUsedEventName = "333" | "222" | "444" | "555" | "666" | "777" | "333bld" | "333oh" | "clock" | "minx" | "pyra" | "skewb" | "sq1" | "444bld" | "555bld"
 export type twistyUsedEventName =  "3x3x3" | "custom" | "2x2x2" | "4x4x4" | "5x5x5" | "6x6x6" | "7x7x7" | "40x40x40" | "megaminx" | "pyraminx" | "square1" | "skewb" | "clock"
+
+
+export type lotteryResult = {
+    username: string
+    prize: string
+}
