@@ -148,4 +148,5 @@ export type twistyUsedEventName =  "3x3x3" | "custom" | "2x2x2" | "4x4x4" | "5x5
 export type lotteryResult = {
     username: string
     prize: string
+    node: string
 }
