@@ -8,17 +8,21 @@ const player = ref<TwistyPlayer | null>(null);
 const config = computed(() => Object.assign({}, {
     puzzle: props.puzzle,
     visualization: "3D",
-    hintFacelets: "none",
-    backView: 'none',
+    hintFacelets: "floating",
     background: 'transparent',
     tempoScale: 6,
-    experimentalMovePressInput: "basic",
+    experimentalMovePressInput: "auto",
     controlPanel: "none",
+    cameraLongitude: 0,
+    cameraLatitude: 45,
+    cameraDistance: 5,
+    experimentalDragInput: 'none',
 }))
 
 onMounted(async () => {
     if (container.value) {
         player.value = new TwistyPlayer(config.value);
+        player.value.experimentalModel.twistySceneModel.foundationDisplay.set('none')  // 魔方镂空
         if ("appendChild" in container.value) {
             container.value.appendChild(player.value);
         }
