@@ -1,14 +1,12 @@
 <template>
   <div class="twisty-player">
-    <div :id="uniqueId" ref="container"></div>
+    <div ref="container"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import {computed, onMounted, ref, watch} from 'vue';
 import {TwistyPlayer} from 'cubing/twisty';
-
-const uniqueId = 'twisty-player-' + (new Date()).getTime().toString();
 
 const container = ref<HTMLElement | null>(null);
 const player = ref<TwistyPlayer | null>(null);
