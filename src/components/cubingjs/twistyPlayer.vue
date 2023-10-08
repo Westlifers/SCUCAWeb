@@ -15,13 +15,13 @@ const config = computed(() => Object.assign({}, props, {
     controlPanel: "none",
 }))
 
-onMounted(() => {
-  if (container.value) {
-    player.value = new TwistyPlayer(config.value);
-      if ("appendChild" in container.value) {
-          container.value.appendChild(player.value);
-      }
-  }
+onMounted(async () => {
+    if (container.value) {
+        player.value = new TwistyPlayer(config.value);
+        if ("appendChild" in container.value) {
+            container.value.appendChild(player.value);
+        }
+    }
 });
 
 watch([() => props.alg, () => props.visualization], () => {
@@ -33,12 +33,10 @@ watch([() => props.alg, () => props.visualization], () => {
 });
 
 const props = defineProps<{
-  puzzle: "3x3x3" | "custom" | "2x2x2" | "4x4x4" | "5x5x5" | "6x6x6" | "7x7x7" | "40x40x40" | "megaminx" | "pyraminx" | "square1" | "clock" | "skewb" | "fto" | "gigaminx" | "master_tetraminx" | "kilominx" | "redi_cube" | "melindas2x2x2x2" | undefined;
-  alg: string;
+  puzzle: "3x3x3" | "custom" | "2x2x2" | "4x4x4" | "5x5x5" | "6x6x6" | "7x7x7" | "40x40x40" | "megaminx" | "pyraminx" | "square1" | "clock" | "skewb" | "fto" | "gigaminx" | "master_tetraminx" | "kilominx" | "redi_cube" | "melindas2x2x2x2";
+  alg?: string;
   visualization?: "2D" | "3D";
-  hintFacelets?: any
-  backView?: any;
-  background?: any;
+  background?: 'transparent';
 }>();
 </script>
 

@@ -1,6 +1,9 @@
 <template>
   <div class="cubing" tabindex="-1">
 
+<!--  test only  -->
+    <interactive-twisty-player puzzle="3x3x3" />
+
 
     <div class="cubing-header">
       <p>参加比赛</p>
@@ -27,7 +30,6 @@
 
         <div class="scramble-content" @click="curtain_state++">
           {{scrambleOfEvent[count - 1]}}
-          <!--     ignore the following warning, it's inevitable     -->
           <twisty-player
               v-if="imgVisible"
               :puzzle="translateEvent(activeEvent)"
@@ -157,6 +159,7 @@ import {ElMessage, ElNotification} from "element-plus";
 import {postResult} from "@/api/service";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
+import InteractiveTwistyPlayer from "@/components/cubingjs/interactiveTwistyPlayer.vue";
 
 const curtain_state = ref(1)
 const store = localStore()
