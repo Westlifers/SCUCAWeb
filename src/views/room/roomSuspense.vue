@@ -41,8 +41,10 @@
         </div>
         <div class="room_left_bar__chat__list">
           <el-scrollbar ref="scrollbarRef">
-            <div v-for="message in messageList" :key="message" class="room_left_bar__chat__list__message">
-              <p>{{message.sender}}: {{message.message}}</p>
+            <div ref="innerRef">
+              <div v-for="message in messageList" :key="message" class="room_left_bar__chat__list__message">
+                <p>{{message.sender}}: {{message.message}}</p>
+              </div>
             </div>
           </el-scrollbar>
         </div>
@@ -153,7 +155,7 @@
 //   }
 import router from "@/router";
 import type {Ref} from "vue";
-import {ref, watch} from "vue";
+import {nextTick, ref, watch} from "vue";
 import {ElMessage, ElScrollbar} from "element-plus";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
 import {convert_time_num2str, translateEvent} from "@/utils";
@@ -280,11 +282,14 @@ const exit = () => {
 
 // 滚动条自动滚动到底部
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
-watch(messageList.value, () => {
-  const maxScrollTop = scrollbarRef.value.wrapRef.scrollHeight - scrollbarRef.value.wrapRef.clientHeight
-  if (scrollbarRef.value) {
-    scrollbarRef.value.setScrollTop(maxScrollTop)
-  }
+const innerRef = ref<HTMLDivElement>()
+watch(messageList.value, async () => {
+    // 需要等待dom更新后才能获取到innerRef的新高度！这很重要，否则总是差一条消息的高度
+    await nextTick()
+    const maxScrollTop = innerRef.value?.clientHeight as number
+    if (scrollbarRef.value) {
+        scrollbarRef.value.setScrollTop(maxScrollTop)
+    }
 })
 </script>
 
