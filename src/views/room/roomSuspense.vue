@@ -22,8 +22,8 @@
                 </template>
                 <div class="room_left_bar__player_list__list__player__popover">
                   <el-scrollbar>
-                    <div v-for="result in playerResults[player]" :key="result" class="room_left_bar__player_list__list__player__popover__result">
-                      <p>{{ result > 0 ? convert_time_num2str(result) : (result == 0? 'DNF': '未开始') }}</p>
+                    <div v-for="result in Object.entries(playerResults[player])" :key="result" class="room_left_bar__player_list__list__player__popover__result">
+                      <p>第{{result[0]}}轮: {{ result[1] > 0 ? convert_time_num2str(result[1] as number) : (result[1] == 0? 'DNF': '未开始') }}</p>
                     </div>
                   </el-scrollbar>
                 </div>
@@ -43,7 +43,7 @@
           <el-scrollbar ref="scrollbarRef">
             <div ref="innerRef">
               <div v-for="message in messageList" :key="message" class="room_left_bar__chat__list__message">
-                <p>{{message.sender}}: {{message.message}}</p>
+                <chat-message :sender="message.sender" :avatar="avatars[message.sender]" :message="message.message" />
               </div>
             </div>
           </el-scrollbar>
@@ -158,9 +158,10 @@ import type {Ref} from "vue";
 import {nextTick, ref, watch} from "vue";
 import {ElMessage, ElScrollbar} from "element-plus";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
-import {convert_time_num2str, translateEvent} from "@/utils";
+import {convert_time_num2str, get_user_avatar, translateEvent} from "@/utils";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import type {apiUsedEventName} from "@/types";
+import ChatMessage from "@/views/room/components/chatMessage.vue";
 
 const message: Ref<string> = ref('');
 const scramble: Ref<string> = ref('');
@@ -181,6 +182,7 @@ const finished: Ref<boolean> = ref(false);
 const is_typing: Ref<boolean> = ref(false);  // 焦点在输入框上
 const imgVisible: Ref<boolean> = ref(true);
 const is3d: Ref<boolean> = ref(false);
+const avatars: Ref<object> = ref({})
 
 const roomId = router.currentRoute.value.params.roomId;
 const event = router.currentRoute.value.params.event as apiUsedEventName  // 此路由只能是项目名
@@ -207,7 +209,7 @@ pkSocket.onmessage = (event) => {
       round.value = message['round'];
       finished.value = false;
       for (let playerResult of Object.entries(playerResults.value)) {
-          playerResults[playerResult[0]][round.value] = -1;
+          playerResults.value[playerResult[0]][round.value] = -1;
       }
       break;
     case 'player_list':
@@ -250,23 +252,30 @@ const send_finish = () => {
     'time': time.value
   }));
 };
-watch(playerList, (newPlayerList, oldPlayerList) => {
-  if (newPlayerList.length > oldPlayerList.length) {
-    // add player who joined
+watch(playerList, async (newPlayerList, oldPlayerList) => {
+    if (newPlayerList.length > oldPlayerList.length) {
+        // add player who joined
+        for (let player of newPlayerList) {
+            if (!(oldPlayerList.indexOf(player) > -1)) {
+                console.log(player)
+                playerResults.value[player] = [];
+            }
+        }
+    } else {
+        // remove player who left
+        for (let player of oldPlayerList) {
+            if (!(newPlayerList.indexOf(player) > -1)) {
+                delete playerResults.value[player];
+            }
+        }
+    }
+
+    // add avatar
     for (let player of newPlayerList) {
-      if (!(oldPlayerList.indexOf(player) > -1)) {
-        console.log(player)
-        playerResults.value[player] = [];
-      }
+        if (!(player in avatars.value)) {
+            avatars.value[player] = await get_user_avatar(player);
+        }
     }
-  } else {
-    // remove player who left
-    for (let player of oldPlayerList) {
-      if (!(newPlayerList.indexOf(player) > -1)) {
-        delete playerResults.value[player];
-      }
-    }
-  }
 });
 
 // close the websocket when the user leaves the page
@@ -364,6 +373,10 @@ watch(messageList.value, async () => {
   align-items: stretch;
   height: 80%;
   text-align: left;
+}
+
+.room_left_bar__chat__list__message {
+    width: 100%;
 }
 
 
