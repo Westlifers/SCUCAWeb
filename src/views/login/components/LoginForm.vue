@@ -103,6 +103,8 @@ const handleLogin = (formEl: FormInstance | undefined) => {
 
         store.setUser(user);
         window.localStorage.setItem("userInfo", JSON.stringify(user))
+          //set expire time 2 weeks
+        window.localStorage.setItem("expire", String(Date.now() + 1000 * 60 * 60 * 24 * 13))
         ElNotification({
           title: '成功',
           message: '用户登录成功！',

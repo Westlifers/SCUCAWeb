@@ -1,12 +1,15 @@
 <template>
   <router-view></router-view>
+  <Suspense><login-expire-checker /></Suspense>
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue'
+import LoginExpireChecker from "@/components/loginExpireChecker.vue";
 
 export default defineComponent({
     name: 'App',
+    components: {LoginExpireChecker},
 });
 </script>
 
