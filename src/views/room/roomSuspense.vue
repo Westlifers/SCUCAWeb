@@ -18,12 +18,12 @@
                   trigger="hover"
               >
                 <template #reference>
-                  <p>{{player}}: {{playerResults[player][playerResults[player].length-1]>0?playerResults[player][playerResults[player].length-1]:'DNF'}}</p>
+                  <p>{{player}}: {{playerResults[player][round]>0?playerResults[player][round]:(playerResults[player][round]==0?'DNF':'未开始')}}</p>
                 </template>
                 <div class="room_left_bar__player_list__list__player__popover">
                   <el-scrollbar>
                     <div v-for="result in playerResults[player]" :key="result" class="room_left_bar__player_list__list__player__popover__result">
-                      <p>{{ result > 0 ? convert_time_num2str(result) : 'DNF' }}</p>
+                      <p>{{ result > 0 ? convert_time_num2str(result) : (result == 0? 'DNF': '未开始') }}</p>
                     </div>
                   </el-scrollbar>
                 </div>
@@ -40,7 +40,7 @@
           <p>聊天</p>
         </div>
         <div class="room_left_bar__chat__list">
-          <el-scrollbar>
+          <el-scrollbar ref="scrollbarRef">
             <div v-for="message in messageList" :key="message" class="room_left_bar__chat__list__message">
               <p>{{message.sender}}: {{message.message}}</p>
             </div>
@@ -154,7 +154,7 @@
 import router from "@/router";
 import type {Ref} from "vue";
 import {ref, watch} from "vue";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElScrollbar} from "element-plus";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
 import {convert_time_num2str, translateEvent} from "@/utils";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
@@ -164,6 +164,13 @@ const message: Ref<string> = ref('');
 const scramble: Ref<string> = ref('');
 const playerList: Ref<string[]> = ref([]);
 const playerResults: Ref<object> = ref({});
+// playerResults = {
+//  'Alice': {
+//    '1': 23.4,
+//    '2': 24.5,
+//    ...
+//  }, ...
+// }
 const messageList: Ref<object[]> = ref([]);
 const round: Ref<number> = ref(0);
 const time: Ref<number> = ref(0);
@@ -197,12 +204,15 @@ pkSocket.onmessage = (event) => {
       scramble.value = message['scramble'];
       round.value = message['round'];
       finished.value = false;
+      for (let playerResult of Object.entries(playerResults.value)) {
+          playerResults[playerResult[0]][round.value] = -1;
+      }
       break;
     case 'player_list':
       playerList.value = message['players'];
       break;
     case 'finish':
-      playerResults.value[message['sender']].push(convert_time_num2str(message['time']));
+      playerResults.value[message['sender']][round.value] = convert_time_num2str(message['time']);
       break;
     case 'results_of_this_round':
       playerResults.value = message['results'];
@@ -269,13 +279,13 @@ const exit = () => {
 
 
 // 滚动条自动滚动到底部
-setInterval(() => {
-  let scroll_bars = document.getElementsByClassName('el-scrollbar__wrap');
-  let scroll_bar = scroll_bars[scroll_bars.length - 1];
-  if (scroll_bar){
-    scroll_bar.scrollTop = scroll_bar.scrollHeight;
+const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
+watch(messageList.value, () => {
+  const maxScrollTop = scrollbarRef.value.wrapRef.scrollHeight - scrollbarRef.value.wrapRef.clientHeight
+  if (scrollbarRef.value) {
+    scrollbarRef.value.setScrollTop(maxScrollTop)
   }
-}, 1000);
+})
 </script>
 
 <style scoped>
