@@ -62,11 +62,11 @@
         <div class="room_header__right">
           <p>{{scramble}}</p>
         </div>
-        <el-divider direction="vertical"/>
+
         <div class="room_header__left">
-          <p>{{roomId}}</p>
-          <p>{{event}}</p>
-          <p>第{{round}}轮</p>
+          <el-tag type="success" size="large">{{roomId}}</el-tag>
+          <el-tag type="warning" size="large">{{event}}</el-tag>
+          <el-tag type="danger" size="large">第{{round}}轮</el-tag>
         </div>
       </div>
 
@@ -402,7 +402,7 @@ watch(messageList.value, async () => {
 .room_header__left {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
   width: 20%;

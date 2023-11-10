@@ -9,9 +9,9 @@ const props = defineProps<{
 <template>
 <div class="message-container">
   <div class="message-avatar">
-    <el-avatar :src="avatar" size="small" v-if="sender!=='SERVER'" />
+    <el-avatar style="margin-right: 10px" :src="avatar" size="small" v-if="sender!=='SERVER'" />
     <div class="message-sender">
-      <el-tag :type="sender=='SERVER'?'danger':'warning'">{{ props.sender }}</el-tag>
+      <el-tag :type="sender=='SERVER'?'danger':'success'" size="large">{{ props.sender }}</el-tag>
     </div>
   </div>
   <div class="message-content">
