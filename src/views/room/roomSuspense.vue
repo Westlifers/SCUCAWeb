@@ -190,6 +190,10 @@ pkSocket.onmessage = (event) => {
       break;
     case 'finish':
       playerResults.value[message['sender']][round.value] = convert_time_num2str(message['time']);
+      messageList.value.push({
+          sender: message['sender'],
+          message: convert_time_num2str(message['time'])
+      })
       break;
     case 'results_of_this_round':
       playerResults.value = message['results'];
