@@ -3,65 +3,11 @@
     <div class="app-main">
       <el-scrollbar ref="scrollbarRef">
         <div class="chat-wrapper" ref="innerRef">
-          <div class="message-wrapper reverse">
+          <div class="message-wrapper">
             <img class="message-pp" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80" alt="profile-pic">
             <div class="message-box-wrapper">
               <div class="message-box">
                 Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur
-              </div>
-              <span>9h ago</span>
-            </div>
-          </div>
-          <div class="message-wrapper reverse">
-            <img class="message-pp" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80" alt="profile-pic">
-            <div class="message-box-wrapper">
-              <div class="message-box">
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </div>
-              <span>9h ago</span>
-            </div>
-          </div>
-          <div class="message-wrapper">
-            <img class="message-pp" src="https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=934&amp;q=80" alt="profile-pic">
-            <div class="message-box-wrapper">
-              <div class="message-box">
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur
-              </div>
-              <span>9h ago</span>
-            </div>
-          </div>
-          <div class="message-wrapper">
-            <img class="message-pp" src="https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=934&amp;q=80" alt="profile-pic">
-            <div class="message-box-wrapper">
-              <div class="message-box">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-              </div>
-              <span>9h ago</span>
-            </div>
-          </div>
-          <div class="message-wrapper reverse">
-            <img class="message-pp" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80" alt="profile-pic">
-            <div class="message-box-wrapper">
-              <div class="message-box">
-                Lorem ipsum dolor sit amet
-              </div>
-              <span>9h ago</span>
-            </div>
-          </div>
-          <div class="message-wrapper reverse">
-            <img class="message-pp" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80" alt="profile-pic">
-            <div class="message-box-wrapper">
-              <div class="message-box">
-                Lorem ipsum dolor
-              </div>
-              <span>9h ago</span>
-            </div>
-          </div>
-          <div class="message-wrapper">
-            <img class="message-pp" src="https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=934&amp;q=80" alt="profile-pic">
-            <div class="message-box-wrapper">
-              <div class="message-box">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
               </div>
               <span>9h ago</span>
             </div>
@@ -75,45 +21,49 @@
         <button class="chat-send-btn" @click="send_chat_message">Send</button>
       </div>
     </div>
+
+
     <div class="app-right">
       <div class="chat-list-wrapper">
-        <div class="chat-list-header">Active Conversations <span class="c-number">4</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" class="feather feather-chevron-up" viewBox="0 0 24 24">
-            <defs/>
-            <path d="M18 15l-6-6-6 6"/>
-          </svg>
+        <div class="chat-list-header">在线玩家<span class="c-number">{{playerList.length}}</span><el-tag>第{{round}}轮</el-tag>
         </div>
         <ul class="chat-list active">
-          <li class="chat-list-item active">
-            <img src="https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80" alt="chat">
-            <span class="chat-list-name">Dwight Schrute</span>
-          </li>
-          <li class="chat-list-item">
-            <img src="https://images.unsplash.com/photo-1566465559199-50c6d9c81631?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80" alt="chat">
-            <span class="chat-list-name">Andy Bernard</span>
-          </li>
-          <li class="chat-list-item">
-            <img src="https://images.unsplash.com/photo-1562788869-4ed32648eb72?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2552&q=80" alt="chat">
-            <span class="chat-list-name">Michael Scott</span>
-          </li>
-          <li class="chat-list-item">
-            <img src="https://images.unsplash.com/photo-1604004555489-723a93d6ce74?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=934&q=80" alt="chat">
-            <span class="chat-list-name">Holy Flax</span>
-          </li>
-          <li class="chat-list-item">
-            <img src="https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE1fHx8ZW58MHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="chat">
-            <span class="chat-list-name">Jim Halpert</span>
+          <li class="chat-list-item active" v-for="player in playerList" :key="player">
+            <img :src="avatars[player]" :alt="player">
+            <span class="chat-list-name">{{player}}</span>
           </li>
         </ul>
       </div>
       <div class="app-profile-box">
-        <img src="https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80" alt="profile">
-        <p class="app-profile-box-title name"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Dwight Scrute</p>
-        <p class="app-profile-box-title mail"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>dwightscrute@test.com</p>
-        <button class="archive-btn">Archive<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-archive" viewBox="0 0 24 24">
-          <defs/>
-          <path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4"/>
-        </svg></button>
+        <div class="activity-info-box time">
+          <div class="info-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-clock" viewBox="0 0 24 24">
+              <defs></defs>
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 6v6l4 2"></path>
+            </svg>
+          </div>
+          <div class="info-text-wrapper">
+            <span class="info-text-upper">{{ time === 0 ? 'DNF' : convert_time_num2str(time) }}</span>
+            <span class="info-text-bottom">Time</span>
+          </div>
+        </div>
+        <div class="room_main__scramble_img">
+          <twisty-player
+              v-if="imgVisible"
+              :puzzle="translateEvent(event)"
+              :alg="scramble"
+              :visualization="is3d? '3D' : '2D'"
+          />
+          <div class="scramble-img-select">
+            <el-button
+                type="primary"
+                @click="is3d = !is3d"
+            >
+              {{is3d ? '2D' : '3D'}} 视角
+            </el-button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -230,6 +180,10 @@ pkSocket.onmessage = (event) => {
       for (let playerResult of Object.entries(playerResults.value)) {
           playerResults.value[playerResult[0]][round.value] = -1;
       }
+      messageList.value.push({
+          sender: 'SERVER',
+          message: `第${round.value}轮打乱：${scramble.value}`
+      })
       break;
     case 'player_list':
       playerList.value = message['players'];
@@ -325,5 +279,7 @@ watch(messageList.value, async () => {
 </script>
 
 <style scoped>
-
+.app-profile-box {
+    overflow: hidden;
+}
 </style>

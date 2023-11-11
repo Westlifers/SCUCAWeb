@@ -568,6 +568,7 @@ html.dark {
   padding: 10px;
   margin-bottom: 8px;
   display: flex;
+  height: 60px;
 }
 .activity-info-box.time {
   background-color: var(--info-box-1);
