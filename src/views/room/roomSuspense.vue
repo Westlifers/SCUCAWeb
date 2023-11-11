@@ -25,12 +25,15 @@
 
     <div class="app-right">
       <div class="chat-list-wrapper">
-        <div class="chat-list-header">在线玩家<span class="c-number">{{playerList.length}}</span><el-tag>第{{round}}轮</el-tag>
+        <div class="chat-list-header">
+          <div class="chat-list-header-left">在线玩家<span class="c-number">{{playerList.length}}</span><el-tag>第{{round}}轮</el-tag></div>
+          <div class="chat-list-header-right"><el-button style="font-size: 12px;" type="danger" @click="exit">Exit <el-icon><CloseBold /></el-icon></el-button></div>
         </div>
         <ul class="chat-list active">
           <li class="chat-list-item active" v-for="player in playerList" :key="player">
             <img :src="avatars[player]" :alt="player">
-            <span class="chat-list-name">{{player}}</span>
+            <span class="chat-list-name">{{player}}：</span>
+            <span class="chat-list-name-result">{{playerResults[player][round]>0?playerResults[player][round]:(playerResults[player][round]==0?'DNF':'未开始')}}</span>
           </li>
         </ul>
       </div>
@@ -285,5 +288,19 @@ watch(messageList.value, async () => {
 <style scoped>
 .app-profile-box {
     overflow: hidden;
+}
+
+.chat-list-header {
+    display: flex;
+    justify-content: space-between;
+}
+.chat-list-header-left {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.chat-list-name-result {
+    font-size: 14px;
 }
 </style>
