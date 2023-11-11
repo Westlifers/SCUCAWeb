@@ -18,6 +18,7 @@ import createKatexPlugin from '@kangc/v-md-editor/lib/plugins/katex/cdn';
 
 import './styles/dark/dark-style.css'
 import './styles/style.css'
+import './styles/chat-style.css'
 
 // highlight.js
 import hljs from 'highlight.js';

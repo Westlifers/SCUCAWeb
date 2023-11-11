@@ -1,23 +1,20 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   message: string
   sender: string
   avatar: string
+  selfSend: boolean
 }>()
 </script>
 
 <template>
-<div class="message-container">
-  <div class="message-avatar">
-    <el-avatar style="margin-right: 10px" :src="avatar" size="small" v-if="sender!=='SERVER'" />
-    <div class="message-sender">
-      <el-tag :type="sender=='SERVER'?'danger':'success'" size="large">{{ props.sender }}</el-tag>
+<div class="message-wrapper" :class="{'reverse': selfSend}">
+  <img class="message-pp" :src="avatar" alt="profile-pic">
+  <div class="message-box-wrapper">
+    <div class="message-box">
+      {{message}}
     </div>
-  </div>
-  <div class="message-content">
-    <el-card>
-      {{ props.message }}
-    </el-card>
+    <span>{{sender}}</span>
   </div>
 </div>
 </template>

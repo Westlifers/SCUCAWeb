@@ -1,104 +1,121 @@
 <template>
-  <div class="room_container">
-
-
-    <div class="room_left_bar">
-
-      <div class="room_left_bar__player_list">
-        <div class="room_left_bar__player_list__title">
-          <el-button type="danger" @click="exit">退出房间</el-button>
-          <p>玩家列表</p>
-        </div>
-        <div class="room_left_bar__player_list__list">
-          <el-scrollbar>
-            <div v-for="player in playerList" :key="player" class="room_left_bar__player_list__list__player">
-              <el-popover
-                  placement="right"
-                  width="200"
-                  trigger="hover"
-              >
-                <template #reference>
-                  <p>{{player}}: {{playerResults[player][round]>0?playerResults[player][round]:(playerResults[player][round]==0?'DNF':'未开始')}}</p>
-                </template>
-                <div class="room_left_bar__player_list__list__player__popover">
-                  <el-scrollbar>
-                    <div v-for="result in Object.entries(playerResults[player])" :key="result" class="room_left_bar__player_list__list__player__popover__result">
-                      <p>第{{result[0]}}轮: {{ result[1] > 0 ? convert_time_num2str(result[1] as number) : (result[1] == 0? 'DNF': '未开始') }}</p>
-                    </div>
-                  </el-scrollbar>
-                </div>
-              </el-popover>
-            </div>
-          </el-scrollbar>
-        </div>
-      </div>
-
-      <el-divider />
-
-      <div class="room_left_bar__chat">
-        <div class="room_left_bar__chat__title">
-          <p>聊天</p>
-        </div>
-        <div class="room_left_bar__chat__list">
-          <el-scrollbar ref="scrollbarRef">
-            <div ref="innerRef">
-              <div v-for="message in messageList" :key="message" class="room_left_bar__chat__list__message">
-                <chat-message :sender="message.sender" :avatar="avatars[message.sender]" :message="message.message" />
+  <div class="app-container">
+    <div class="app-main">
+      <el-scrollbar ref="scrollbarRef">
+        <div class="chat-wrapper" ref="innerRef">
+          <div class="message-wrapper reverse">
+            <img class="message-pp" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80" alt="profile-pic">
+            <div class="message-box-wrapper">
+              <div class="message-box">
+                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur
               </div>
+              <span>9h ago</span>
             </div>
-          </el-scrollbar>
-        </div>
-        <div class="room_left_bar__chat__input">
-          <el-input v-model="message" placeholder="输入消息" @keydown.enter="send_chat_message" @focus="is_typing=true" @blur="is_typing=false" />
-        </div>
-      </div>
-
-    </div>
-
-    <el-divider direction="vertical" style="height: 100%" />
-
-    <div class="room_right_container">
-      <div class="room_header">
-        <div class="room_header__right">
-          <p>{{scramble}}</p>
-        </div>
-
-        <div class="room_header__left">
-          <el-tag type="success" size="large">{{roomId}}</el-tag>
-          <el-tag type="warning" size="large">{{event}}</el-tag>
-          <el-tag type="danger" size="large">第{{round}}轮</el-tag>
-        </div>
-      </div>
-
-      <div class="room_main">
-        <div class="room_main__time">
-          <p>{{ time === 0 ? 'DNF' : convert_time_num2str(time) }}</p>
-        </div>
-        <div class="room_main__scramble_img">
-          <twisty-player
-              v-if="imgVisible"
-              :puzzle="translateEvent(event)"
-              :alg="scramble"
-              :visualization="is3d? '3D' : '2D'"
-          />
-          <div class="scramble-img-select">
-            <el-button
-                type="primary"
-                @click="imgVisible = !imgVisible"
-            >
-              {{imgVisible ? 'Hide' : 'Show'}} Scramble
-            </el-button>
-            <el-button
-                type="primary"
-                @click="is3d = !is3d"
-            >
-              {{is3d ? '2D' : '3D'}} Visualization
-            </el-button>
           </div>
+          <div class="message-wrapper reverse">
+            <img class="message-pp" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80" alt="profile-pic">
+            <div class="message-box-wrapper">
+              <div class="message-box">
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+              <span>9h ago</span>
+            </div>
+          </div>
+          <div class="message-wrapper">
+            <img class="message-pp" src="https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=934&amp;q=80" alt="profile-pic">
+            <div class="message-box-wrapper">
+              <div class="message-box">
+                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur
+              </div>
+              <span>9h ago</span>
+            </div>
+          </div>
+          <div class="message-wrapper">
+            <img class="message-pp" src="https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=934&amp;q=80" alt="profile-pic">
+            <div class="message-box-wrapper">
+              <div class="message-box">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              </div>
+              <span>9h ago</span>
+            </div>
+          </div>
+          <div class="message-wrapper reverse">
+            <img class="message-pp" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80" alt="profile-pic">
+            <div class="message-box-wrapper">
+              <div class="message-box">
+                Lorem ipsum dolor sit amet
+              </div>
+              <span>9h ago</span>
+            </div>
+          </div>
+          <div class="message-wrapper reverse">
+            <img class="message-pp" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80" alt="profile-pic">
+            <div class="message-box-wrapper">
+              <div class="message-box">
+                Lorem ipsum dolor
+              </div>
+              <span>9h ago</span>
+            </div>
+          </div>
+          <div class="message-wrapper">
+            <img class="message-pp" src="https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=934&amp;q=80" alt="profile-pic">
+            <div class="message-box-wrapper">
+              <div class="message-box">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              </div>
+              <span>9h ago</span>
+            </div>
+          </div>
+          <chat-message v-for="message in messageList" :key="message" :sender="message.sender" :self-send="message.sender==store.user.username" :avatar="avatars[message.sender]" :message="message.message" />
         </div>
+      </el-scrollbar>
+
+      <div class="chat-input-wrapper">
+        <el-input type="text" @keydown.enter="send_chat_message" v-model="message" placeholder="Enter your message here" @focus="is_typing=true" @blur="is_typing=false" />
+        <button class="chat-send-btn" @click="send_chat_message">Send</button>
       </div>
     </div>
-
+    <div class="app-right">
+      <div class="chat-list-wrapper">
+        <div class="chat-list-header">Active Conversations <span class="c-number">4</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" class="feather feather-chevron-up" viewBox="0 0 24 24">
+            <defs/>
+            <path d="M18 15l-6-6-6 6"/>
+          </svg>
+        </div>
+        <ul class="chat-list active">
+          <li class="chat-list-item active">
+            <img src="https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80" alt="chat">
+            <span class="chat-list-name">Dwight Schrute</span>
+          </li>
+          <li class="chat-list-item">
+            <img src="https://images.unsplash.com/photo-1566465559199-50c6d9c81631?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80" alt="chat">
+            <span class="chat-list-name">Andy Bernard</span>
+          </li>
+          <li class="chat-list-item">
+            <img src="https://images.unsplash.com/photo-1562788869-4ed32648eb72?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2552&q=80" alt="chat">
+            <span class="chat-list-name">Michael Scott</span>
+          </li>
+          <li class="chat-list-item">
+            <img src="https://images.unsplash.com/photo-1604004555489-723a93d6ce74?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=934&q=80" alt="chat">
+            <span class="chat-list-name">Holy Flax</span>
+          </li>
+          <li class="chat-list-item">
+            <img src="https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE1fHx8ZW58MHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="chat">
+            <span class="chat-list-name">Jim Halpert</span>
+          </li>
+        </ul>
+      </div>
+      <div class="app-profile-box">
+        <img src="https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80" alt="profile">
+        <p class="app-profile-box-title name"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Dwight Scrute</p>
+        <p class="app-profile-box-title mail"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>dwightscrute@test.com</p>
+        <button class="archive-btn">Archive<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-archive" viewBox="0 0 24 24">
+          <defs/>
+          <path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4"/>
+        </svg></button>
+      </div>
+    </div>
   </div>
 
   <timing-curtain :state="timingState" @timing-over="set_time" v-if="!finished && !is_typing" />
@@ -162,6 +179,7 @@ import {convert_time_num2str, get_user_avatar, translateEvent} from "@/utils";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import type {apiUsedEventName} from "@/types";
 import ChatMessage from "@/views/room/components/chatMessage.vue";
+import {localStore} from "@/store";
 
 const message: Ref<string> = ref('');
 const scramble: Ref<string> = ref('');
@@ -183,6 +201,7 @@ const is_typing: Ref<boolean> = ref(false);  // 焦点在输入框上
 const imgVisible: Ref<boolean> = ref(true);
 const is3d: Ref<boolean> = ref(false);
 const avatars: Ref<object> = ref({})
+const store = localStore()
 
 const roomId = router.currentRoute.value.params.roomId;
 const event = router.currentRoute.value.params.event as apiUsedEventName  // 此路由只能是项目名
@@ -271,8 +290,11 @@ watch(playerList, async (newPlayerList, oldPlayerList) => {
     }
 
     // add avatar
-    for (let player of newPlayerList) {
-        if (!(player in avatars.value)) {
+    for (let player of ['SERVER'].concat(newPlayerList)) {
+        if (player == 'SERVER') {
+            avatars.value[player] = 'http://img.yougi.top/default.png'
+        }
+        else if (!(player in avatars.value)) {
             avatars.value[player] = await get_user_avatar(player);
         }
     }
@@ -303,169 +325,5 @@ watch(messageList.value, async () => {
 </script>
 
 <style scoped>
-.room_container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  height: 100%;
-  width: 100%;
-  background-color: var(--yougi-projects-section);
-  border-radius: 30px;
-  padding: 20px 20px 20px 20px;
-}
 
-.room_left_bar {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch;
-  height: 100%;
-  width: 30%;
-}
-
-.room_left_bar__player_list {
-  max-height: 20%;
-}
-.room_left_bar__player_list__list {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  height: 80%;
-}
-.room_left_bar__player_list__title {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: center;
-}
-.room_left_bar__player_list__title button {
-  font-size: 12px;
-  margin-bottom: 10px;
-}
-.room_left_bar__player_list__title p {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding: 0;
-}
-.room_left_bar__chat__title p {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
-.room_left_bar__chat {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch;
-  height: 70%;
-  width: 100%;
-}
-
-.room_left_bar__chat__list {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  height: 80%;
-  text-align: left;
-}
-
-.room_left_bar__chat__list__message {
-    width: 100%;
-}
-
-
-.room_right_container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch;
-  height: 100%;
-  width: 70%;
-}
-
-
-.room_header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 10%;
-  width: 100%;
-}
-
-.room_header__left {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  width: 20%;
-}
-.room_header__left p:first-child {
-  font-size: 30px;
-  font-weight: bold;
-  margin-right: 20px;
-}
-.room_header__left p:nth-child(2) {
-  font-size: 20px;
-  font-weight: bold;
-  margin-right: 20px;
-}
-.room_header__left p:last-child {
-  font-size: 20px;
-  font-weight: bold;
-  margin-right: 20px;
-}
-
-.room_header__right {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 80%;
-}
-.room_header__right p {
-  font-size: 20px;
-  font-weight: bold;
-  margin-right: 20px;
-}
-
-
-.room_main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 80%;
-  width: 100%;
-}
-.room_main__time {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-}
-.room_main__time p {
-  font-size: 100px;
-  font-weight: bold;
-  margin-bottom: 100px;
-}
-.room_main__scramble_img {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-.scramble-img-select {
-  display: flex;
-  justify-content: flex-end;
-}
 </style>
