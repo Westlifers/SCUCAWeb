@@ -3,15 +3,6 @@
     <div class="app-main">
       <el-scrollbar ref="scrollbarRef">
         <div class="chat-wrapper" ref="innerRef">
-          <div class="message-wrapper">
-            <img class="message-pp" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80" alt="profile-pic">
-            <div class="message-box-wrapper">
-              <div class="message-box">
-                Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur
-              </div>
-              <span>9h ago</span>
-            </div>
-          </div>
           <chat-message v-for="message in messageList" :key="message" :sender="message.sender" :self-send="message.sender==store.user.username" :avatar="avatars[message.sender]" :message="message.message" />
         </div>
       </el-scrollbar>
