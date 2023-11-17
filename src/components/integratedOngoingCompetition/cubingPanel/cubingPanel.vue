@@ -148,41 +148,52 @@
 
 <script lang="ts" setup>
 import {computed, reactive, ref, watch} from "vue";
-import {getComp} from "@/api/fetchData";
+import {getComp, getCompCachedResult} from "@/api/fetchData";
 import {localStore} from "@/store";
-import type {apiUsedEventName, Scramble} from "@/types";
+import type {apiUsedEventName, CachedResult, Scramble} from "@/types";
 import {convert_time_str2num, SPECIAL_EVENTS, convert_time_num2str, translateEvent} from "@/utils";
 import type {FormInstance} from "element-plus";
 import {ElMessage, ElNotification} from "element-plus";
-import {postResult} from "@/api/service";
+import {postResult, postTempResult} from "@/api/service";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
 
 const curtain_state = ref(1)
 const store = localStore()
-const set_time = (time_) => {
+const set_time = async (time_) => {
   let time = time_.punishment === -1?0:time_.time
 
   if (time === 0) {
     state.resultForm[`time_${count.value}`] = 'DNF'
-    return
   }
-  state.resultForm[`time_${count.value}`] = convert_time_num2str(convert_time_str2num(time.toFixed(3))).replace(/\s*/g,"")
+  else {
+    state.resultForm[`time_${count.value}`] = convert_time_num2str(convert_time_str2num(time.toFixed(3))).replace(/\s*/g,"")
+  }
+
+  // 将成绩缓存到服务器
+  await postTempResult({
+    wos: props.comp,
+    event: props.activeEvent,
+    order: count.value,
+    result: time,
+  })
 
   // 自动进入下一个打乱
   if (count.value < maxScrambleCount.value) {
     count.value += 1
   }
+
 }
+
+const props = defineProps<{
+    comp: string
+    activeEvent: apiUsedEventName
+}>()
+
+const cachedResult = await getCompCachedResult(props.comp)
 
 
 // 下面是直接复制以前的代码，所以有些变量名可能不太合适，并且可能很混乱。但是这个组件的功能是可以正常使用的。
-
-const props = defineProps<{
-  comp: string
-  activeEvent: apiUsedEventName
-}>()
-
 const count = ref(1)
 const dialogVisible = ref(false)
 const imgVisible = ref(false)
@@ -239,13 +250,35 @@ const maxScrambleCount = computed(() => {
 })
 // 切换项目时清除表单
 watch(() => props.activeEvent, () => {
-  count.value = 1
-  state.resultForm.time_1 = ''
-  state.resultForm.time_2 = ''
-  state.resultForm.time_3 = ''
-  state.resultForm.time_4 = ''
-  state.resultForm.time_5 = ''
+  let cacheOfThisEvent: CachedResult = {
+    event: props.activeEvent,
+    time_1: -1, time_2: -1, time_3: -1, time_4: -1, time_5: -1
+  }
+  // 遍历寻找是否有对应的缓存，否则取以上的默认值
+  for (const cache of cachedResult) {
+    if (cache.event == props.activeEvent) cacheOfThisEvent = cache
+  }
+  // 计算现在应该到哪一把了
+  for (let i = 1; i <= 5; i++) {
+    if (cacheOfThisEvent[`time_${i}`] === -1) {
+      count.value = i
+      // 但是注意不能超出最大轮数，这会发生在用户已经完成但忘了提交后重新加载时
+      if (count.value > maxScrambleCount.value) count.value = maxScrambleCount.value
+      break
+    }
+  }
+  // 把缓存成绩填进去
+  for (let i = 1; i <= 5; i++) {
+    if (cacheOfThisEvent[`time_${i}`] === -1) {
+      state.resultForm[`time_${i}`] = ''
+    }
+    else {
+      state.resultForm[`time_${i}`] = cacheOfThisEvent[`time_${i}`]==0?'DNF':convert_time_num2str(cacheOfThisEvent[`time_${i}`]).replace(/\s*/g,"")
+    }
+  }
+
 })
+
 // 是否是特殊项目
 const is_special = computed(() => maxScrambleCount.value === 3)
 const scrambleOfEvent = computed(() => {

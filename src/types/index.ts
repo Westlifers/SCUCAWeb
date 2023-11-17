@@ -27,6 +27,16 @@ export interface Result {
 }
 
 
+export interface CachedResult {
+    event: string,
+    time_1: number,
+    time_2: number,
+    time_3: number,
+    time_4: number,
+    time_5: number,
+}
+
+
 export interface OmittedCompetition {
     compId: string,
     is_normal: boolean,

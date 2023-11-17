@@ -1,6 +1,6 @@
 import request from "@/api/index";
 import type {
-    Announcement,
+    Announcement, CachedResult,
     DetailedCompetition,
     OmittedCompetition,
     OmittedResultAvg,
@@ -83,6 +83,40 @@ export async function getComp (compId: string): Promise<DetailedCompetition> {
         result_set: result_set,
         scramble_set: scramble_set
     }
+}
+
+
+export async function getCompCachedResult (compId: string): Promise<CachedResult[]> {
+    let res
+    // 当comp为'week'，查询当前周赛；为' special '，查询当前正赛；为其它，查询compId对应的比赛
+    switch (compId) {
+        case 'week':
+            res = await request({
+                url: '/competition/cached-result/?wos=week',
+                method: 'get',
+            })
+            break
+        case 'special':
+            res = await request({
+                url: '/competition/cached-result/?wos=special',
+                method: 'get',
+            })
+            break
+    }
+
+    const tempResults: CachedResult[] = []
+    for (const result of res) {
+        tempResults.push({
+            event: result['event'],
+            time_1: result['time_1'],
+            time_2: result['time_2'],
+            time_3: result['time_3'],
+            time_4: result['time_4'],
+            time_5: result['time_5'],
+        })
+    }
+
+    return tempResults
 }
 
 

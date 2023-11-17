@@ -33,6 +33,13 @@ export async function postResult(data: any) {
     })
 }
 
+export async function postTempResult(data: any) {
+    return request({
+        url: `/competition/cached-result/?wos=${data['wos']}&event=${data['event']}&order=${data['order']}&result=${data['result']}`,
+        method: 'post',
+    })
+}
+
 export async function createCompetition(comp: string, data: any) {
     if (comp === 'week') {
         return request({
