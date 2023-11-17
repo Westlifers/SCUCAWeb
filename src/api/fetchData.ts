@@ -104,7 +104,12 @@ export async function getCompCachedResult (compId: string): Promise<CachedResult
             break
     }
 
+    console.log(res)
+
     const tempResults: CachedResult[] = []
+    if ('detail' in res) {
+        return tempResults
+    }
     for (const result of res) {
         tempResults.push({
             event: result['event'],
