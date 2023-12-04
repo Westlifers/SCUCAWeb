@@ -1,7 +1,7 @@
 <template>
   <div class="announcements">
     <div class="announcement-header">
-      <p>Announcements</p>
+      <p>更新与公告</p>
       <p>{{(new Date()).toDateString()}}</p>
     </div>
 

@@ -2,7 +2,7 @@
   <div class="notification">
 
     <div class="notification-header">
-      <p>Activities</p>
+      <p>社团动态</p>
     </div>
 
 
