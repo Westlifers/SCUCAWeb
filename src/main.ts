@@ -16,6 +16,8 @@ import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
 import '@kangc/v-md-editor/lib/theme/style/github.css';
 import createKatexPlugin from '@kangc/v-md-editor/lib/plugins/katex/cdn';
 
+import "@cubing/icons";
+
 import './styles/dark/dark-style.css'
 import './styles/style.css'
 import './styles/chat-style.css'
