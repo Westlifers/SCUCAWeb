@@ -50,7 +50,7 @@ export function convert_time_num2str(time: number): string {
 }
 
 export const SPECIAL_EVENTS = ['333bld', '444bld', '555bld', '666', '777']
-export const ALL_EVENTS = ['333', '222', '444', '555', '666', '777', '333bld', '333oh', 'clock', 'minx', 'pyra', 'skewb', 'sq1', '444bld', '555bld']
+export const ALL_EVENTS: apiUsedEventName[] = ['333', '222', '444', '555', '666', '777', '333bld', '333oh', 'clock', 'minx', 'pyra', 'skewb', 'sq1', '444bld', '555bld']
 
 
 export async function get_user_avatar(username: string) {

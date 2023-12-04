@@ -11,7 +11,9 @@
               :key="event"
               :label="event"
               :value="event"
-          />
+          >
+            <span class="cubing-icon" :class="`event-${translateEventForScramble(event)}`"><span style="margin-left: 5px">{{event}}</span></span>
+          </el-option>
         </el-select>
         <el-select v-model="aorb" placeholder="选择类型" size="small">
           <el-option label="平均" value="avg" />
@@ -37,7 +39,7 @@ import DataTable from "@/views/rank/components/DataTable.vue";
 import type {Ref} from "vue";
 import {computed, ref, watch} from "vue";
 import type {RankPaginationData} from "@/types";
-import {ALL_EVENTS} from "@/utils";
+import {ALL_EVENTS, translateEventForScramble} from "@/utils";
 
 // contributed by ChatGPT, cheers for AI!
 

@@ -3,8 +3,6 @@
     <div class="results-header">
       <p>本周成绩</p>
       <div class="selector">
-        <el-button icon="ArrowLeft" size="small" round :disabled="events.indexOf(activeEvent) <= 0"
-                   @click="emits('setEvent', events[events.indexOf(activeEvent) - 1])" />
         <p>
           <el-select v-model="activeEvent">
             <el-option
@@ -12,11 +10,11 @@
                 :key="event"
                 :label="event"
                 :value="event"
-            />
+            >
+              <span class="cubing-icon" :class="`event-${translateEventForScramble(event)}`"><span style="margin-left: 5px">{{event}}</span></span>
+            </el-option>
           </el-select>
         </p>
-        <el-button icon="ArrowRight" size="small" round :disabled="events.indexOf(activeEvent) >= events.length - 1"
-                   @click="emits('setEvent', events[events.indexOf(activeEvent) + 1])"/>
       </div>
     </div>
 
@@ -33,7 +31,12 @@
 import {getComp} from "@/api/fetchData";
 import type {Ref} from "vue";
 import {computed, ref, watch} from "vue";
-import {classifyTableDataByEvent, get_user_avatar, getSortedEventsFromTableData} from "@/utils";
+import {
+  classifyTableDataByEvent,
+  get_user_avatar,
+  getSortedEventsFromTableData,
+  translateEventForScramble
+} from "@/utils";
 import DataTable from "@/components/competitionDetail/DataTable.vue";
 import type {apiUsedEventName, DetailedCompetition} from "@/types";
 

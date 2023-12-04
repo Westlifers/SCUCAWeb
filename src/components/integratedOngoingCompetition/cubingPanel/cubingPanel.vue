@@ -37,7 +37,11 @@
         </div>
 
         <div class="scramble-footer">
-          <p>Progress</p>
+          <p style="width: 100%; display: flex; justify-content: space-between; font-size: 14px">
+            <span>当前进度</span>
+            <span v-if="!isMobile">按空格开始观察</span>
+            <span v-else>点击打乱公式开始观察</span>
+          </p>
           <el-progress :percentage="count/maxScrambleCount*100" :show-text="false" :status="count===maxScrambleCount?'success':'exception'" />
           <p>{{`${count} / ${maxScrambleCount}`}}</p>
         </div>
@@ -191,6 +195,11 @@ const props = defineProps<{
 }>()
 
 const cachedResult = await getCompCachedResult(props.comp)
+
+// check if device is mobile
+const isMobile = computed(() => {
+  return window.innerWidth < 768
+})
 
 
 // 下面是直接复制以前的代码，所以有些变量名可能不太合适，并且可能很混乱。但是这个组件的功能是可以正常使用的。
