@@ -136,6 +136,18 @@
       </div>
       <div class="finished-content">
         <p>你已经完成了此项目</p>
+        <div class="scramble-content">
+          <div class="control">
+            <el-button-group>
+              <el-button type="primary" icon="ArrowLeft" @click="count--" :disabled="count===1"></el-button>
+              <el-button type="primary" icon="ArrowRight" @click="count++" :disabled="count===maxScrambleCount"></el-button>
+            </el-button-group>
+          </div>
+          <div class="scramble">
+            <p>{{`第${count}次打乱`}}</p>
+            <p>{{scrambleOfEvent[count - 1]}}</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -154,8 +166,8 @@
 import {computed, reactive, ref, watch} from "vue";
 import {getComp, getCompCachedResult} from "@/api/fetchData";
 import {localStore} from "@/store";
-import type {apiUsedEventName, CachedResult, Scramble} from "@/types";
-import {convert_time_str2num, SPECIAL_EVENTS, convert_time_num2str, translateEvent} from "@/utils";
+import type {apiUsedEventName, CachedResult} from "@/types";
+import {convert_time_num2str, convert_time_str2num, SPECIAL_EVENTS, translateEvent} from "@/utils";
 import type {FormInstance} from "element-plus";
 import {ElMessage, ElNotification} from "element-plus";
 import {postResult, postTempResult} from "@/api/service";
@@ -238,17 +250,6 @@ const events_available = computed(() => {
   return events_available
 })
 
-// 未完成的打乱
-const scrambles_available = computed(() => {
-  const scramble_set: Scramble[] = []
-  for (let scramble of compData.scramble_set) {
-    if (events_available.value.indexOf(scramble.event) > -1) {
-      scramble_set.push(scramble)
-    }
-  }
-  return scramble_set
-})
-
 // 打乱数
 const maxScrambleCount = computed(() => {
   if (SPECIAL_EVENTS.indexOf(props.activeEvent) > -1) {
@@ -291,7 +292,7 @@ watch(() => props.activeEvent, () => {
 // 是否是特殊项目
 const is_special = computed(() => maxScrambleCount.value === 3)
 const scrambleOfEvent = computed(() => {
-  for (let scramble of scrambles_available.value) {
+  for (let scramble of compData.scramble_set) {
     if (scramble.event === props.activeEvent) {
       return [scramble.scramble_1, scramble.scramble_2, scramble.scramble_3, scramble.scramble_4, scramble.scramble_5]
     }
