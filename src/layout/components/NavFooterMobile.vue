@@ -13,21 +13,27 @@ const avatar = await get_user_avatar(store.user.username)
 <template>
   <el-menu default-active="1" class="nav-footer-mobile" mode="horizontal">
 
-    <el-menu-item index="1" @click="go_page('week')">
-      <el-icon size="100"><TrendCharts /></el-icon>
-    </el-menu-item>
-
-    <el-menu-item index="2" @click="go_page('index')">
+    <el-menu-item index="1" @click="go_page('index')">
       <el-icon size="100"><ElementPlus /></el-icon>
     </el-menu-item>
 
 
-    <el-menu-item index="3" @click="go_page('pk')">
+    <el-menu-item index="2" @click="go_page('mobileWeek')">
+      <el-icon size="100"><Grid /></el-icon>
+    </el-menu-item>
+
+
+    <el-menu-item index="3" @click="go_page('mobileWeekRank')">
+      <el-icon size="100"><Trophy /></el-icon>
+    </el-menu-item>
+
+
+    <el-menu-item index="4" @click="go_page('pk')">
       <el-icon size="100"><Timer /></el-icon>
     </el-menu-item>
 
 
-    <el-menu-item index="4" @click="go_page('profile')">
+    <el-menu-item index="5" @click="go_page('profile')">
       <el-avatar :src="avatar" size="default" />
     </el-menu-item>
 

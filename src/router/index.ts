@@ -50,7 +50,17 @@ const routes: Array<RouteRecordRaw> = [
         path: 'special',
         component: specialSuspense,
         name: 'special'
-      }
+      },
+      // {
+      //   path: 'mobile/week',
+      //   component: ,
+      //   name: 'mobileWeek'
+      // },
+      // {
+      //   path: 'mobile/weekrank',
+      //   component: ,
+      //   name: 'mobileWeekRank'
+      // }
     ]
   },
 
