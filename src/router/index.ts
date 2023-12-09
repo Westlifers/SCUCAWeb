@@ -16,6 +16,7 @@ import weekSuspense from "@/views/week/WeekSuspense.vue";
 import practiceViewSuspense from "@/views/practice/practiceViewSuspense.vue";
 import roomSuspense from "@/views/room/roomSuspense.vue";
 import roomListSuspense from "@/views/room/roomListSuspense.vue";
+import cubingMobileSuspense from "@/views/week/mobile/cubing/cubingMobileSuspense.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -51,11 +52,11 @@ const routes: Array<RouteRecordRaw> = [
         component: specialSuspense,
         name: 'special'
       },
-      // {
-      //   path: 'mobile/week',
-      //   component: ,
-      //   name: 'mobileWeek'
-      // },
+      {
+        path: 'mobile/week',
+        component: cubingMobileSuspense,
+        name: 'mobileWeek'
+      },
       // {
       //   path: 'mobile/weekrank',
       //   component: ,
