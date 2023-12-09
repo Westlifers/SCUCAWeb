@@ -36,6 +36,12 @@ const set_event = (event: apiUsedEventName) => {
   padding: 0 32px 0 0;
 }
 
+@media screen and (max-width: 768px) {
+  .ongoing-comp-wrapper {
+    padding: 0;
+  }
+}
+
 .comp-panel {
   width: 65%;
 }

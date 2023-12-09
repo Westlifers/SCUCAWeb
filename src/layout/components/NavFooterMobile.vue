@@ -17,8 +17,8 @@ const avatar = await get_user_avatar(store.user.username)
       <el-icon size="100"><TrendCharts /></el-icon>
     </el-menu-item>
 
-    <el-menu-item index="2" @click="go_page('history')">
-      <el-icon size="100"><document /></el-icon>
+    <el-menu-item index="2" @click="go_page('index')">
+      <el-icon size="100"><ElementPlus /></el-icon>
     </el-menu-item>
 
 
