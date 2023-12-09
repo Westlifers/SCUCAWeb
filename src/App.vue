@@ -16,7 +16,7 @@ export default defineComponent({
 <style>
 html {
     height: 100%;
-
+    overflow: hidden;
 }
 * {
     margin: 0;
