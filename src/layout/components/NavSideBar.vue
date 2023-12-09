@@ -1,5 +1,5 @@
 <template>
-  <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse" unique-opened>
+  <el-menu default-active="1-1" class="el-menu-vertical-demo" :collapse="isCollapse" unique-opened>
 
     <el-button icon="MoreFilled" id="collapse-button" @click="isCollapse=!isCollapse" circle />
 
