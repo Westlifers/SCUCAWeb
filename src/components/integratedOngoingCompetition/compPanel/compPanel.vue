@@ -32,10 +32,10 @@ import {getComp} from "@/api/fetchData";
 import type {Ref} from "vue";
 import {computed, ref, watch} from "vue";
 import {
-  classifyTableDataByEvent,
-  get_user_avatar,
-  getSortedEventsFromTableData,
-  translateEventForScramble
+    classifyTableDataByEvent,
+    get_user_avatar,
+    getSortedEventsFromTableData,
+    translateEventForScramble
 } from "@/utils";
 import DataTable from "@/components/competitionDetail/DataTable.vue";
 import type {apiUsedEventName, DetailedCompetition} from "@/types";

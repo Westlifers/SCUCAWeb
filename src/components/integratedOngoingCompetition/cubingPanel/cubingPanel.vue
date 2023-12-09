@@ -167,7 +167,7 @@ import {computed, reactive, ref, watch} from "vue";
 import {getComp, getCompCachedResult} from "@/api/fetchData";
 import {localStore} from "@/store";
 import type {apiUsedEventName, CachedResult} from "@/types";
-import {convert_time_num2str, convert_time_str2num, SPECIAL_EVENTS, translateEvent} from "@/utils";
+import {convert_time_num2str, convert_time_str2num, isMobile, SPECIAL_EVENTS, translateEvent} from "@/utils";
 import type {FormInstance} from "element-plus";
 import {ElMessage, ElNotification} from "element-plus";
 import {postResult, postTempResult} from "@/api/service";
@@ -208,10 +208,6 @@ const props = defineProps<{
 
 const cachedResult = await getCompCachedResult(props.comp)
 
-// check if device is mobile
-const isMobile = computed(() => {
-  return window.innerWidth < 768
-})
 
 
 // 下面是直接复制以前的代码，所以有些变量名可能不太合适，并且可能很混乱。但是这个组件的功能是可以正常使用的。

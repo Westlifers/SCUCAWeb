@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, onMounted, onUnmounted, shallowRef, watch} from 'vue';
+import {onMounted, onUnmounted, ref, shallowRef, watch} from 'vue';
 import * as echarts from 'echarts';
 import {convert_time_num2str} from "@/utils";
 import {useDark} from "@vueuse/core";

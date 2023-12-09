@@ -19,8 +19,8 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, ref, watch} from "vue";
-import {convert_time_num2str} from "@/utils";
+import {ref, watch} from "vue";
+import {convert_time_num2str, isMobile} from "@/utils";
 
 const is_inspection = ref(false)  // 按下空格，观察中
 const is_pre_timing = ref(false)  // 按下空格，等待延迟启动
@@ -163,12 +163,9 @@ const props = defineProps<{
   state: number
 }>()
 
-// check if device is mobile
-const is_mobile = computed(() => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-})
+
 const stimulate_space = () => {
-  if (!is_mobile.value) return
+  if (!isMobile) return
   // stimulate a space key down event
   keyDown({code: 'Space'});
   keyUp({code: 'Space'})

@@ -6,7 +6,7 @@
     </el-header>
 
     <el-container>
-      <nav-side-bar />
+      <nav-side-bar v-if="!isMobile" />
       <el-container>
         <el-main>
           <router-view></router-view>
@@ -22,9 +22,15 @@ import NavSideBar from "@/layout/components/NavSideBar.vue";
 import NavHeader from "@/layout/components/NavHeader.vue";
 
 import {defineComponent} from 'vue'
+import {isMobile} from "@/utils";
 
 export default defineComponent({
   name: 'App',
+  computed: {
+    isMobile() {
+      return isMobile
+    }
+  },
   components: {NavSideBar, NavHeader}
 });
 </script>

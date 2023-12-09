@@ -1,12 +1,14 @@
 import request from "@/api/index";
 import type {
-    Announcement, CachedResult,
+    Announcement,
+    CachedResult,
     DetailedCompetition,
     OmittedCompetition,
     OmittedResultAvg,
     OmittedResultBest,
     RankPaginationData,
-    Record, RecordWithScore,
+    Record,
+    RecordWithScore,
     Result,
     Room,
     Score,

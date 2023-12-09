@@ -70,7 +70,7 @@
 import {getAnnouncement} from "@/api/fetchData";
 import type {Ref} from "vue";
 import {computed, ref} from "vue";
-import {get_user_avatar} from "@/utils";
+import {get_user_avatar, isMobile} from "@/utils";
 
 const posts = await getAnnouncement('ua')
 // add a list of boolean values to control the drawer
@@ -79,10 +79,9 @@ for (let i = 0; i < posts.length; i++) {
   drawer.value.push(false)
 }
 
-// check if the device is mobile, and change drawer direction and size accordingly
-const isMobile = computed(() => window.innerWidth <= 768)
-const drawerDirection = computed(() => isMobile.value ? 'btt' : 'rtl')
-const drawerSize = computed(() => isMobile.value ? '60%' : '50%')
+// Change drawer direction and size by isMobile
+const drawerDirection = computed(() => isMobile ? 'btt' : 'rtl')
+const drawerSize = computed(() => isMobile ? '60%' : '50%')
 
 // calculate every author's avatar, so that we don't need to fetch it every time
 const avatars = {}

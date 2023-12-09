@@ -56,7 +56,7 @@
 <script lang="ts" setup>
 import type {TableColumnCtx} from "element-plus";
 import type {Result} from "@/types";
-import {SPECIAL_EVENTS, convert_time_num2str} from "@/utils";
+import {convert_time_num2str, isMobile, SPECIAL_EVENTS} from "@/utils";
 import {computed} from "vue";
 
 
@@ -102,12 +102,8 @@ const props = defineProps<{
   avatars: object
 }>()
 
-// check if device is mobile
-const isMobile = computed(() => {
-  return window.innerWidth < 768
-})
 const width = computed(() => {
-  return isMobile.value ? 75 : 110
+  return isMobile ? 75 : 110
 })
 
 </script>

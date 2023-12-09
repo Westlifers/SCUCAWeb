@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <el-dialog title="积分榜" v-model="dialogVisible" :width="is_mobile?'80%':'30%'" append-to-body>
+  <el-dialog title="积分榜" v-model="dialogVisible" :width="isMobile?'80%':'30%'" append-to-body>
     <div class="dialog-score-wrapper">
       <div class="credit-wrapper" v-for="user in users" :key="user.username">
         <el-avatar :src="!user.profile.avatar?'http://img.yougi.top/default.png':user.profile.avatar"
@@ -59,12 +59,10 @@
 <script lang="ts" setup>
 import {getProfile, getScoreRank} from "@/api/fetchData";
 import type {Score} from "@/types";
-import {computed, ref} from "vue";
+import {ref} from "vue";
+import {isMobile} from "@/utils";
 
 const dialogVisible = ref(false)
-const is_mobile = computed(() => {
-  return window.innerWidth <= 768
-})
 
 const scoreRank: Score[] = await getScoreRank()
 // get all usernames

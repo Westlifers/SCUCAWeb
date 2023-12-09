@@ -24,7 +24,7 @@
 import type {Scramble} from "@/types";
 import {computed, ref, watch} from "vue";
 import SubmitForm from "@/components/cubing/form/SubmitForm.vue";
-import {SPECIAL_EVENTS} from "@/utils";
+import {isMobile, SPECIAL_EVENTS} from "@/utils";
 
 const maxScrambleCount = computed(() => {
   if (SPECIAL_EVENTS.indexOf(props.event) > -1) {
@@ -61,12 +61,8 @@ const props = defineProps<{
 // 重选项目时重置index，防止溢出
 watch([maxScrambleCount], () => {index.value = 1})
 
-// check if device is mobile
-const isMobile = computed(() => {
-  return window.innerWidth <= 768
-})
 const direction = computed(() => {
-  return isMobile.value ? 'vertical' : 'horizontal'
+  return isMobile ? 'vertical' : 'horizontal'
 })
 </script>
 

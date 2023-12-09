@@ -16,7 +16,7 @@
 <script lang="ts" setup>
 import type {TableColumnCtx} from "element-plus";
 import type {OmittedResultAvgWithCompId, OmittedResultBestWithCompId, Result} from "@/types";
-import {convert_time_num2str} from "@/utils";
+import {convert_time_num2str, isMobile} from "@/utils";
 import {computed} from "vue";
 
 const formatter = (row: Result, column: TableColumnCtx<Result>) => {
@@ -30,12 +30,8 @@ defineProps<{
   page: number
 }>()
 
-// check if device is mobile
-const isMobile = computed(() => {
-  return window.innerWidth <= 768
-})
 const width = computed(() => {
-  return isMobile.value ? 75 : 200
+  return isMobile ? 75 : 200
 })
 </script>
 
