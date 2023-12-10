@@ -2,9 +2,10 @@
 import {computed} from "vue";
 import {get_user_avatar, go_page} from "@/utils";
 import {localStore} from "@/store";
+import {useDark} from "@vueuse/core";
 
 const store = localStore()
-
+const isDark = useDark()
 const isLoggedIn = computed(() => !(store.user.username===''))
 
 const avatar = await get_user_avatar(store.user.username)
@@ -28,14 +29,11 @@ const avatar = await get_user_avatar(store.user.username)
     </el-menu-item>
 
 
-    <el-menu-item index="4" @click="go_page('pk')">
-      <el-icon size="100"><Timer /></el-icon>
-    </el-menu-item>
-
-
-    <el-menu-item index="5" @click="go_page('profile')">
+    <el-menu-item index="4" @click="go_page('profile')">
       <el-avatar :src="avatar" size="default" />
     </el-menu-item>
+
+    <el-switch size="large" v-model="isDark" active-icon="Moon" inactive-icon="Sunny" active-color="black" inline-prompt/>
 
 
   </el-menu>

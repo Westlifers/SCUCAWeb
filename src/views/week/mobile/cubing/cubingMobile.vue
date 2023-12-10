@@ -1,128 +1,45 @@
 <template>
-  <div class="cubing" tabindex="-1">
+  <div class="cubing-mobile" tabindex="-1">
 
 
-    <div class="cubing-header">
-      <p>参加比赛</p>
-      <div class="selector" v-if="events_available.indexOf(activeEvent) > -1">
-        <el-button icon="ArrowLeft" size="small" round :disabled="count <= 1"
-                   @click="count--"/>
-        <span>{{count}}</span>
-        <el-button icon="ArrowRight" size="small" round :disabled="count >= maxScrambleCount"
-                   @click="count++"/>
-      </div>
+    <div class="cubing-header-mobile">
+      <el-button type="primary" icon="ArrowLeft"
+                 @click="activeEvent = events_all[events_all.indexOf(activeEvent) - 1]"
+                 :disabled="events_all.indexOf(activeEvent)==0" round></el-button>
+      <el-select v-model="activeEvent" placeholder="请选择项目" style="width: 100px">
+        <el-option
+            v-for="item in events_available"
+            :key="item"
+            :label="item"
+            :value="item"
+        >
+          <span class="cubing-icon" :class="`event-${translateEventForScramble(item)}`"><span style="margin-left: 5px">{{item}}</span></span>
+        </el-option>
+      </el-select>
+      <el-button type="primary" icon="ArrowRight"
+                 @click="activeEvent = events_all[events_all.indexOf(activeEvent) + 1]"
+                 :disabled="events_all.indexOf(activeEvent)==events_all.length-1" round></el-button>
     </div>
 
-
-    <div class="scramble-container" v-if="events_available.indexOf(activeEvent) > -1">
-      <el-card shadow="hover" :style="{backgroundColor: '#dbf6fd'}">
-
-        <template #header>
-          <span>{{activeEvent}}</span>
-          <el-button-group>
-            <el-switch v-model="imgVisible" active-text="显示结果" inactive-text="隐藏结果" inline-prompt style="padding-right: 5px" />
-            <el-switch v-model="is3d" active-text="3D" inactive-text="2D" inline-prompt />
-          </el-button-group>
-        </template>
-
-        <div class="scramble-content" @click="curtain_state++">
-          {{scrambleOfEvent[count - 1]}}
-          <!--     ignore the following warning, it's inevitable     -->
-          <twisty-player
-              v-if="imgVisible"
-              :puzzle="translateEvent(activeEvent)"
-              :alg="scrambleOfEvent[count - 1]"
-              :visualization="is3d? '3D' : '2D'"
-          />
-        </div>
-
-        <div class="scramble-footer">
-          <p style="width: 100%; display: flex; justify-content: space-between; font-size: 14px">
-            <span>当前进度</span>
-            <span v-if="!isMobile">按空格开始观察</span>
-            <span v-else>点击打乱公式开始观察</span>
-          </p>
-          <el-progress :percentage="count/maxScrambleCount*100" :show-text="false" :status="count===maxScrambleCount?'success':'exception'" />
-          <p>{{`${count} / ${maxScrambleCount}`}}</p>
-        </div>
-
-      </el-card>
+    <div class="scramble-container-mobile" v-if="events_available.indexOf(activeEvent) > -1">
+      <p style="text-align: center; line-height: 25px; font-weight: 10">{{scrambleOfEvent[count - 1]}}</p>
     </div>
 
     <div class="scramble-submit" v-if="events_available.indexOf(activeEvent) > -1">
-      <el-form
-          ref="formRef"
-          :model="state.resultForm"
-          label-width="auto"
-          size="default"
-          :rules="state.resultRules"
-      >
-        <el-form-item label="第一次" prop="time_1" v-if="count===1">
-          <el-input
-              v-model="state.resultForm.time_1"
-              class="w-50 m-2"
-              placeholder="Your result"
-              disabled
-          />
-        </el-form-item>
-
-        <el-form-item label="第二次" prop="time_2" v-if="count===2">
-          <el-input
-              v-model="state.resultForm.time_2"
-              class="w-50 m-2"
-              placeholder="Your result"
-              disabled
-          />
-        </el-form-item>
-
-        <el-form-item label="第三次" prop="time_3" v-if="count===3">
-          <el-input
-              v-model="state.resultForm.time_3"
-              class="w-50 m-2"
-              placeholder="Your result"
-              disabled
-          />
-        </el-form-item>
-
-        <el-form-item label="第四次" prop="time_4" v-if="count===4">
-          <el-input
-              v-model="state.resultForm.time_4"
-              class="w-50 m-2"
-              placeholder="Your result"
-              disabled
-          />
-        </el-form-item>
-
-        <el-form-item label="第五次" prop="time_5" v-if="count===5">
-          <el-input
-              v-model="state.resultForm.time_5"
-              class="w-50 m-2"
-              placeholder="Your result"
-              disabled
-          />
-        </el-form-item>
-
-        <el-form-item>
-          <el-button type="primary" @click="openDialog" style="width: 100%" v-if="count===maxScrambleCount">提交</el-button>
-          <el-dialog v-model="dialogVisible" width="30%" title="确认成绩" style="text-align: left">
-            <p>本次成绩如下：</p>
-            <p>第一次：{{state.resultForm.time_1}}</p>
-            <p>第二次：{{state.resultForm.time_2}}</p>
-            <p>第三次：{{state.resultForm.time_3}}</p>
-            <p v-if="maxScrambleCount===5">第四次：{{state.resultForm.time_4}}</p>
-            <p v-if="maxScrambleCount===5">第五次：{{state.resultForm.time_5}}</p>
-            <p>请检查成绩输入是否正确。</p>
-            <template #footer>
-              <span class="dialog-footer">
-                <el-button @click="dialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="dialogVisible = false;handleSubmit(formRef)">
-                  确认
-                </el-button>
-              </span>
-            </template>
-          </el-dialog>
-        </el-form-item>
-      </el-form>
+      <div class="result-floater">
+        <el-popover placement="left-end" width="200" trigger="click" :offset="20">
+          <template #reference>
+            <div class="cubing-icon event-333"></div>
+          </template>
+          <template #default>
+            <div class="results-overview">
+              <p v-for="(result, name, i) in state.resultForm" :key="result">
+                <span v-if="i+1<=maxScrambleCount">第{{i+1}}次：{{result}}</span>
+              </p>
+            </div>
+          </template>
+        </el-popover>
+      </div>
     </div>
 
     <div class="finished" v-else>
@@ -167,7 +84,12 @@ import {computed, reactive, Ref, ref, watch} from "vue";
 import {getComp, getCompCachedResult} from "@/api/fetchData";
 import {localStore} from "@/store";
 import type {apiUsedEventName, CachedResult} from "@/types";
-import {convert_time_num2str, convert_time_str2num, isMobile, SPECIAL_EVENTS, translateEvent} from "@/utils";
+import {
+  convert_time_num2str,
+  convert_time_str2num,
+  SPECIAL_EVENTS,
+  translateEventForScramble
+} from "@/utils";
 import type {FormInstance} from "element-plus";
 import {ElMessage, ElNotification} from "element-plus";
 import {postResult, postTempResult} from "@/api/service";
@@ -190,7 +112,7 @@ const set_time = async (time_) => {
     // 将成绩缓存到服务器
     await postTempResult({
         wos: 'week',
-        event: activeEvent,
+        event: activeEvent.value,
         order: count.value,
         result: time,
     })
@@ -221,13 +143,13 @@ store.updateUserParticipationData()
 const userParticipationData = computed(() => store.userParticipation)
 // 根据进度，计算相关的项目
 const events_all = computed(() =>
-    userParticipationData.value.week.events_all
+    userParticipationData.value.week.events_all as apiUsedEventName[]
 )
 const events_finished = computed(() =>
     userParticipationData.value.week.events_finished
 )
 const events_available = computed(() => {
-    const events_available: string[] = []
+    const events_available: apiUsedEventName[] = []
     for (let event of events_all.value) {
         if (!(events_finished.value.indexOf(event) > -1)) {
             events_available.push(event)
@@ -413,22 +335,29 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
 </script>
 
 <style scoped>
-.cubing {
+.cubing-mobile {
     background-color: var(--yougi-projects-section);
-    border-radius: 30px;
     padding: 32px 32px 0 32px;
     display: flex;
     flex-direction: column;
     overflow: auto;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 60px);
     transition: all 300ms cubic-bezier(0.19, 1, 0.56, 1);
 }
 
-.cubing-header {
+.cubing-header-mobile {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
+    border-radius: 30px;
+    padding: 16px 24px;
+    background-color: var(--profile-card-bg-color);
+}
+
+:deep(.el-input__wrapper) {
+  background-color: transparent !important;
+  height: 100% !important;
 }
 
 .cubing-header p {
@@ -454,6 +383,20 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
 }
 :deep(.el-card__header) {
     color: #4A4A4A;
+}
+
+.result-floater {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: var(--profile-card-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
 }
 
 .scramble-content {
