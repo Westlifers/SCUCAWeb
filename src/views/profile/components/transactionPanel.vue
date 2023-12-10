@@ -17,7 +17,7 @@
       <div class="head is-wait" @click="dialogVisible=true">View All</div>
     </div>
     <div class="credit-wrapper" v-for="user in users.length>=4?users.slice(0, 4):users" :key="user.username">
-      <el-avatar :src="!user.profile.avatar?'http://img.yougi.top/default.png':user.profile.avatar"
+      <el-avatar :src="!user.profile.avatar?'https://img.yougi.top/default.png':user.profile.avatar"
                  size="default"
                  style="margin-right: 10px"
       />
@@ -34,7 +34,7 @@
   <el-dialog title="积分榜" v-model="dialogVisible" :width="isMobile?'80%':'30%'" append-to-body>
     <div class="dialog-score-wrapper">
       <div class="credit-wrapper" v-for="user in users" :key="user.username">
-        <el-avatar :src="!user.profile.avatar?'http://img.yougi.top/default.png':user.profile.avatar"
+        <el-avatar :src="!user.profile.avatar?'https://img.yougi.top/default.png':user.profile.avatar"
                    size="default"
                    style="margin-right: 10px"
         />

@@ -244,7 +244,7 @@ watch(playerList, async (newPlayerList, oldPlayerList) => {
     // add avatar
     for (let player of ['SERVER'].concat(newPlayerList)) {
         if (player == 'SERVER') {
-            avatars.value[player] = 'http://img.yougi.top/default.png'
+            avatars.value[player] = 'https://img.yougi.top/default.png'
         }
         else if (!(player in avatars.value)) {
             avatars.value[player] = await get_user_avatar(player);
