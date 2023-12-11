@@ -80,7 +80,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, reactive, Ref, ref, watch} from "vue";
+import {computed, onMounted, reactive, Ref, ref, watch} from "vue";
 import {getComp, getCompCachedResult} from "@/api/fetchData";
 import {localStore} from "@/store";
 import type {apiUsedEventName, CachedResult} from "@/types";
@@ -167,34 +167,40 @@ const maxScrambleCount = computed(() => {
     }
 })
 // 切换项目时清除表单
+const clearForm = () => {
+  let cacheOfThisEvent: CachedResult = {
+    event: activeEvent.value,
+    time_1: -1, time_2: -1, time_3: -1, time_4: -1, time_5: -1
+  }
+  // 遍历寻找是否有对应的缓存，否则取以上的默认值
+  for (const cache of cachedResult) {
+    if (cache.event == activeEvent.value) cacheOfThisEvent = cache
+  }
+  // 计算现在应该到哪一把了
+  for (let i = 1; i <= 5; i++) {
+    if (cacheOfThisEvent[`time_${i}`] === -1) {
+      count.value = i
+      // 但是注意不能超出最大轮数，这会发生在用户已经完成但忘了提交后重新加载时
+      if (count.value > maxScrambleCount.value) count.value = maxScrambleCount.value
+      break
+    }
+  }
+  // 把缓存成绩填进去
+  for (let i = 1; i <= 5; i++) {
+    if (cacheOfThisEvent[`time_${i}`] === -1) {
+      state.resultForm[`time_${i}`] = ''
+    }
+    else {
+      state.resultForm[`time_${i}`] = cacheOfThisEvent[`time_${i}`]==0?'DNF':convert_time_num2str(cacheOfThisEvent[`time_${i}`]).replace(/\s*/g,"")
+    }
+  }
+}
 watch(() => activeEvent.value, () => {
-    let cacheOfThisEvent: CachedResult = {
-        event: activeEvent.value,
-        time_1: -1, time_2: -1, time_3: -1, time_4: -1, time_5: -1
-    }
-    // 遍历寻找是否有对应的缓存，否则取以上的默认值
-    for (const cache of cachedResult) {
-        if (cache.event == activeEvent.value) cacheOfThisEvent = cache
-    }
-    // 计算现在应该到哪一把了
-    for (let i = 1; i <= 5; i++) {
-        if (cacheOfThisEvent[`time_${i}`] === -1) {
-            count.value = i
-            // 但是注意不能超出最大轮数，这会发生在用户已经完成但忘了提交后重新加载时
-            if (count.value > maxScrambleCount.value) count.value = maxScrambleCount.value
-            break
-        }
-    }
-    // 把缓存成绩填进去
-    for (let i = 1; i <= 5; i++) {
-        if (cacheOfThisEvent[`time_${i}`] === -1) {
-            state.resultForm[`time_${i}`] = ''
-        }
-        else {
-            state.resultForm[`time_${i}`] = cacheOfThisEvent[`time_${i}`]==0?'DNF':convert_time_num2str(cacheOfThisEvent[`time_${i}`]).replace(/\s*/g,"")
-        }
-    }
-
+  clearForm()
+})
+// 初始时也要清除表单
+onMounted(() => {
+  clearForm()
 })
 
 // 是否是特殊项目

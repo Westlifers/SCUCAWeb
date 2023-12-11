@@ -51,7 +51,6 @@ document.addEventListener('keydown', (e) => {
   }
 })
 document.addEventListener('touchstart', (e) => {
-  console.log(1)
   // 等价于按下1(不是空格，因为在没有开始观察时点击屏幕触发空格是愚蠢的)
   keyDown({code: 'Digit1'})
 })
