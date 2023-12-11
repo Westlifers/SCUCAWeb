@@ -52,8 +52,8 @@ document.addEventListener('keydown', (e) => {
 })
 document.addEventListener('touchstart', (e) => {
   console.log(1)
-  // 等价于按下空格
-  keyDown({code: 'Space'})
+  // 等价于按下1(不是空格，因为在没有开始观察时点击屏幕触发空格是愚蠢的)
+  keyDown({code: 'Digit1'})
 })
 document.addEventListener('keyup', (e) => {
   if (e.code === 'Escape') {
@@ -61,7 +61,7 @@ document.addEventListener('keyup', (e) => {
   }
 })
 document.addEventListener('touchend', (e) => {
-  keyUp({code: 'Space'})
+  keyUp({code: 'Digit1'})
 })
 
 const keyUp = (key) => {
