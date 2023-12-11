@@ -21,7 +21,7 @@
                  :disabled="events_all.indexOf(activeEvent)==events_all.length-1" round></el-button>
     </div>
 
-    <div class="scramble-container-mobile" v-if="events_available.indexOf(activeEvent) > -1">
+    <div class="scramble-container-mobile" v-if="events_available.indexOf(activeEvent) > -1" @click="curtain_state++">
       <p style="text-align: center; line-height: 25px; font-weight: 10">{{scrambleOfEvent[count - 1]}}</p>
     </div>
 

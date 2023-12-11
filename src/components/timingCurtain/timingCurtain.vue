@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div class="timing-curtain" v-if="is_timing || is_inspection || is_finished" @click="stimulate_space">
+    <div class="timing-curtain" v-if="is_timing || is_inspection || is_finished">
       <div class="timing-curtain__content">
         <div class="inspection" :style="{color: is_pre_timing?'green':'red'}" v-if="is_inspection">{{inspecting_time<0?(inspecting_time<-2?'DNF':'+2'):inspecting_time.toFixed(0)}}</div>
         <div class="timing" v-if="is_timing">{{ convert_time_num2str(parseFloat(time.toFixed(3))) }}</div>
@@ -50,11 +50,18 @@ document.addEventListener('keydown', (e) => {
     keyDown(e)
   }
 })
+document.addEventListener('touchstart', (e) => {
+  console.log(1)
+  // 等价于按下空格
+  keyDown({code: 'Space'})
+})
 document.addEventListener('keyup', (e) => {
   if (e.code === 'Escape') {
     return
   }
-  keyUp(e)
+})
+document.addEventListener('touchend', (e) => {
+  keyUp({code: 'Space'})
 })
 
 const keyUp = (key) => {
