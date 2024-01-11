@@ -8,7 +8,7 @@
                  :disabled="events_all.indexOf(activeEvent)==0" round></el-button>
       <el-select v-model="activeEvent" placeholder="请选择项目" style="width: 100px">
         <el-option
-            v-for="item in events_available"
+            v-for="item in events_all"
             :key="item"
             :label="item"
             :value="item"
@@ -30,7 +30,7 @@
         {{count==1?'0.000':state.resultForm[`time_${count-1}`]}}
       </span>
 
-      <el-button type="primary" icon="Check" v-if="count==maxScrambleCount" size="large" round @click="dialogVisible=true">
+      <el-button type="primary" icon="Check" v-if="count==maxScrambleCount&&state.resultForm[`time_${count}`]!=''" size="large" round @click="dialogVisible=true">
         提交
       </el-button>
     </div>
@@ -108,7 +108,6 @@ import {
   SPECIAL_EVENTS,
   translateEventForScramble
 } from "@/utils";
-import type {FormInstance} from "element-plus";
 import {ElMessage, ElNotification} from "element-plus";
 import {postResult, postTempResult} from "@/api/service";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";

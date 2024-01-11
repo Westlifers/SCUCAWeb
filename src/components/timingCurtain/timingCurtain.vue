@@ -54,17 +54,16 @@ document.addEventListener('touchstart', (e) => {
   // 等价于按下1(不是空格，因为在没有开始观察时点击屏幕触发空格是愚蠢的)
   if (!is_inspection.value && !is_timing.value) return
   keyDown({code: 'Space'})
-  console.log(1)
 })
 document.addEventListener('keyup', (e) => {
   if (e.code === 'Escape') {
     return
   }
+  keyUp(e)
 })
 document.addEventListener('touchend', (e) => {
   if (!is_inspection.value && !is_timing.value) return
   keyUp({code: 'Space'})
-  console.log(2)
 })
 
 const keyUp = (key) => {
@@ -87,6 +86,18 @@ const keyUp = (key) => {
         is_timing.value = false
       }
     }, 17)
+    return
+  }
+
+  // if user press any key, and we are at timing, stop timing
+  if (is_timing.value) {
+    // 睡一会，免得连续点击到按钮，不知道为什么松开后会点到按钮
+    setTimeout(() => {
+      is_timing.value = false
+      is_finished.value = true
+    }, 10)
+    // time value is the time stamp of the last key down event, to seconds
+    time.value = ((new Date()).getTime() - time_stamp.value) / 1000
     return
   }
 }
@@ -130,15 +141,6 @@ const keyDown = (key) => {
       timing_type.value = ''  // 清除选择，防止下次计时时有焦点
       return;
     }
-  }
-
-  // if user press any key, and we are at timing, stop timing
-  if (is_timing.value) {
-    is_timing.value = false
-    is_finished.value = true
-    // time value is the time stamp of the last key down event, to seconds
-    time.value = ((new Date()).getTime() - time_stamp.value) / 1000
-    return
   }
 
 }
