@@ -29,6 +29,10 @@
       <span>
         {{count==1?'0.000':state.resultForm[`time_${count-1}`]}}
       </span>
+
+      <el-button type="primary" icon="Check" v-if="count==maxScrambleCount" size="large" round @click="dialogVisible=true">
+        提交
+      </el-button>
     </div>
 
 
@@ -60,15 +64,17 @@
 
 
 
-    <div class="result-floater">
+    <div class="result-floater" v-if="events_available.indexOf(activeEvent) > -1">
       <el-popover placement="left-end" width="200" trigger="click" :offset="20">
         <template #reference>
           <div class="cubing-icon event-333"></div>
         </template>
         <template #default>
           <div class="results-overview">
-            <p v-for="(result, name, i) in state.resultForm" :key="result">
-              <span v-if="i+1<=maxScrambleCount">第{{i+1}}次：{{result}}</span>
+            <p v-for="(result, name, i) in state.resultForm" :key="name" style="margin-bottom: 10px">
+              <span v-if="i+1<=maxScrambleCount" :style="`color: ${i+1<=count?'#409EFF':'#909399'}`">
+                第{{i+1}}次：{{result}}
+              </span>
             </p>
           </div>
         </template>
@@ -81,7 +87,13 @@
         v-if="events_available.indexOf(activeEvent) > -1 && state.resultForm[`time_${count}`] === ''"
     />
 
-
+    <el-dialog title="确认提交" v-model="dialogVisible" width="80%" center align-center>
+      <span>确认提交成绩？</span>
+      <template #footer>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleSubmit">确 定</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -190,6 +202,8 @@ const clearForm = () => {
       if (count.value > maxScrambleCount.value) count.value = maxScrambleCount.value
       break
     }
+    // 如果没有找到，那就是已经完成，count就是最大轮数
+    if (i === maxScrambleCount.value) count.value = maxScrambleCount.value
   }
   // 把缓存成绩填进去
   for (let i = 1; i <= 5; i++) {
@@ -224,7 +238,6 @@ const scrambleOfEvent = computed(() => {
 
 
 // form part
-const formRef = ref<FormInstance>()
 const compId = computed(() => compData.compId)
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -279,69 +292,34 @@ const state = reactive({
     }
 })
 
-// watch count, every time it increases, validate the form, if not valid, decrease count
-watch([count], (value, oldValue) => {
-    if (value > oldValue) {
-        formRef.value?.validate((valid) => {
-            if (!valid) {
-                count.value--
-                ElMessage({
-                    message: '请检查成绩格式！',
-                    type: 'error',
-                    duration: 2000
-                })
-            }
-        })
-    }
-})
-// check if the form is valid before open the dialog
-const openDialog = () => {
-    formRef.value?.validate((valid) => {
-        if (valid) {
-            dialogVisible.value = true
-        } else {
-            ElMessage({
-                message: '请检查成绩格式！',
-                type: 'error',
-                duration: 2000
-            })
-        }
-    })
-}
 
-const handleSubmit =  (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-
-    formEl.validate(async (valid) => {
-        if (valid) {
-            const req = {
-                competition: compId.value,
-                event: activeEvent.value,
-                time_1: convert_time_str2num(state.resultForm.time_1),
-                time_2: convert_time_str2num(state.resultForm.time_2),
-                time_3: convert_time_str2num(state.resultForm.time_3),
-                time_4: convert_time_str2num(state.resultForm.time_4),
-                time_5: convert_time_str2num(state.resultForm.time_5),
-            }
-            try {
-                const data = await postResult(req)
-                ElNotification({
-                    title: '成功',
-                    message: '提交成功！',
-                    type: 'success',
-                })
-                store.updateUserParticipationData()
-                window.location.reload()
-            }
-            catch (e) {
-                ElNotification({
-                    title: '失败',
-                    message: '提交成绩失败！',
-                    type: 'error',
-                })
-            }
-        }
-    })
+const handleSubmit =  async () => {
+      const req = {
+          competition: compId.value,
+          event: activeEvent.value,
+          time_1: convert_time_str2num(state.resultForm.time_1),
+          time_2: convert_time_str2num(state.resultForm.time_2),
+          time_3: convert_time_str2num(state.resultForm.time_3),
+          time_4: convert_time_str2num(state.resultForm.time_4),
+          time_5: convert_time_str2num(state.resultForm.time_5),
+      }
+      try {
+          const data = await postResult(req)
+          ElNotification({
+              title: '成功',
+              message: '提交成功！',
+              type: 'success',
+          })
+          await store.updateUserParticipationData()
+          window.location.reload()
+      }
+      catch (e) {
+          ElNotification({
+              title: '失败',
+              message: '提交成绩失败！',
+              type: 'error',
+          })
+      }
 }
 
 </script>
@@ -543,6 +521,7 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
 
 .scramble-submit {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 24px;
