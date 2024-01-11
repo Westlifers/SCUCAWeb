@@ -21,26 +21,16 @@
                  :disabled="events_all.indexOf(activeEvent)==events_all.length-1" round></el-button>
     </div>
 
-    <div class="scramble-container-mobile" v-if="events_available.indexOf(activeEvent) > -1" @click="curtain_state++">
+    <div class="scramble-container-mobile" v-if="events_available.indexOf(activeEvent) > -1">
       <p style="text-align: center; line-height: 25px; font-weight: 10">{{scrambleOfEvent[count - 1]}}</p>
     </div>
 
-    <div class="scramble-submit" v-if="events_available.indexOf(activeEvent) > -1">
-      <div class="result-floater">
-        <el-popover placement="left-end" width="200" trigger="click" :offset="20">
-          <template #reference>
-            <div class="cubing-icon event-333"></div>
-          </template>
-          <template #default>
-            <div class="results-overview">
-              <p v-for="(result, name, i) in state.resultForm" :key="result">
-                <span v-if="i+1<=maxScrambleCount">第{{i+1}}次：{{result}}</span>
-              </p>
-            </div>
-          </template>
-        </el-popover>
-      </div>
+    <div class="scramble-submit" v-if="events_available.indexOf(activeEvent) > -1"  @click="curtain_state++">
+      <span>
+        {{count==1?'0.000':state.resultForm[`time_${count-1}`]}}
+      </span>
     </div>
+
 
     <div class="finished" v-else>
       <div class="finished-header account-profile">
@@ -68,6 +58,22 @@
       </div>
     </div>
 
+
+
+    <div class="result-floater">
+      <el-popover placement="left-end" width="200" trigger="click" :offset="20">
+        <template #reference>
+          <div class="cubing-icon event-333"></div>
+        </template>
+        <template #default>
+          <div class="results-overview">
+            <p v-for="(result, name, i) in state.resultForm" :key="result">
+              <span v-if="i+1<=maxScrambleCount">第{{i+1}}次：{{result}}</span>
+            </p>
+          </div>
+        </template>
+      </el-popover>
+    </div>
 
     <timing-curtain
         @timing-over="set_time"
@@ -533,5 +539,16 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.scramble-submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+    height: 100%
+}
+.scramble-submit span {
+    font-size: 50px
 }
 </style>

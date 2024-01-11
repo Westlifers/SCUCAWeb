@@ -11,7 +11,7 @@
             <el-radio-button label="2">+2</el-radio-button>
             <el-radio-button label="3">DNF</el-radio-button>
           </el-radio-group>
-          <p class="space_tip">无惩罚可按空格跳过选择；观察惩罚已自动记入</p>
+          <p class="space_tip" v-if="!isMobile">无惩罚可按空格跳过选择；观察惩罚已自动记入</p>
         </div>
       </div>
     </div>
@@ -52,7 +52,9 @@ document.addEventListener('keydown', (e) => {
 })
 document.addEventListener('touchstart', (e) => {
   // 等价于按下1(不是空格，因为在没有开始观察时点击屏幕触发空格是愚蠢的)
-  keyDown({code: 'Digit1'})
+  if (!is_inspection.value && !is_timing.value) return
+  keyDown({code: 'Space'})
+  console.log(1)
 })
 document.addEventListener('keyup', (e) => {
   if (e.code === 'Escape') {
@@ -60,7 +62,9 @@ document.addEventListener('keyup', (e) => {
   }
 })
 document.addEventListener('touchend', (e) => {
-  keyUp({code: 'Digit1'})
+  if (!is_inspection.value && !is_timing.value) return
+  keyUp({code: 'Space'})
+  console.log(2)
 })
 
 const keyUp = (key) => {
