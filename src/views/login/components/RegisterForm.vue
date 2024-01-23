@@ -54,7 +54,12 @@ import router from "@/router";
 
 const registerFormRef = ref<FormInstance>()
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+const validateUsername = (rule: any, value: string, callback: Function) => {
+  if (value.length >= 15) {
+    callback(new Error("用户名不能超过15个字符"))
+  }
+}
+
 const validatePassword = (rule: any, value: string, callback: Function) => {
   if (value.length < 6) {
     callback(new Error("密码不少于6位"));
@@ -63,7 +68,6 @@ const validatePassword = (rule: any, value: string, callback: Function) => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 const validatePassword2 = (rule: any, value: string, callback: Function) => {
   if (value.length < 6) {
     callback(new Error("密码不少于6位"));
@@ -83,7 +87,7 @@ const state = reactive({
   },
 
   registerRules: {
-    account: [{ required: true, trigger: "blur" }],
+    account: [{ required: true, trigger: "blur", validator: validateUsername}],
     email: [{ required: true, trigger: "blur" }],
     password: [
       {
