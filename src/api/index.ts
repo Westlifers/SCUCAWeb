@@ -22,7 +22,6 @@ request.interceptors.request.use((config) => {
 request.interceptors.response.use(
     (response) => {
         const data = response.data
-        console.log('response => ', response)
         if (data.status === '401') {
             localStorage.removeItem('userInfo');
             ElMessage({

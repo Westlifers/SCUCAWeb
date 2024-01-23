@@ -83,7 +83,8 @@ export async function getComp (compId: string): Promise<DetailedCompetition> {
         user_count: res['user_count'],
         event_count: res['event_count'],
         result_set: result_set,
-        scramble_set: scramble_set
+        scramble_set: scramble_set,
+        is_record: res['is_record']
     }
 }
 
@@ -105,8 +106,6 @@ export async function getCompCachedResult (compId: string): Promise<CachedResult
             })
             break
     }
-
-    console.log(res)
 
     const tempResults: CachedResult[] = []
     if ('detail' in res) {
