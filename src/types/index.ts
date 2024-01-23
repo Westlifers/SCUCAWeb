@@ -58,7 +58,8 @@ export interface Scramble {
 
 export interface DetailedCompetition extends OmittedCompetition{
     result_set: Result[],
-    scramble_set: Scramble[]
+    scramble_set: Scramble[],
+    is_record: boolean
 }
 
 

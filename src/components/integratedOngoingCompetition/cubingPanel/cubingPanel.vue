@@ -219,7 +219,8 @@ const is3d = ref(false)
 // 是否是周赛
 const is_normal = computed(() => props.comp==='week')
 // 异步获取当前比赛数据
-const compData = is_normal.value?await getComp('week'):await getComp('special')
+const preCompData = is_normal.value?await getComp('week'):await getComp('special')
+const compData = preCompData.is_record?undefined:preCompData  // 如果是手动录入成绩的比赛，假装没看到
 // 请求更新用户进度
 store.updateUserParticipationData()
 
