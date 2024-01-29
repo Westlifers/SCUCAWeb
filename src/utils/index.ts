@@ -188,3 +188,6 @@ export function translateEventForScramble(event: apiUsedEventName): string {
 
 export const isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
 
+export const quickMessages: string[] = [
+  '运气真好', '运气真差', '厚实', '不好意思', '真不要脸', 'sigma'
+]

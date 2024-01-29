@@ -9,6 +9,7 @@
 
       <div class="chat-input-wrapper">
         <el-input type="text" @keydown.enter="send_chat_message" v-model="message" placeholder="Enter your message here" @focus="is_typing=true" @blur="is_typing=false" />
+        <quick-message @send_message="(m) => {message=m;send_chat_message()}" />
         <button class="chat-send-btn" @click="send_chat_message">Send</button>
       </div>
     </div>
@@ -116,7 +117,7 @@
 //   }
 import router from "@/router";
 import type {Ref} from "vue";
-import {nextTick, ref, watch} from "vue";
+import {nextTick, onMounted, ref, watch} from "vue";
 import {ElMessage, ElScrollbar} from "element-plus";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
 import {convert_time_num2str, get_user_avatar, translateEvent} from "@/utils";
@@ -124,6 +125,7 @@ import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import type {apiUsedEventName} from "@/types";
 import ChatMessage from "@/views/room/components/chatMessage.vue";
 import {localStore} from "@/store";
+import QuickMessage from "@/views/room/components/quickMessage.vue";
 
 const message: Ref<string> = ref('');
 const scramble: Ref<string> = ref('');
@@ -165,7 +167,11 @@ pkSocket.onmessage = (event) => {
 
   switch (message['type']) {
     case 'chat_message':
-      messageList.value.push({sender: message['sender'], message: message['message']});
+      messageList.value.push({
+        sender: message['sender'],
+        message: message['message'],
+        type: 'chat_message'
+      });
       break;
     case 'new_round':
       scramble.value = message['scramble'];
@@ -177,7 +183,8 @@ pkSocket.onmessage = (event) => {
       if (round.value == 0) {
         messageList.value.push({
             sender: 'SERVER',
-            message: `欢迎，按空格随意发送一次成绩即为准备`
+            message: `欢迎，按空格随意发送一次成绩即为准备`,
+            type: 'welcome'
         })
       }
       else {
@@ -233,12 +240,26 @@ const send_finish = () => {
     'time': time.value
   }));
 };
+
+// 要在mounted时首先获取一次avatar，否则SERVER的头像获取不到
+onMounted(async () => {
+  await updateAvatar(playerList.value)
+})
+const updateAvatar = async (playerList) => {
+  for (let player of ['SERVER'].concat(playerList)) {
+    if (player == 'SERVER') {
+      avatars.value[player] = 'https://img.yougi.top/default.png'
+    }
+    else if (!(player in avatars.value)) {
+      avatars.value[player] = await get_user_avatar(player);
+    }
+  }
+}
 watch(playerList, async (newPlayerList, oldPlayerList) => {
     if (newPlayerList.length > oldPlayerList.length) {
         // add player who joined
         for (let player of newPlayerList) {
             if (!(oldPlayerList.indexOf(player) > -1)) {
-                console.log(player)
                 playerResults.value[player] = [];
             }
         }
@@ -252,14 +273,7 @@ watch(playerList, async (newPlayerList, oldPlayerList) => {
     }
 
     // add avatar
-    for (let player of ['SERVER'].concat(newPlayerList)) {
-        if (player == 'SERVER') {
-            avatars.value[player] = 'https://img.yougi.top/default.png'
-        }
-        else if (!(player in avatars.value)) {
-            avatars.value[player] = await get_user_avatar(player);
-        }
-    }
+    await updateAvatar(newPlayerList)
 });
 
 // close the websocket when the user leaves the page
