@@ -233,6 +233,9 @@ const send_chat_message = () => {
     'message': message.value
   }));
   message.value = "";
+  // 发送消息后移开焦点，因为此时用户需要空格
+  const input = document.querySelector('.el-input__inner') as HTMLInputElement
+  input.blur()
 };
 const send_finish = () => {
   pkSocket.send(JSON.stringify({
