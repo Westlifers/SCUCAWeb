@@ -195,7 +195,7 @@ pkSocket.onmessage = (event) => {
       playerResults.value[message['sender']][round.value] = convert_time_num2str(message['time']);
       messageList.value.push({
           sender: message['sender'],
-          message: convert_time_num2str(message['time']),
+          message: convert_time_num2str(message['time'])==0?'DNF':convert_time_num2str(message['time']),
           type: round.value==0?'ready':'finish'
       })
       break;
