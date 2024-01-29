@@ -3,7 +3,7 @@
     <div class="app-main">
       <el-scrollbar ref="scrollbarRef">
         <div class="chat-wrapper" ref="innerRef">
-          <chat-message v-for="message in messageList" :key="message" :sender="message.sender" :self-send="message.sender==store.user.username" :avatar="avatars[message.sender]" :message="message.message" />
+          <chat-message v-for="message in messageList" :key="message" :sender="message.sender" :self-send="message.sender==store.user.username" :avatar="avatars[message.sender]" :message="message.message" :type="message.type" />
         </div>
       </el-scrollbar>
 
@@ -176,7 +176,8 @@ pkSocket.onmessage = (event) => {
       }
       messageList.value.push({
           sender: 'SERVER',
-          message: `第${round.value}轮打乱：${scramble.value}`
+          message: `第${round.value}轮打乱：${scramble.value}`,
+          type: 'new_round'
       })
       break;
     case 'player_list':
@@ -186,7 +187,8 @@ pkSocket.onmessage = (event) => {
       playerResults.value[message['sender']][round.value] = convert_time_num2str(message['time']);
       messageList.value.push({
           sender: message['sender'],
-          message: convert_time_num2str(message['time'])
+          message: convert_time_num2str(message['time']),
+          type: 'finish'
       })
       break;
     case 'results_of_this_round':

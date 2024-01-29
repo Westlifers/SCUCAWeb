@@ -1,20 +1,45 @@
 <script setup lang="ts">
-defineProps<{
+import {ElMessage, ElNotification} from "element-plus";
+
+const prop = defineProps<{
   message: string
   sender: string
   avatar: string
   selfSend: boolean
+  type: string
 }>()
+
+const copyScrambleToClipboard = () => {
+  if (prop.type !== 'new_round') return
+
+  const text = prop.message.split("：")[1]
+
+  const input = document.createElement('input')
+  input.setAttribute('readonly', 'readonly')
+  input.setAttribute('value', text)
+  document.body.appendChild(input)
+  input.select()
+  input.setSelectionRange(0, 9999)
+  document.execCommand('copy')
+  document.body.removeChild(input)
+
+  ElNotification({
+    message: '打乱已复制到剪切板',
+    type: 'success',
+    duration: 2000
+  })
+}
+
 </script>
 
 <template>
-<div class="message-wrapper" :class="{'reverse': selfSend}">
+<div class="message-wrapper" :class="{'reverse': selfSend, 'copy': type=='new_round'}">
   <img class="message-pp" :src="avatar" alt="profile-pic">
   <div class="message-box-wrapper">
-    <div class="message-box">
+    <div class="message-box" @click="copyScrambleToClipboard">
       {{message}}
     </div>
-    <span>{{sender}}</span>
+    <span><el-button v-if="type=='finish'" type="success" size="small" icon="check" circle></el-button>&nbsp;{{sender}}&nbsp;</span>
   </div>
 </div>
 </template>
@@ -40,6 +65,21 @@ defineProps<{
   justify-content: center;
   margin-right: 10px;
   margin-bottom: 5px;
+}
+
+.message-wrapper.reverse .message-box-wrapper span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.message-wrapper .message-box-wrapper span {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.copy .message-box-wrapper .message-box{
+  cursor: pointer;
 }
 
 </style>
