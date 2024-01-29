@@ -24,7 +24,7 @@
           <li class="chat-list-item active" v-for="player in playerList" :key="player">
             <img :src="avatars[player]" :alt="player">
             <span class="chat-list-name">{{player}}：</span>
-            <span class="chat-list-name-result">{{playerResults[player][round]>0?playerResults[player][round]:(playerResults[player][round]==0?'DNF':'未开始')}}</span>
+            <span class="chat-list-name-result">{{playerResults[player][round]>0?(round==0?'已准备':playerResults[player][round]):(playerResults[player][round]==0?'DNF':'未开始')}}</span>
           </li>
         </ul>
       </div>
@@ -174,11 +174,19 @@ pkSocket.onmessage = (event) => {
       for (let playerResult of Object.entries(playerResults.value)) {
           playerResults.value[playerResult[0]][round.value] = -1;
       }
-      messageList.value.push({
+      if (round.value == 0) {
+        messageList.value.push({
+            sender: 'SERVER',
+            message: `欢迎，按空格随意发送一次成绩即为准备`
+        })
+      }
+      else {
+        messageList.value.push({
           sender: 'SERVER',
           message: `第${round.value}轮打乱：${scramble.value}`,
           type: 'new_round'
-      })
+        })
+      }
       break;
     case 'player_list':
       playerList.value = message['players'];
@@ -188,7 +196,7 @@ pkSocket.onmessage = (event) => {
       messageList.value.push({
           sender: message['sender'],
           message: convert_time_num2str(message['time']),
-          type: 'finish'
+          type: round.value==0?'ready':'finish'
       })
       break;
     case 'results_of_this_round':

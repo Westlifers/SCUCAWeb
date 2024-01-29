@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ElMessage, ElNotification} from "element-plus";
+import {ElNotification} from "element-plus";
 
 const prop = defineProps<{
   message: string
@@ -39,7 +39,7 @@ const copyScrambleToClipboard = () => {
     <div class="message-box" @click="copyScrambleToClipboard">
       {{message}}
     </div>
-    <span><el-button v-if="type=='finish'" type="success" size="small" icon="check" circle></el-button>&nbsp;{{sender}}&nbsp;</span>
+    <span><el-button v-if="type=='finish'||type=='ready'" :type="type=='ready'?'primary':'success'" size="small" :icon="type=='ready'?'':'check'" circle></el-button>&nbsp;{{sender}}&nbsp;</span>
   </div>
 </div>
 </template>
