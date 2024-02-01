@@ -20,6 +20,8 @@
     </el-container>
   </el-container>
 
+  <tour-guide name="index" />
+
 </template>
 
 <script lang="ts">
@@ -29,6 +31,7 @@ import NavHeader from "@/layout/components/NavHeader.vue";
 import {defineComponent} from 'vue'
 import {isMobile} from "@/utils";
 import NavFooterMobile from "@/layout/components/NavFooterMobile.vue";
+import TourGuide from "@/components/tourGuide.vue";
 
 export default defineComponent({
   name: 'App',
@@ -37,7 +40,12 @@ export default defineComponent({
       return isMobile
     }
   },
-  components: {NavFooterMobile, NavSideBar, NavHeader}
+  data() {
+    return {
+      open: true,
+    }
+  },
+  components: {TourGuide, NavFooterMobile, NavSideBar, NavHeader}
 });
 </script>
 

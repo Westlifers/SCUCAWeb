@@ -6,7 +6,7 @@
     </div>
   </el-menu>
   <el-menu class="func">
-    <div class="user-popover">
+    <div class="user-popover" id="nav-user">
       <Suspense>
         <nav-user />
       </Suspense>

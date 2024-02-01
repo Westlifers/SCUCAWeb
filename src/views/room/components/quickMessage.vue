@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {quickMessages} from "@/utils";
+import {QUICK_MESSAGES} from "@/utils";
 
 const emit = defineEmits<{
   (event: 'send_message', message: string): void
@@ -13,7 +13,7 @@ const emit = defineEmits<{
   </template>
 
   <div class="quick-message-wrapper">
-    <div class="quick-message-item" v-for="message in quickMessages" :key="message" @click="emit('send_message', message)">{{message}}</div>
+    <div class="quick-message-item" v-for="message in QUICK_MESSAGES" :key="message" @click="emit('send_message', message)">{{message}}</div>
   </div>
 </el-popover>
 </template>
