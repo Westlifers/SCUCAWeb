@@ -105,13 +105,13 @@ import type {apiUsedEventName, CachedResult} from "@/types";
 import {
   convert_time_num2str,
   convert_time_str2num,
-  SPECIAL_EVENTS,
   translateEventForScramble
 } from "@/utils";
 import {ElMessage, ElNotification} from "element-plus";
 import {postResult, postTempResult} from "@/api/service";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
+import {SPECIAL_EVENTS} from "@/utils/constants";
 
 const curtain_state = ref(1)
 const activeEvent: Ref<apiUsedEventName> = ref('333' as apiUsedEventName)

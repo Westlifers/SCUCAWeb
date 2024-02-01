@@ -16,8 +16,9 @@
 <script lang="ts" setup>
 import type {TableColumnCtx} from "element-plus";
 import type {OmittedResultAvgWithCompId, OmittedResultBestWithCompId, Result} from "@/types";
-import {convert_time_num2str, isMobile} from "@/utils";
+import {convert_time_num2str} from "@/utils";
 import {computed} from "vue";
+import {isMobile} from "@/utils/constants";
 
 const formatter = (row: Result, column: TableColumnCtx<Result>) => {
   const val = row[column.property]

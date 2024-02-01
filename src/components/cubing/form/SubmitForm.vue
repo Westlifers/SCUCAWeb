@@ -64,9 +64,10 @@ import {computed, reactive, ref} from 'vue'
 import type {FormInstance} from "element-plus";
 import {ElNotification} from "element-plus";
 import {postResult} from "@/api/service";
-import {convert_time_str2num, SPECIAL_EVENTS} from "@/utils";
+import {convert_time_str2num} from "@/utils";
 import {localStore} from "@/store";
 import router from "@/router";
+import {SPECIAL_EVENTS} from "@/utils/constants";
 
 const formRef = ref<FormInstance>()
 const store = localStore()

@@ -34,7 +34,8 @@
 import {reactive, ref} from 'vue'
 import type {FormInstance} from "element-plus";
 import {createCompetition} from "@/api/service";
-import {ALL_EVENTS} from "@/utils";
+
+import {ALL_EVENTS} from "@/utils/constants";
 
 const checkAll = ref(false)
 const isIndeterminate = ref(true)

@@ -56,8 +56,9 @@
 <script lang="ts" setup>
 import type {TableColumnCtx} from "element-plus";
 import type {Result} from "@/types";
-import {convert_time_num2str, isMobile, SPECIAL_EVENTS} from "@/utils";
+import {convert_time_num2str} from "@/utils";
 import {computed} from "vue";
+import {isMobile, SPECIAL_EVENTS} from "@/utils/constants";
 
 
 const formatter = (row: Result, column: TableColumnCtx<Result>) => {

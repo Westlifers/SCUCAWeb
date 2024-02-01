@@ -60,7 +60,8 @@
 import {getProfile, getScoreRank} from "@/api/fetchData";
 import type {Score} from "@/types";
 import {ref} from "vue";
-import {isMobile} from "@/utils";
+
+import {isMobile} from "@/utils/constants";
 
 const dialogVisible = ref(false)
 

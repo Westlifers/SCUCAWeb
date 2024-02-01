@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import {TOUR_GUIDE_LIST} from "@/utils";
+
+import {TOUR_GUIDE_LIST} from "@/utils/constants";
 
 const prop = defineProps<{
   name: string

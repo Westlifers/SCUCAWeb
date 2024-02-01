@@ -167,12 +167,13 @@ import {computed, reactive, ref, watch} from "vue";
 import {getComp, getCompCachedResult} from "@/api/fetchData";
 import {localStore} from "@/store";
 import type {apiUsedEventName, CachedResult} from "@/types";
-import {convert_time_num2str, convert_time_str2num, isMobile, SPECIAL_EVENTS, translateEvent} from "@/utils";
+import {convert_time_num2str, convert_time_str2num, translateEvent} from "@/utils";
 import type {FormInstance} from "element-plus";
 import {ElMessage, ElNotification} from "element-plus";
 import {postResult, postTempResult} from "@/api/service";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
+import {isMobile, SPECIAL_EVENTS} from "@/utils/constants";
 
 const curtain_state = ref(1)
 const store = localStore()

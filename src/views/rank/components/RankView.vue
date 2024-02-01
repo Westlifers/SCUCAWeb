@@ -39,7 +39,8 @@ import DataTable from "@/views/rank/components/DataTable.vue";
 import type {Ref} from "vue";
 import {computed, ref, watch} from "vue";
 import type {RankPaginationData} from "@/types";
-import {ALL_EVENTS, translateEventForScramble} from "@/utils";
+import {translateEventForScramble} from "@/utils";
+import {ALL_EVENTS} from "@/utils/constants";
 
 // contributed by ChatGPT, cheers for AI!
 

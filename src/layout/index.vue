@@ -29,9 +29,9 @@ import NavSideBar from "@/layout/components/NavSideBar.vue";
 import NavHeader from "@/layout/components/NavHeader.vue";
 
 import {defineComponent} from 'vue'
-import {isMobile} from "@/utils";
 import NavFooterMobile from "@/layout/components/NavFooterMobile.vue";
 import TourGuide from "@/components/tourGuide.vue";
+import {isMobile} from "@/utils/constants";
 
 export default defineComponent({
   name: 'App',

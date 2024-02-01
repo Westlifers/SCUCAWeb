@@ -20,7 +20,8 @@
 
 <script lang="ts" setup>
 import {ref, watch} from "vue";
-import {convert_time_num2str, isMobile} from "@/utils";
+import {convert_time_num2str} from "@/utils";
+import {isMobile} from "@/utils/constants";
 
 const is_inspection = ref(false)  // 按下空格，观察中
 const is_pre_timing = ref(false)  // 按下空格，等待延迟启动

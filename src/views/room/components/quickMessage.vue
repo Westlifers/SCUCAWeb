@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {QUICK_MESSAGES} from "@/utils";
+
+import {QUICK_MESSAGES} from "@/utils/constants";
 
 const emit = defineEmits<{
   (event: 'send_message', message: string): void

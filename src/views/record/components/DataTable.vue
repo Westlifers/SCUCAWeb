@@ -28,7 +28,8 @@ import type {Record, Result} from "@/types";
 import {getScuRecord} from "@/api/fetchData";
 import {computed} from "vue";
 import type {TableColumnCtx} from "element-plus";
-import {ALL_EVENTS, convert_time_num2str} from "@/utils";
+import {convert_time_num2str} from "@/utils";
+import {ALL_EVENTS} from "@/utils/constants";
 
 const record: Record = await getScuRecord()
 

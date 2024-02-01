@@ -24,7 +24,7 @@
 import type {Scramble} from "@/types";
 import {computed, ref, watch} from "vue";
 import SubmitForm from "@/components/cubing/form/SubmitForm.vue";
-import {isMobile, SPECIAL_EVENTS} from "@/utils";
+import {isMobile, SPECIAL_EVENTS} from "@/utils/constants";
 
 const maxScrambleCount = computed(() => {
   if (SPECIAL_EVENTS.indexOf(props.event) > -1) {

@@ -70,7 +70,8 @@
 import {getAnnouncement} from "@/api/fetchData";
 import type {Ref} from "vue";
 import {computed, ref} from "vue";
-import {get_user_avatar, isMobile} from "@/utils";
+import {get_user_avatar} from "@/utils";
+import {isMobile} from "@/utils/constants";
 
 const posts = await getAnnouncement('ua')
 // add a list of boolean values to control the drawer

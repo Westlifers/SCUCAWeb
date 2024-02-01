@@ -54,9 +54,9 @@
 import {getRoomList} from "@/api/fetchData";
 import type {Room} from "@/types";
 import {ref} from "vue";
-import {ALL_EVENTS} from "@/utils";
 import type {FormInstance} from "element-plus";
 import router from "@/router";
+import {ALL_EVENTS} from "@/utils/constants";
 
 const roomList: Room[] = await getRoomList();
 const formRef = ref<FormInstance>()

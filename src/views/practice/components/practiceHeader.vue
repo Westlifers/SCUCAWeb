@@ -24,7 +24,8 @@
 
 <script lang="ts" setup>
 import {ref, watch} from "vue";
-import {ALL_EVENTS} from "@/utils";
+
+import {ALL_EVENTS} from "@/utils/constants";
 
 const emits = defineEmits<{
   (event: 'setEvent', e: string): void
