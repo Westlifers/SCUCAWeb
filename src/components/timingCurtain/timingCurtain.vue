@@ -92,13 +92,19 @@ const keyUp = (key) => {
 
   // if user press any key, and we are at timing, stop timing
   if (is_timing.value) {
+    // if time is less than 0.2, we consider it as a mistake and ignore it
+    const t = ((new Date()).getTime() - time_stamp.value) / 1000
+    if (t <= 0.2) {
+      console.log('mistake')
+      return
+    }
     // 睡一会，免得连续点击到按钮，不知道为什么松开后会点到按钮
     setTimeout(() => {
       is_timing.value = false
       is_finished.value = true
     }, 10)
     // time value is the time stamp of the last key down event, to seconds
-    time.value = ((new Date()).getTime() - time_stamp.value) / 1000
+    time.value = t
     return
   }
 }
