@@ -8,14 +8,14 @@
       </el-scrollbar>
 
       <div class="chat-input-wrapper">
-        <el-input type="text" @keydown.enter="send_chat_message" v-model="message" placeholder="Enter your message here" @focus="is_typing=true" @blur="is_typing=false" />
+        <el-input type="text" @keydown.enter="send_chat_message" v-model="message" placeholder="Enter message" @focus="is_typing=true" @blur="is_typing=false" />
         <quick-message @send_message="(m) => {message=m;send_chat_message()}" />
         <button class="chat-send-btn" @click="send_chat_message">Send</button>
       </div>
     </div>
 
 
-    <div class="app-right">
+    <div class="app-right" v-if="!isMobile">
       <div class="chat-list-wrapper">
         <div class="chat-list-header">
           <div class="chat-list-header-left">在线玩家<span class="c-number">{{playerList.length}}</span><el-tag>第{{round}}轮</el-tag></div>
@@ -126,6 +126,7 @@ import type {apiUsedEventName} from "@/types";
 import ChatMessage from "@/views/room/components/chatMessage.vue";
 import {localStore} from "@/store";
 import QuickMessage from "@/views/room/components/quickMessage.vue";
+import {isMobile} from "@/utils/constants";
 
 const message: Ref<string> = ref('');
 const scramble: Ref<string> = ref('');
@@ -320,5 +321,18 @@ watch(messageList.value, async () => {
 
 .chat-list-name-result {
     font-size: 14px;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 0;
+    }
+
+    .app-main {
+        height: 100%;
+    }
+
+
 }
 </style>
