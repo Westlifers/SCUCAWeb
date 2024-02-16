@@ -55,4 +55,10 @@ const emit = defineEmits<{
 :deep(.el-popper) {
     padding: 0 !important;
 }
+
+@media (max-width: 768px) {
+    .el-button {
+        margin: 0 !important;
+    }
+}
 </style>
