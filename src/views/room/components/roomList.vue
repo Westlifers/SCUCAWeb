@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <el-dialog title="创建房间" v-model="dialogVisible" width="30%">
+  <el-dialog title="创建房间" v-model="dialogVisible" :width="isMobile?'90%':'30%'">
     <el-form
         ref="formRef"
         :model="state.form"
@@ -56,7 +56,7 @@ import type {Room} from "@/types";
 import {ref} from "vue";
 import type {FormInstance} from "element-plus";
 import router from "@/router";
-import {ALL_EVENTS} from "@/utils/constants";
+import {ALL_EVENTS, isMobile} from "@/utils/constants";
 
 const roomList: Room[] = await getRoomList();
 const formRef = ref<FormInstance>()
