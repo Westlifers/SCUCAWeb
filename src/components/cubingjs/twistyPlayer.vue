@@ -10,25 +10,41 @@ import {TwistyPlayer} from 'cubing/twisty';
 
 const container = ref<HTMLElement | null>(null);
 const player = ref<TwistyPlayer | null>(null);
+const playerWithSize = computed(() => {
+  const player_ = player.value
+  if (player_ && ('style' in player_)) {
+    // add css style to player
+    player_.style.width = `${props.width}px`;
+    player_.style.height = `${props.height}px`;
+    player_.style.margin = 'auto'
+  }
+  return player_
+})
 
-const config = computed(() => Object.assign({}, props, {
-  controlPanel: "none",
-}))
+const config = computed(() => {
+  let config_ = Object.assign({}, props, {
+    controlPanel: "none",
+  })
+
+  const {width, height, ...rest} = config_;
+
+  return rest;
+})
 
 onMounted(async () => {
   if (container.value) {
     player.value = new TwistyPlayer(config.value);
     if ("appendChild" in container.value) {
-      container.value.appendChild(player.value);
+      container.value.appendChild(playerWithSize.value);
     }
   }
 });
 
 watch([() => props.alg, () => props.visualization], () => {
   if (container.value && player.value && "appendChild" in container.value) {
-    container.value.removeChild(player.value);
+    container.value.removeChild(playerWithSize.value);
     player.value = new TwistyPlayer(config.value);
-    container.value.appendChild(player.value);
+    container.value.appendChild(playerWithSize.value);
   }
 });
 
@@ -37,6 +53,8 @@ const props = defineProps<{
   alg?: string;
   visualization?: "2D" | "3D";
   background?: 'transparent';
+  width?: string;
+  height?: string;
 }>();
 </script>
 
