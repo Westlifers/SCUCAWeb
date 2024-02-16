@@ -9,6 +9,7 @@
 
       <div class="chat-input-wrapper">
         <el-input type="text" @keydown.enter="send_chat_message" v-model="message" placeholder="Enter message" @focus="is_typing=true" @blur="is_typing=false" />
+        <el-button type="primary" @click="drawerVisible=true" v-if="isMobile">计时</el-button>
         <quick-message @send_message="(m) => {message=m;send_chat_message()}" />
         <button class="chat-send-btn" @click="send_chat_message">Send</button>
       </div>
@@ -64,6 +65,48 @@
   </div>
 
   <timing-curtain :state="timingState" @timing-over="set_time" v-if="!finished && !is_typing" />
+
+  <el-drawer
+    v-model="drawerVisible"
+    :title="`第${round}轮打乱`"
+    v-if="isMobile"
+    direction="btt"
+    size="70%"
+    >
+    <template #default>
+      <div class="drawer-panel">
+        <div class="drawer-scramble-panel">
+          <el-card>
+            <p>{{scramble}}</p>
+          </el-card>
+        </div>
+        <div class="drawer-preview-panel">
+          <twisty-player
+              v-if="imgVisible"
+              :puzzle="translateEvent(event)"
+              :alg="scramble"
+              :visualization="is3d? '3D' : '2D'"
+              width="200"
+              height="200"
+          />
+          <el-button-group>
+            <el-button
+                type="primary"
+                @click="is3d = !is3d"
+            >
+              {{is3d ? '2D' : '3D'}}
+            </el-button>
+            <el-button
+                type="primary"
+                @click="timingState++;drawerVisible=false"
+            >
+              观察
+            </el-button>
+          </el-button-group>
+        </div>
+      </div>
+    </template>
+  </el-drawer>
 </template>
 
 <script lang="ts" setup>
@@ -149,6 +192,7 @@ const imgVisible: Ref<boolean> = ref(true);
 const is3d: Ref<boolean> = ref(false);
 const avatars: Ref<object> = ref({})
 const store = localStore()
+const drawerVisible = ref(false)
 
 const roomId = router.currentRoute.value.params.roomId;
 const event = router.currentRoute.value.params.event as apiUsedEventName  // 此路由只能是项目名
@@ -333,6 +377,24 @@ watch(messageList.value, async () => {
         height: 100%;
     }
 
+    .drawer-panel {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
 
+    .drawer-scramble-panel {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .drawer-scramble-panel p {
+        font-size: 15px;
+    }
+
+    .drawer-preview-panel {
+        width: 50%;
+    }
 }
 </style>
