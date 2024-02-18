@@ -3,7 +3,13 @@ import {getComp} from "@/api/fetchData";
 import {apiUsedEventName} from "@/types";
 import type {Ref} from "vue";
 import {computed, ref} from "vue";
-import {classifyTableDataByEvent, convert_time_num2str, get_user_avatar} from "@/utils";
+import {
+  classifyTableDataByEvent,
+  convert_time_num2str,
+  get_user_avatar,
+  getSortedEventsFromTableData,
+  translateEventForScramble
+} from "@/utils";
 import ProgressBar from "@/components/progressBar.vue";
 
 const data = await getComp('week')
@@ -58,6 +64,7 @@ const integratedData = computed(() => {
 })
 
 const activeEvent: Ref<apiUsedEventName> = ref<apiUsedEventName>('333')
+const events = computed(() => getSortedEventsFromTableData(data))
 
 const avatars = {}
 for (let i = 0; i < data.result_set.length; i++) {
@@ -69,8 +76,20 @@ for (let i = 0; i < data.result_set.length; i++) {
 </script>
 
 <template>
-<el-table :data="integratedData[activeEvent]" style="width: 100%">
+<el-table :data="integratedData[activeEvent]" style="width: 100%" :default-sort="{prop: 'avg', order: 'ascending'}">
   <el-table-column prop="username" label="用户名" width="100">
+    <template #header>
+      <el-select v-model="activeEvent">
+        <el-option
+            v-for="event in events"
+            :key="event"
+            :label="event"
+            :value="event"
+        >
+          <span class="cubing-icon" :class="`event-${translateEventForScramble(event)}`"><span style="margin-left: 5px">{{event}}</span></span>
+        </el-option>
+      </el-select>
+    </template>
     <template v-slot:default="scope">
       <div class="username">
         <el-avatar :src="avatars[scope.row.username]" size="small"></el-avatar>
@@ -78,7 +97,7 @@ for (let i = 0; i < data.result_set.length; i++) {
       </div>
     </template>
   </el-table-column>
-  <el-table-column prop="avg" label="平均"></el-table-column>
+  <el-table-column prop="avg" label="平均" sortable></el-table-column>
   <el-table-column label="详细成绩" width="200">
     <template v-slot:default="scope">
       <progress-bar

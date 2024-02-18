@@ -45,33 +45,34 @@ const offsetLeftRatio = computed(() => props.min / innerWidthRatio.value)
 }
 
 .progress-bar {
-  height: 5px;
+  height: 10px;
   background-color: var(--el-border-color-lighter);
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
 .progress-bar-inner {
   height: 100%;
   background-color: #409eff;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .progress-bar-left-text, .progress-bar-right-text {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12px;
-  color: #606266;
+  font-size: 14px;
   width: 50px;
 }
 
 .progress-bar-left-text {
   justify-content: flex-start;
+  margin-right: 10px;
 }
 
 .progress-bar-right-text {
   justify-content: flex-end;
+  margin-left: 10px;
 }
 
 </style>
