@@ -81,6 +81,16 @@
       </el-popover>
     </div>
 
+    <div class="cubing-scramble-preview">
+      <twisty-player
+          :alg="scrambleOfEvent[count - 1]"
+          :visualization="is3d ? '3D' : '2D'"
+          v-if="events_available.indexOf(activeEvent) > -1"
+          :puzzle="translateEvent(activeEvent)"
+          width="200"
+      />
+    </div>
+
     <timing-curtain
         @timing-over="set_time"
         :state="curtain_state"
@@ -104,7 +114,7 @@ import {localStore} from "@/store";
 import type {apiUsedEventName, CachedResult} from "@/types";
 import {
   convert_time_num2str,
-  convert_time_str2num,
+  convert_time_str2num, translateEvent,
   translateEventForScramble
 } from "@/utils";
 import {ElMessage, ElNotification} from "element-plus";
@@ -528,5 +538,10 @@ const handleSubmit =  async () => {
 }
 .scramble-submit span {
     font-size: 50px
+}
+
+.cubing-scramble-preview {
+    position: absolute;
+    bottom: 60px;
 }
 </style>
