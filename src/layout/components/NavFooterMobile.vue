@@ -1,26 +1,20 @@
 <script setup lang="ts">
-import {computed} from "vue";
-import {get_user_avatar, go_page} from "@/utils";
-import {localStore} from "@/store";
+import {go_page} from "@/utils";
 import {useDark} from "@vueuse/core";
 
-const store = localStore()
 const isDark = useDark()
-const isLoggedIn = computed(() => !(store.user.username===''))
 
-const avatar = await get_user_avatar(store.user.username)
 </script>
 
 <template>
   <el-menu default-active="1" class="nav-footer-mobile" mode="horizontal">
 
-    <el-menu-item index="1" @click="go_page('index')">
-      <el-icon size="100"><ElementPlus /></el-icon>
+    <el-menu-item index="1" @click="go_page('mobileWeek')">
+      <el-icon size="100"><Grid /></el-icon>
     </el-menu-item>
 
-
-    <el-menu-item index="2" @click="go_page('mobileWeek')">
-      <el-icon size="100"><Grid /></el-icon>
+    <el-menu-item index="2" @click="go_page('mobileWeekRank')">
+      <el-icon size="100"><Trophy /></el-icon>
     </el-menu-item>
 
 
@@ -29,7 +23,6 @@ const avatar = await get_user_avatar(store.user.username)
     </el-menu-item>
 
     <el-switch size="large" v-model="isDark" active-icon="Moon" inactive-icon="Sunny" active-color="black" inline-prompt/>
-
 
   </el-menu>
 </template>

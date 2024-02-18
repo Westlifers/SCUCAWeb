@@ -8,7 +8,13 @@
 <script lang="ts" setup>
 
 import AnnouncementPanel from "@/views/index/components/announcementPanel.vue";
-import NotificationPanel from "@/views/index/components/notificationPanel.vue";</script>
+import NotificationPanel from "@/views/index/components/notificationPanel.vue";
+import {isMobile} from "@/utils/constants";
+import {go_page} from "@/utils";
+
+// 移动端不需要首页，跳转到周赛页面
+if (isMobile) go_page('mobileWeek')
+</script>
 
 <style scoped>
 .index-wrapper {
