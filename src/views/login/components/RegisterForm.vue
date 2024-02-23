@@ -57,6 +57,8 @@ const registerFormRef = ref<FormInstance>()
 const validateUsername = (rule: any, value: string, callback: Function) => {
   if (value.length >= 15) {
     callback(new Error("用户名不能超过15个字符"))
+  } else {
+    callback()
   }
 }
 
