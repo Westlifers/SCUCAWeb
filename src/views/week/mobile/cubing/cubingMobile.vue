@@ -543,5 +543,6 @@ const handleSubmit =  async () => {
 .cubing-scramble-preview {
     position: absolute;
     bottom: 60px;
+    pointer-events: none;
 }
 </style>
