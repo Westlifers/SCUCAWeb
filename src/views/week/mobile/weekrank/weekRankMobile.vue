@@ -62,6 +62,17 @@ const integratedData = computed(() => {
 
   return result
 })
+const sort_avg_count_in_zero = (obj_a, obj_b) => {
+  let a = obj_a.avg
+  let b = obj_b.avg
+  if (a == 0) {
+    a = Infinity
+  }
+  if (b == 0) {
+    b = Infinity
+  }
+  return a - b
+}
 
 const activeEvent: Ref<apiUsedEventName> = ref<apiUsedEventName>('333')
 const events = computed(() => getSortedEventsFromTableData(data))
@@ -97,7 +108,11 @@ for (let i = 0; i < data.result_set.length; i++) {
       </div>
     </template>
   </el-table-column>
-  <el-table-column prop="avg" label="平均" sortable></el-table-column>
+  <el-table-column prop="avg" label="平均" sortable :sort-method="sort_avg_count_in_zero">
+    <template v-slot:default="scope">
+      <div>{{ scope.row.avg > 0 ? convert_time_num2str(scope.row.avg) : 'DNF' }}</div>
+    </template>
+  </el-table-column>
   <el-table-column label="详细成绩" width="200">
     <template v-slot:default="scope">
       <progress-bar
