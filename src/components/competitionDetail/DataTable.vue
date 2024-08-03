@@ -43,10 +43,10 @@
       <template v-slot:default="scope">
         <el-badge value="SCUR" class="item" v-if="scope.row.is_best_scur">
           <div class="badge-value">
-            {{ convert_time_num2str(scope.row.best) }}
+            {{ scope.row.avg > 0 ? convert_time_num2str(scope.row.best) : 'DNF' }}
           </div>
         </el-badge>
-        <div v-else>{{ convert_time_num2str(scope.row.best) }}</div>
+        <div v-else>{{ scope.row.avg > 0 ? convert_time_num2str(scope.row.best) : 'DNF' }}</div>
       </template>
     </el-table-column>
 
