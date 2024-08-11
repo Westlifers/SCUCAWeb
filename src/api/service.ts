@@ -43,7 +43,8 @@ export async function postTempResult(data: any) {
 export async function createCompetition(comp: string, data: any) {
     if (comp === 'week') {
         return request({
-            url: '/competition/create/week/',
+            // url: '/competition/create/week/',        // deprecated in 2024.8.11
+            url: '/competition/quickweekcreation/',
             method: "post",
             data
         })
