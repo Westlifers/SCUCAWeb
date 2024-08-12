@@ -5,6 +5,7 @@ import {version} from "../../package.json"
 import {ElNotification} from "element-plus";
 import router from "@/router";
 import {getAnnouncement} from "@/api/fetchData";
+import {localStore} from "@/store";
 
 if (window.localStorage.getItem('expire') as number <= new Date().getTime()) {
     localStorage.removeItem('userInfo');
@@ -38,6 +39,10 @@ if (hasNewVersion) {
         duration: 0
     })
 }
+
+// 更新QQ绑定状态
+const store = localStore()
+store.updateQQBindingRequest()
 </script>
 
 <template>

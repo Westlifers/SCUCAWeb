@@ -414,7 +414,7 @@ export async function checkQQBindingRequest(): Promise<QQBindingRequest> {
 
 export async function bindQQ(qq: string): Promise<QQBindingRequest> {
     const res = await request({
-        url: '/user/bindqq/',
+        url: '/user/createqqbinding/',
         method: 'post',
         data: {
             qq: qq

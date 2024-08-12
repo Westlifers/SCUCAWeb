@@ -9,7 +9,13 @@
       </div>
       <div class="account-name">{{store.user.username}}</div>
       <div class="account-title">{{store.user.is_scuer?'SCUer':'OUTSIDER'}}</div>
-      <div class="account-qq">
+      <div class="account-qq" v-if="isThereQQBindingRequest">
+        QQ号：{{store.user.qq?store.user.qq:'未绑定'}}
+        <el-badge is-dot>
+          <el-button type="text" size="small" @click="QQDialogVisible = true">改绑</el-button>
+        </el-badge>
+      </div>
+      <div class="account-qq" v-else>
         QQ号：{{store.user.qq?store.user.qq:'未绑定'}}
         <el-button type="text" size="small" @click="QQDialogVisible = true">改绑</el-button>
       </div>
@@ -54,13 +60,15 @@
 
 import {localStore} from "@/store";
 import {ElMessageBox} from "element-plus";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import ProfileEditDialog from "@/views/profile/components/profileEditDialog.vue";
 import {get_user_avatar} from "@/utils";
 import QQEditDialog from "@/views/profile/components/QQEditDialog.vue";
 
 const store = localStore()
 const avatar = await get_user_avatar(store.user.username)
+
+const isThereQQBindingRequest = computed(() => store.QQBindingRequest.qq !== '')
 
 const dialogVisible = ref(false)
 const QQDialogVisible = ref(false)
