@@ -69,6 +69,7 @@ const store = localStore()
 const avatar = await get_user_avatar(store.user.username)
 
 const isThereQQBindingRequest = computed(() => store.QQBindingRequest.qq !== '')
+await store.updateUserProfile()
 
 const dialogVisible = ref(false)
 const QQDialogVisible = ref(false)
