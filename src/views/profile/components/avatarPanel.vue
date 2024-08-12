@@ -9,6 +9,10 @@
       </div>
       <div class="account-name">{{store.user.username}}</div>
       <div class="account-title">{{store.user.is_scuer?'SCUer':'OUTSIDER'}}</div>
+      <div class="account-qq">
+        QQ号：{{store.user.qq?store.user.qq:'未绑定'}}
+        <el-button type="text" size="small" @click="QQDialogVisible = true">改绑</el-button>
+      </div>
     </div>
     <div class="account card" @click="dialogVisible = true">
       <div class="account-cash">{{store.user.is_superuser?'管理员':'Cuber'}}</div>
@@ -33,6 +37,17 @@
       </span>
     </template>
   </el-dialog>
+
+  <el-dialog
+      v-model="QQDialogVisible"
+      title="修改QQ号"
+      width="30%"
+      center
+      append-to-body
+  >
+    <QQEditDialog />
+  </el-dialog>
+
 </template>
 
 <script lang="ts" setup>
@@ -42,11 +57,13 @@ import {ElMessageBox} from "element-plus";
 import {ref} from "vue";
 import ProfileEditDialog from "@/views/profile/components/profileEditDialog.vue";
 import {get_user_avatar} from "@/utils";
+import QQEditDialog from "@/views/profile/components/QQEditDialog.vue";
 
 const store = localStore()
 const avatar = await get_user_avatar(store.user.username)
 
 const dialogVisible = ref(false)
+const QQDialogVisible = ref(false)
 const handleClose = (done: () => void) => {
   ElMessageBox.confirm('档案修改还未提交，是否要返回？')
     .then(() => {

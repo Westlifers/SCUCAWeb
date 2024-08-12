@@ -7,6 +7,8 @@ export interface User {
     avatar: string,
     is_scuer: boolean,
     description: string,
+    qq: string,
+    WCAID: string,
 }
 
 
@@ -149,6 +151,13 @@ export interface Room {
     players: string[]
     finished_players: string[]
     round: number
+}
+
+
+export interface QQBindingRequest {
+    qq: string
+    targetUser: string
+    secretKey: string
 }
 
 

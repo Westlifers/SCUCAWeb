@@ -3,9 +3,10 @@ import LineDateTime from "@/views/profile/components/charts/lineDateTime.vue";
 import {ref, shallowRef} from "vue";
 import {getAllResultOfUser} from "@/api/fetchData";
 import PieEvents from "@/views/profile/components/charts/pieEvents.vue";
+import HeatMap from "@/views/profile/components/charts/heatMap.vue";
 
 const result_set = await getAllResultOfUser()
-const chart = ref('LineDateTime')  // el-select似乎不能使用shallowRef/ref包装对象来作为选择结果，所以拐了个弯，用字符串到字典去对应
+const chart = ref('HeatMap')  // el-select似乎不能使用shallowRef/ref包装对象来作为选择结果，所以拐了个弯，用字符串到字典去对应
 const allCharts = shallowRef({
     'LineDateTime': {
        'chartComponent': LineDateTime,
@@ -14,6 +15,10 @@ const allCharts = shallowRef({
     'PieEvents': {
         'chartComponent': PieEvents,
         'description': '各项目占比饼图'
+    },
+    'HeatMap': {
+        'chartComponent': HeatMap,
+        'description': '活跃热力图'
     }
 })
 

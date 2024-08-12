@@ -712,6 +712,10 @@ body {
 .account-income {
   font-size: 14px;
 }
+.account-qq {
+  font-size: 13px;
+  margin-top: 6px;
+}
 .account-iban {
   margin-top: auto;
   font-weight: 500;

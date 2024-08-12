@@ -99,6 +99,8 @@ const handleLogin = (formEl: FormInstance | undefined) => {
           is_scuer: data.is_scuer,
           avatar: data.avatar,
           description: data.description,
+          qq: data.qq,
+          WCAID: data.WCAID,
         };
 
         store.setUser(user);

@@ -5,7 +5,7 @@ import type {
     DetailedCompetition,
     OmittedCompetition,
     OmittedResultAvg,
-    OmittedResultBest,
+    OmittedResultBest, QQBindingRequest,
     RankPaginationData,
     Record,
     RecordWithScore,
@@ -320,6 +320,8 @@ export async function getProfile(username: string): Promise<User> {
         is_active: res['is_active'],
         avatar: res['avatar'],
         description: res['description'],
+        qq: res['qq'],
+        WCAID: res['WCAID'],
     }
 }
 
@@ -383,5 +385,48 @@ export async function getAllResultOfUser(): Promise<Result[]> {
 
     const result_set = res['result_set']
     return result_set as Result[]
+}
+
+
+export async function checkQQBindingRequest(): Promise<QQBindingRequest> {
+    const res = await request({
+        url: '/user/checkqqbinding/',
+        method: 'get'
+    })
+
+    const qqBindingRequest = res['QQBindingRequest']
+    if (qqBindingRequest){
+        return {
+            qq: qqBindingRequest['QQNumber'],
+            targetUser: qqBindingRequest['TargetUser'],
+            secretKey: qqBindingRequest['secretKey'],
+        }
+    }
+    else {
+        return {
+            qq: '',
+            targetUser: '',
+            secretKey: '',
+        }
+    }
+}
+
+
+export async function bindQQ(qq: string): Promise<QQBindingRequest> {
+    const res = await request({
+        url: '/user/bindqq/',
+        method: 'post',
+        data: {
+            qq: qq
+        }
+    })
+
+    const secret_Key = res['secretKey']
+    const store = localStore()
+    return {
+        qq: qq,
+        targetUser: store.user.username,
+        secretKey: secret_Key,
+    }
 }
 

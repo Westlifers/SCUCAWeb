@@ -1,8 +1,8 @@
 import {defineStore} from 'pinia'
 
-import type {User, UserParticipationData} from '@/types'
+import type {QQBindingRequest, User, UserParticipationData} from '@/types'
 import {ElNotification} from "element-plus";
-import {getProfile, getUserParticipationData} from "@/api/fetchData";
+import {checkQQBindingRequest, getProfile, getUserParticipationData} from "@/api/fetchData";
 
 export const initDefaultUserInfo = (): User => {
     let user = {
@@ -14,6 +14,8 @@ export const initDefaultUserInfo = (): User => {
         is_scuer: false,
         avatar: 'https://img.yougi.top/default.png',
         description: '',
+        qq: '',
+        WCAID: '',
     }
     if (window.localStorage.getItem("userInfo")) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -41,11 +43,20 @@ const initDarkMode = (): boolean => {
     return darkMode === 'dark';
 }
 
+const initQQBindingRequest = (): QQBindingRequest => {
+    return {
+        qq: '',
+        targetUser: '',
+        secretKey: ''
+    }
+}
+
 export const localStore = defineStore('store', {
     state: () => ({
         user: initDefaultUserInfo(),  // 用户数据
         userParticipation: initUserParticipationData(),
-        isDark: initDarkMode()
+        isDark: initDarkMode(),
+        QQBindingRequest: initQQBindingRequest()
     }),
 
     actions: {
@@ -83,6 +94,9 @@ export const localStore = defineStore('store', {
         async updateUserProfile() {
             this.user = await getProfile(this.user.username)
             await window.localStorage.setItem("userInfo", JSON.stringify(this.user))
+        },
+        async updateQQBindingRequest() {
+            this.QQBindingRequest = await checkQQBindingRequest()
         }
     },
 
