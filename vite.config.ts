@@ -3,6 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://github.com/vitejs/vite/blob/ec7ee22cf15bed05a6c55693ecbac27cfd615118/packages/vite/src/node/plugins/workerImportMetaUrl.ts#L127-L128
 const workerImportMetaUrlRE =
@@ -13,6 +14,12 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    visualizer({
+      open:true,  //注意这里要设置为true，否则无效
+      filename: "stats.html", //分析图生成的文件名
+      gzipSize: true, // 收集 gzip 大小并将其显示
+      brotliSize: true, // 收集 brotli 大小并将其显示
+    })
   ],
   resolve: {
     alias: {

@@ -4,28 +4,17 @@
     <el-button icon="MoreFilled" id="collapse-button" @click="isCollapse=!isCollapse" circle />
 
 
-    <el-sub-menu index="1">
-      <template #title>
-        <el-icon><Bicycle /></el-icon>
-        <span>进行赛事</span>
-      </template>
-
-      <el-menu-item index="1-1" @click="go_page('week')">
-        <el-icon><TrendCharts /></el-icon>
-        <template #title>周赛</template>
-      </el-menu-item>
-
-      <el-menu-item index="1-2" @click="go_page('special')">
-        <el-icon><Grid /></el-icon>
-        <template #title>正赛</template>
-      </el-menu-item>
-    </el-sub-menu>
+    <el-menu-item index="1" @click="go_page('week')">
+      <el-icon><TrendCharts /></el-icon>
+      <template #title>周赛</template>
+    </el-menu-item>
 
 
     <el-menu-item index="2" @click="go_page('history')">
       <el-icon><document /></el-icon>
       <template #title>历史赛事</template>
     </el-menu-item>
+
 
     <el-menu-item index="3" @click="go_page('record')">
       <el-icon><Medal /></el-icon>
