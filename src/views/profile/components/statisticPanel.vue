@@ -31,7 +31,12 @@ const allCharts = shallowRef({
         <el-icon size="40"><DataAnalysis /></el-icon>
         数据分析
       </div>
-      <el-select v-model="chart" placeholder="请选择图表">
+      <el-select 
+        v-model="chart" 
+        placeholder="请选择图表"
+        style="width: 200px"
+        size="default"
+      >
         <el-option
           v-for="(val, key) in allCharts"
           :key="key"
@@ -40,7 +45,7 @@ const allCharts = shallowRef({
         />
       </el-select>
     </div>
-    <div class="cards card">
+    <div class="cards card chart-container">
       <component :is="allCharts[chart].chartComponent" :result_set="result_set" />
     </div>
   </div>
@@ -50,10 +55,25 @@ const allCharts = shallowRef({
 .cards-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background: var(--yougi-card-bg);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    border-bottom: 1px solid var(--yougi-border);
 }
 
 .cards-view {
     display: flex;
     align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--yougi-text);
+}
+
+.chart-container {
+    padding: 24px;
+    background: var(--yougi-card-bg);
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
 }
 </style>

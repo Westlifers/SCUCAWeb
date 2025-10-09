@@ -1,50 +1,80 @@
 <template>
-  <div class="announcements">
-    <div class="announcement-header">
-      <p>更新与公告</p>
-      <p>{{(new Date()).toDateString()}}</p>
+  <div class="announcements animate-fade-in">
+    <div class="announcement-header animate-fade-in-down">
+      <div class="header-title">
+        <el-icon class="header-icon"><Bell /></el-icon>
+        <p>更新与公告</p>
+      </div>
+      <p class="header-date">{{(new Date()).toDateString()}}</p>
     </div>
 
-    <div class="announcement-statistics">
-      <el-statistic title="Updates" :value="update_count" />
-      <el-statistic title="Announcements" :value="announcement_count" />
+    <div class="announcement-statistics animate-fade-in-up animate-delay-100">
+      <div class="stat-card hover-lift">
+        <el-icon class="stat-icon update-icon"><Promotion /></el-icon>
+        <div class="stat-content">
+          <el-statistic title="Updates" :value="update_count" />
+        </div>
+      </div>
+      <div class="stat-card hover-lift">
+        <el-icon class="stat-icon announce-icon"><ChatDotRound /></el-icon>
+        <div class="stat-content">
+          <el-statistic title="Announcements" :value="announcement_count" />
+        </div>
+      </div>
     </div>
 
-    <el-scrollbar max-height="600">
+    <el-scrollbar class="announcement-scrollbar">
       <div class="announcement-body">
-        <div v-for="(post, index) in posts" :key="post.title" class="announcement-card">
-          <el-card class="box-card" shadow="hover" :style="{backgroundColor: post.type==='update'?'#e9e7fd':'#fee4cb'}">
-
-
+        <div 
+          v-for="(post, index) in posts" 
+          :key="post.title" 
+          class="announcement-card animate-scale-in"
+          :style="{'animation-delay': `${index * 50}ms`}"
+        >
+          <el-card 
+            class="box-card card-hover" 
+            shadow="hover" 
+            :class="post.type==='update' ? 'update-card' : 'announce-card'"
+          >
             <template #header>
               <div class="card-header">
                 <div class="card-header-date">
-                  <el-badge :value="post.type==='update'?'更新':'公告'" class="item" :type="post.type==='update'?'success':'primary'">
-                    <span>{{ (new Date(Date.parse(post.date))).toLocaleDateString() }}</span>
+                  <el-badge 
+                    :value="post.type==='update'?'更新':'公告'" 
+                    class="item badge-modern" 
+                    :type="post.type==='update'?'success':'primary'"
+                  >
+                    <span class="date-text">
+                      <el-icon><Calendar /></el-icon>
+                      {{ (new Date(Date.parse(post.date))).toLocaleDateString() }}
+                    </span>
                   </el-badge>
-                  <el-button type="primary" @click="drawer[index] = true"><el-icon><MoreFilled /></el-icon></el-button>
+                  <el-button 
+                    type="primary" 
+                    circle
+                    class="detail-btn hover-scale"
+                    @click="drawer[index] = true"
+                  >
+                    <el-icon><MoreFilled /></el-icon>
+                  </el-button>
                 </div>
                 <div class="el-header-title">
-                  <p>{{ post.title }}</p>
+                  <p class="title-text">{{ post.title }}</p>
                 </div>
               </div>
             </template>
 
-
             <div class="card-body">
-              <!--     show only first 30 characters of the content     -->
-              <p>{{ post.content.substring(0, 30) + '...' }}</p>
+              <p class="content-preview">{{ post.content.substring(0, 30) + '...' }}</p>
             </div>
-
 
             <el-divider />
 
-
             <div class="card-footer">
               <div class="card-footer-info">
-                <div class="info-author">
-                  <el-avatar :src="avatars[post.author]" size="small" />
-                  <p>{{ post.author }}</p>
+                <div class="info-author hover-scale">
+                  <el-avatar :src="avatars[post.author]" size="small" class="author-avatar" />
+                  <p class="author-name">{{ post.author }}</p>
                 </div>
                 <div class="info-time">
                   <el-icon><Clock /></el-icon>&nbsp;
@@ -52,17 +82,26 @@
                 </div>
               </div>
             </div>
-
-
-            <el-drawer v-model="drawer[index]" :direction="drawerDirection" :size="drawerSize">
-              <v-md-preview :text="'# ' + post.title + '\n' + post.content" />
-            </el-drawer>
-
-
           </el-card>
         </div>
       </div>
     </el-scrollbar>
+
+    <el-drawer 
+      v-for="(post, index) in posts" 
+      :key="`drawer-${index}`"
+      v-model="drawer[index]" 
+      :direction="drawerDirection" 
+      :size="drawerSize" 
+      class="modern-drawer"
+      append-to-body
+      destroy-on-close
+    >
+      <template #header>
+        <h3 class="drawer-title text-gradient">{{ post.title }}</h3>
+      </template>
+      <v-md-preview :text="post.content" />
+    </el-drawer>
   </div>
 </template>
 
@@ -72,6 +111,7 @@ import type {Ref} from "vue";
 import {computed, ref} from "vue";
 import {get_user_avatar} from "@/utils";
 import {isMobile} from "@/utils/constants";
+import { Bell, Promotion, ChatDotRound, Calendar, Clock, MoreFilled } from '@element-plus/icons-vue';
 
 const posts = await getAnnouncement('ua')
 // add a list of boolean values to control the drawer
@@ -91,7 +131,6 @@ for (let i = 0; i < posts.length; i++) {
   if (author in avatars) continue
   avatars[posts[i].author] = await get_user_avatar(posts[i].author)
 }
-
 
 // 下面的代码只是为了展示动画效果
 const update_count = ref(0)
@@ -114,13 +153,15 @@ const interval2 = setInterval(() => {
 
 <style scoped>
 .announcements {
-  background-color: var(--yougi-projects-section);
-  border-radius: 32px;
-  padding: 32px 32px 0 32px;
+  background: var(--yougi-projects-section);
+  border-radius: var(--radius-2xl);
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  flex: 2;
-  height: calc(100vh - 120px);
+  height: 100%;
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-base) var(--ease-out);
+  box-sizing: border-box;
 }
 
 .announcement-header {
@@ -129,20 +170,35 @@ const interval2 = setInterval(() => {
   align-items: center;
   margin-bottom: 24px;
   color: var(--yougi-main-color);
+  flex-shrink: 0;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-icon {
+  font-size: 28px;
+  color: var(--yougi-primary);
+  animation: pulse 2s var(--ease-in-out) infinite;
+}
+
+.header-date {
+  font-size: 14px;
+  color: var(--yougi-secondary-color);
+  font-weight: 500;
 }
 
 @media screen and (max-width: 768px) {
   .announcement-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
   }
 
-  .announcement-header p:first-child {
-    width: 100%;
-    text-align: center;
-  }
-
-  .announcement-header p:nth-child(2) {
+  .announcement-header .header-date {
     width: 100%;
     text-align: right;
   }
@@ -152,85 +208,204 @@ const interval2 = setInterval(() => {
   font-size: 24px;
   line-height: 32px;
   font-weight: 600;
-  opacity: 0.9;
   margin: 0;
 }
 
 .announcement-statistics {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 16px;
   margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+.stat-card {
+  flex: 1;
+  background: linear-gradient(135deg, var(--yougi-primary-light), var(--yougi-primary));
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base) var(--ease-out);
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.stat-icon {
+  font-size: 36px;
+  color: white;
+  opacity: 0.9;
+}
+
+.update-icon {
+  animation: bounce 2s var(--ease-in-out) infinite;
+}
+
+.announce-icon {
+  animation: pulse 2s var(--ease-in-out) infinite;
+}
+
+.stat-content {
+  color: white;
+}
+
+.stat-content :deep(.el-statistic__head) {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+.stat-content :deep(.el-statistic__content) {
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.announcement-scrollbar {
+  flex: 1;
+  min-height: 0;
+}
+
+.announcement-scrollbar :deep(.el-scrollbar__wrap) {
+  overflow-x: hidden;
 }
 
 .announcement-body {
   display: flex;
   flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 16px;
 }
 
 .announcement-card {
-  width: calc(100% / 3 - 16px);
+  width: calc(33.333% - 12px);
   text-align: left;
-  transition: 0.2s;
-  padding: 8px;
+  transition: all var(--transition-base) var(--ease-out);
 }
+
 @media screen and (max-width: 1300px) {
   .announcement-card {
-    width: calc(100% / 2 - 16px)
-  }
-}
-@media screen and (max-width: 1100px) {
-  .announcement-card {
-    width: calc(100% - 16px)
+    width: calc(50% - 8px);
   }
 }
 
-.el-card {
-  border-radius: 30px !important;
+@media screen and (max-width: 1100px) {
+  .announcement-card {
+    width: 100%;
+  }
+}
+
+.box-card {
+  border-radius: var(--radius-xl) !important;
+  border: none !important;
+  overflow: hidden;
+  transition: all var(--transition-base) var(--ease-out);
+  position: relative;
+}
+
+.box-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--yougi-primary), var(--yougi-accent));
+  opacity: 0;
+  transition: opacity var(--transition-base) var(--ease-out);
+}
+
+.box-card:hover::before {
+  opacity: 1;
+}
+
+.update-card {
+  background: linear-gradient(135deg, #e9e7fd 0%, #f5f4ff 100%) !important;
+}
+
+.dark .update-card {
+  background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%) !important;
+}
+
+.announce-card {
+  background: linear-gradient(135deg, #fee4cb 0%, #fff5e6 100%) !important;
+}
+
+.dark .announce-card {
+  background: linear-gradient(135deg, #78350f 0%, #451a03 100%) !important;
 }
 
 .card-header {
-  color: #4A4A4A;
-  opacity: 0.7;
+  color: var(--yougi-secondary-color);
   font-size: 14px;
   line-height: 16px;
+}
+
+.card-header-date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.date-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.badge-modern :deep(.el-badge__content) {
+  border-radius: var(--radius-full);
+  font-weight: 600;
+}
+
+.detail-btn {
+  transition: all var(--transition-base) var(--ease-out) !important;
+}
+
+.detail-btn:hover {
+  transform: rotate(90deg) scale(1.1);
 }
 
 .el-header-title {
   font-size: 20px;
   line-height: 24px;
   font-weight: 700;
-  opacity: 0.7;
   margin-bottom: 5px;
 }
 
-.card-header-date {
-  line-height: 2em;
-  display: flex;
-  justify-content: space-between;
-  color: #4A4A4A;
+.title-text {
+  color: var(--yougi-main-color);
+  margin: 0;
+  transition: color var(--transition-base) var(--ease-out);
 }
 
-.card-header-date button {
-  background-color: transparent;
-  border: none;
-  color: #4A4A4A;
+.box-card:hover .title-text {
+  color: var(--yougi-primary);
 }
 
 .card-body {
-  color: #4A4A4A;
+  color: var(--yougi-secondary-color);
   font-size: 15px;
   line-height: 24px;
-  font-weight: 700;
+  font-weight: 500;
+}
+
+.content-preview {
+  margin: 0;
   opacity: 0.8;
 }
 
 .card-footer-info {
-  color: #4A4A4A;
+  color: var(--yougi-secondary-color);
   font-size: 14px;
   line-height: 24px;
   font-weight: 500;
-  opacity: 1;
   margin-bottom: 5px;
   display: flex;
   justify-content: space-between;
@@ -240,19 +415,51 @@ const interval2 = setInterval(() => {
 .info-author {
   display: flex;
   align-items: center;
-  font-weight: 700;
+  gap: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base) var(--ease-out);
 }
 
-.info-author p {
-  margin-left: 10px;
+.author-avatar {
+  box-shadow: var(--shadow);
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+.info-author:hover .author-avatar {
+  box-shadow: var(--shadow-lg);
+}
+
+.author-name {
+  margin: 0;
+  color: var(--yougi-main-color);
 }
 
 .info-time {
-  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  opacity: 0.6;
+  font-size: 13px;
 }
 
 .el-divider {
   width: 100%;
-  margin-left: 0;
+  margin: 16px 0;
+}
+
+.modern-drawer :deep(.el-drawer__header) {
+  padding: 24px;
+  border-bottom: 1px solid var(--yougi-message-box-border);
+  margin-bottom: 0;
+}
+
+.drawer-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.modern-drawer :deep(.el-drawer__body) {
+  padding: 24px;
 }
 </style>

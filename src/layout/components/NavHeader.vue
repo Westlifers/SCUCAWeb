@@ -1,23 +1,31 @@
 <template>
-  <el-menu class="el-menu-demo" mode="horizontal">
-    <div class="el-menu-item" @click="go_page('index')">
-      <el-icon size="100"><ElementPlus /></el-icon>
-      <p class="app-name">SCUCAComp</p>
+  <el-menu class="el-menu-demo glass-nav animate-fade-in-down" mode="horizontal">
+    <div class="el-menu-item logo-container" @click="go_page('index')">
+      <div class="logo-wrapper hover-scale">
+        <el-icon size="100" class="logo-icon"><ElementPlus /></el-icon>
+      </div>
+      <p class="app-name text-gradient">SCUCAComp</p>
     </div>
   </el-menu>
-  <el-menu class="func">
+  <div class="func">
     <div class="user-popover" id="nav-user">
       <Suspense>
         <nav-user />
       </Suspense>
     </div>
 
-    <el-divider direction="vertical" style="height: 70%" />
-
-    <div class="user-popover">
-      <el-switch size="large" v-model="isDark" active-icon="Moon" inactive-icon="Sunny" active-color="black" inline-prompt/>
+    <div class="user-popover theme-toggle">
+      <el-switch 
+        size="large" 
+        v-model="isDark" 
+        active-icon="Moon" 
+        inactive-icon="Sunny" 
+        active-color="#6366f1" 
+        inline-prompt
+        class="modern-switch"
+      />
     </div>
-  </el-menu>
+  </div>
   <div class="h-6" />
 </template>
 
@@ -25,40 +33,11 @@
 import NavUser from "@/layout/components/NavUser.vue";
 import {go_page} from "@/utils";
 import {watch} from "vue";
-import {useDark, useToggle} from '@vueuse/core'
+import {useDark} from '@vueuse/core'
 import {localStore} from "@/store";
 
 const store = localStore()
 const isDark = useDark()
-const toggleDark = useToggle(isDark)
-
-// below is for nav-break-notice previously, but is deprecated now
-
-// const is_new_notice = ref(true)
-// const new_record_title = ref('')
-// const new_length = ref(0)
-// const visible = ref(false)
-// const receive_new_record = (record_title_and_new_length) => {
-//   is_new_notice.value = true
-//   new_record_title.value = record_title_and_new_length.record_title
-//   new_length.value = record_title_and_new_length.new_length
-// }
-//
-// const read_new_record = async () => {
-//   // there's a variable named visible in nav-break-notice, if it's true, return
-//   if (visible.value) return
-//   is_new_notice.value = false
-//   localStorage.setItem('latestBreakAnnouncement', new_record_title.value)
-//   localStorage.setItem('breakAnnouncementLength', JSON.stringify(new_length.value))
-// }
-//
-// const update_visible = (new_visible) => {
-//   visible.value = new_visible
-// }
-//
-// const receive_no_new_record = () => {
-//   is_new_notice.value = false
-// }
 
 watch(isDark, (newVal) => {
   store.toggleDarkMode(typeof newVal === "boolean" ? newVal : false)
@@ -66,18 +45,73 @@ watch(isDark, (newVal) => {
 </script>
 
 <style scoped>
-.el-menu-demo {
-  background-color: var(--yougi-app-container);
-  height: 100%;
-  color: var(--yougi-main-color);
-  --el-menu-bg-color: var(--yougi-main-color);
+.glass-nav {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all var(--transition-base) var(--ease-out);
 }
 
-.el-menu-demo .el-menu-item p {
-  font-size: 20px;
+.dark .glass-nav {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.el-menu-demo {
+  height: 100%;
+  color: var(--yougi-main-color);
+  --el-menu-bg-color: transparent;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--yougi-primary), var(--yougi-accent));
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+.logo-wrapper:hover {
+  box-shadow: var(--shadow-xl);
+  transform: rotate(10deg) scale(1.05);
+}
+
+.logo-icon {
+  color: white !important;
+  font-size: 28px !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+.logo-wrapper:hover .logo-icon {
+  transform: scale(1.1);
+}
+
+.app-name {
+  font-size: 22px;
   line-height: 24px;
-  font-weight: 400;
-  margin: 0 32px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, var(--yougi-primary), var(--yougi-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all var(--transition-base) var(--ease-out);
 }
 
 .func {
@@ -89,40 +123,68 @@ watch(isDark, (newVal) => {
   align-items: center;
   top: 0;
   height: 56px;
-  background-color: inherit;
+  padding-right: 16px;
+  gap: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.8);
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+.dark .func {
+  background: rgba(15, 23, 42, 0.8);
 }
 
 .user-popover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-right: 10px;
-  background-color: inherit;
+}
+
+.theme-toggle {
+  padding: 8px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+.theme-toggle:hover {
+  background: var(--yougi-link-color-hover);
+}
+
+.modern-switch {
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+.modern-switch:hover {
+  transform: scale(1.05);
 }
 
 .el-menu-item {
-  --el-menu-hover-bg-color: var(--yougi-app-container);
+  --el-menu-hover-bg-color: transparent;
+  border: none !important;
 }
 
 .el-menu--horizontal {
   border: none !important;
 }
 
-.el-menu-item:hover p,
-.el-menu-item:hover .el-icon svg{
-  color: var(--yougi-main-color);
-  fill: var(--yougi-main-color);
+.logo-container:hover .app-name {
+  transform: scale(1.05);
 }
 
-/* 扒源码扒出来的，我也不知道为什么这么选 */
-.el-menu--horizontal .el-menu-item:not(.is-disabled):focus, .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
-  color: var(--yougi-main-color);
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus, 
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+  color: var(--yougi-primary);
+  background: transparent;
 }
 
-/* 针对极窄页面 */
 @media screen and (max-width: 430px) {
-  .el-menu-demo .el-menu-item p {
+  .app-name {
     display: none;
+  }
+  
+  .logo-container {
+    padding: 0 12px;
   }
 }
 </style>

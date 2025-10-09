@@ -1,35 +1,98 @@
 :root {
-    --yougi-bg-color: #F3F6FDFF;
-
-    --yougi-app-container: #f3f6fd;
-    --yougi-main-color: #1f1c2e;
-    --yougi-secondary-color: #4A4A4A;
-    --yougi-link-color: #1f1c2e;
-    --yougi-link-color-hover: #c3cff4;
+    /* 基础背景色 - 更柔和的浅色调 */
+    --yougi-bg-color: #f8f9fc;
+    --yougi-app-container: #f8f9fc;
+    
+    /* 主色系 - 现代化的深蓝灰 */
+    --yougi-main-color: #1a1f36;
+    --yougi-secondary-color: #4a5568;
+    
+    /* 品牌色 - 优雅的紫蓝渐变 */
+    --yougi-primary: #6366f1;
+    --yougi-primary-light: #818cf8;
+    --yougi-primary-dark: #4f46e5;
+    --yougi-accent: #8b5cf6;
+    --yougi-accent-light: #a78bfa;
+    
+    /* 链接和交互色 */
+    --yougi-link-color: #6366f1;
+    --yougi-link-color-hover: #eef2ff;
     --yougi-link-color-active: #fff;
-    --yougi-link-color-active-bg: #1f1c2e;
-    --yougi-projects-section: #fff;
-    --yougi-message-box-hover: #fafcff;
-    --yougi-message-box-border: #e9ebf0;
-    --yougi-more-list-bg: #fff;
-    --yougi-more-list-bg-hover: #f6fbff;
-    --yougi-more-list-shadow: rgba(209, 209, 209, 0.4);
-    --yougi-button-bg: #1f1c24;
-    --yougi-search-area-bg: #fff;
-    --yougi-star: #1ff1c2e;
-    --yougi-message-btn: #fff;
-
-    --profile-bg-color: #252954;
-    --profile-color: black;
-    --profile-card-header-bg-color: #D5DEFFFF;
-    --profile-card-bg-color: #D5DEFFFF;
-    --profle-card-bg: radial-gradient(circle, #d5deff 0%, #c4cff8 100%);
-    --profle-destination-card-bg-color: #1a1d3a;
-    --profle-destination-card-bg-1: linear-gradient(45deg, #a6b7f3 0%, #90a3ea 100%);
-    --profle-destination-card-bg-2: linear-gradient(325deg, #a6b7f3 0%, #90a3ea 100%);
-    --profile-point-color: black;
-    --profile-credit-type-color: black;
-    --profile-active-link-color: black;
-    --profile-quote-bg-color: #98aaea;
-    --profile-quote-color: #3b3b3b;
+    --yougi-link-color-active-bg: #6366f1;
+    
+    /* 卡片和容器 */
+    --yougi-projects-section: #ffffff;
+    --yougi-card-bg: #ffffff;
+    --yougi-card-hover: #fafbfc;
+    
+    /* 消息和列表 */
+    --yougi-message-box-hover: #f8fafc;
+    --yougi-message-box-border: #e2e8f0;
+    --yougi-more-list-bg: #ffffff;
+    --yougi-more-list-bg-hover: #f8fafc;
+    --yougi-more-list-shadow: rgba(15, 23, 42, 0.08);
+    
+    /* 按钮和搜索 */
+    --yougi-button-bg: #1a1f36;
+    --yougi-search-area-bg: #ffffff;
+    --yougi-star: #fbbf24;
+    --yougi-message-btn: #ffffff;
+    
+    /* 成功、警告、错误色 */
+    --yougi-success: #10b981;
+    --yougi-warning: #f59e0b;
+    --yougi-error: #ef4444;
+    --yougi-info: #3b82f6;
+    
+    /* Profile 配色升级 */
+    --profile-bg-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --profile-color: #1a1f36;
+    --profile-card-header-bg-color: #ffffff;
+    --profile-card-bg-color: #ffffff;
+    --profle-card-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --profle-destination-card-bg-color: #1e293b;
+    --profle-destination-card-bg-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --profle-destination-card-bg-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --profile-point-color: #1a1f36;
+    --profile-credit-type-color: #1a1f36;
+    --profile-active-link-color: #6366f1;
+    --profile-quote-bg-color: #eef2ff;
+    --profile-quote-color: #4a5568;
+    
+    /* 阴影系统 */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    
+    /* 动画时间 */
+    --transition-fast: 150ms;
+    --transition-base: 250ms;
+    --transition-slow: 350ms;
+    --transition-slower: 500ms;
+    
+    /* 动画曲线 */
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* 圆角系统 */
+    --radius-sm: 0.375rem;
+    --radius-base: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-2xl: 2rem;
+    --radius-full: 9999px;
+    
+    /* 间距系统 */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
 }

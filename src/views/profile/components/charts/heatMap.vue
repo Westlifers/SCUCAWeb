@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {onMounted, onUnmounted, type Ref, ref, shallowRef, watch} from 'vue';
 import * as echarts from 'echarts';
-import {convert_time_num2str} from "@/utils";
 import {useDark} from "@vueuse/core";
 import type {Result} from "@/types";
 
@@ -119,24 +118,55 @@ window.addEventListener('resize', () => chartInstance.value.resize())
 </script>
 
 <template>
-  <div class="switch-group">
-    <el-select v-model="year" placeholder="请选择年份">
-      <el-option
-        v-for="year in years"
-        :key="year"
-        :label="year"
-        :value="year"
-      />
-    </el-select>
+  <div class="chart-wrapper">
+    <div class="switch-group">
+      <span class="switch-label">选择年份：</span>
+      <el-select 
+        v-model="year" 
+        placeholder="请选择年份"
+        style="width: 140px"
+        size="small"
+      >
+        <el-option
+          v-for="year in years"
+          :key="year"
+          :label="year"
+          :value="year"
+        />
+      </el-select>
+    </div>
+    <div ref="chart" class="chart-content"></div>
   </div>
-  <div ref="chart" style="width: 100%; height: 400px;"></div>
 </template>
 
 <style scoped>
+.chart-wrapper {
+    width: 100%;
+}
+
 .switch-group {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: var(--yougi-bg-secondary, #f5f7fa);
+    border-radius: var(--radius-lg, 8px);
+}
+
+.dark .switch-group {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.switch-label {
+    font-size: 14px;
+    color: var(--yougi-text-secondary);
+    font-weight: 500;
+}
+
+.chart-content {
+    width: 100%;
+    height: 400px;
 }
 </style>

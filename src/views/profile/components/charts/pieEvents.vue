@@ -86,9 +86,18 @@ window.addEventListener('resize', () => chartInstance.value.resize())
 </script>
 
 <template>
-  <div ref="chart" style="width: 100%; height: 400px;"></div>
+  <div class="chart-wrapper">
+    <div ref="chart" class="chart-content"></div>
+  </div>
 </template>
 
 <style scoped>
+.chart-wrapper {
+    width: 100%;
+}
 
+.chart-content {
+    width: 100%;
+    height: 400px;
+}
 </style>

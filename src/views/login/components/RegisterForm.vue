@@ -149,5 +149,12 @@ const handleRegister = (formEl: FormInstance | undefined) => {
 
 
 <style scoped>
+.registerForm {
+  width: 100%;
+}
 
+.submit-btn {
+  width: 100%;
+  margin-top: 10px;
+}
 </style>

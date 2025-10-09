@@ -8,15 +8,13 @@
       <card-panel />
 
       <avatar-panel />
-    </div>
-
-    <div class="user-box second-box">
-      <pb-panel />
 
       <transaction-panel />
     </div>
 
-    <div class="user-box third-box">
+    <div class="user-box second-box">
+      <pb-panel />
+      
       <statistic-panel />
     </div>
   </div>

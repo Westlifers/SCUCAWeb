@@ -28,12 +28,12 @@
       >登录</el-button
       >
     </el-form-item>
-
-    <!-- 找回密码 -->
-    <div class="tiparea">
-      <p>忘记密码？ <a>立即找回</a></p>
-    </div>
   </el-form>
+  
+  <!-- 找回密码 - 移到表单外部 -->
+  <div class="tiparea">
+    <p>忘记密码？ <a>立即找回</a></p>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -127,22 +127,34 @@ const handleLogin = (formEl: FormInstance | undefined) => {
 <style scoped>
 /* form */
 .loginForm {
-  margin-top: 20px;
-  background-color: #fff;
-  padding: 20px 40px 20px 20px;
-  border-radius: 5px;
-  box-shadow: 0px 5px 10px #cccc;
+  width: 100%;
 }
 
 .submit-btn {
   width: 100%;
+  margin-top: 10px;
 }
+
 .tiparea {
   text-align: right;
   font-size: 12px;
-  color: #333;
+  color: var(--yougi-text-secondary);
+  margin-top: 10px;
+  padding: 0 10px;
 }
+
+.tiparea p {
+  margin: 0;
+}
+
 .tiparea p a {
-  color: #409eff;
+  color: var(--yougi-primary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.tiparea p a:hover {
+  color: var(--yougi-accent);
+  text-decoration: underline;
 }
 </style>

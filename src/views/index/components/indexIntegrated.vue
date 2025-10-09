@@ -21,26 +21,32 @@ if (isMobile) go_page('mobileWeek')
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 32px 0 0;
+  padding: 20px 32px 20px 0;
+  gap: 20px;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .announcement-panel {
   width: 65%;
+  min-width: 0;
 }
 
 .notification-panel {
   width: 32%;
+  min-width: 0;
   transition: all 300ms cubic-bezier(0.19, 1, 0.56, 1);
 }
 
 @media screen and (max-width: 768px) {
   .index-wrapper {
     flex-direction: column;
+    padding: 20px;
   }
 
   .announcement-panel {
     width: 100%;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
   }
 
   .notification-panel {

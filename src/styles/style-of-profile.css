@@ -209,6 +209,18 @@ body {
   flex-grow: 1;
   max-width: none;
 }
+
+/* second-box 横向布局，两个面板各占一半 */
+.user-box.second-box {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.user-box.second-box > * {
+  flex: 1;
+  min-width: 0;
+}
 .user-box + .user-box .today {
   margin-left: 30px;
 }

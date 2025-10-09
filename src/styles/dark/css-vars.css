@@ -1,37 +1,97 @@
 .dark:root {
-    --yougi-light-black: #242424FF;
-    --yougi-light-black-2: #434343FF;
-    --yougi-link-color: #5866D5FF;
-    --yougi-app-container: #1f1d2b;
-    --yougi-app-container: #111827;
-    --yougi-main-color: #fff;
-    --yougi-secondary-color: rgba(255,255,255,.8);
-    --yougi-projects-section: #1f2937;
-    --yougi-link-color: rgba(255,255,255,.8);
-    --yougi-link-color-hover: rgba(195, 207, 244, 0.1);
-    --yougi-link-color-active-bg: rgba(195, 207, 244, 0.2);
-    --yougi-button-bg: #1f2937;
-    --yougi-search-area-bg: #1f2937;
-    --yougi-message-box-hover: #243244;
-    --yougi-message-box-border: rgba(255,255,255,.1);
-    --yougi-star: #ffd92c;
-    --yougi-light-font: rgba(255,255,255,.8);
-    --yougi-more-list-bg: #2f3142;
-    --yougi-more-list-bg-hover: rgba(195, 207, 244, 0.1);
-    --yougi-more-list-shadow: rgba(195, 207, 244, 0.1);
-    --yougi-message-btn: rgba(195, 207, 244, 0.1);
-
-    --profile-bg-color: #252954;
-    --profile-color: #9b9ca7;
-    --profile-card-header-bg-color: #10122b;
-    --profile-card-bg-color: #1a2049;
-    --profle-card-bg: radial-gradient(circle, #1a2049 0%, #13162f 100%);
-    --profle-destination-card-bg-color: #1a1d3a;
-    --profle-destination-card-bg-1: linear-gradient(45deg, #1a1d3a 0%, #212752 100%);
-    --profle-destination-card-bg-2: linear-gradient(325deg, #1a1d3a 0%, #212752 100%);
-    --profile-point-color: #bebec4;
-    --profile-credit-type-color: #e7e8ea;
-    --profile-active-link-color: #bebec4;
-    --profile-quote-bg-color: #15193c;
-    --profile-quote-color: #9B9CA7;
+    /* 基础背景色 - 更深邃的深色调 */
+    --yougi-light-black: #1e293b;
+    --yougi-light-black-2: #334155;
+    --yougi-bg-color: #0f172a;
+    --yougi-app-container: #0f172a;
+    
+    /* 主色系 */
+    --yougi-main-color: #f1f5f9;
+    --yougi-secondary-color: rgba(241, 245, 249, 0.8);
+    
+    /* 品牌色 - 暗色模式下更亮 */
+    --yougi-primary: #818cf8;
+    --yougi-primary-light: #a5b4fc;
+    --yougi-primary-dark: #6366f1;
+    --yougi-accent: #a78bfa;
+    --yougi-accent-light: #c4b5fd;
+    
+    /* 链接和交互色 */
+    --yougi-link-color: #818cf8;
+    --yougi-link-color-hover: rgba(129, 140, 248, 0.15);
+    --yougi-link-color-active-bg: rgba(129, 140, 248, 0.2);
+    
+    /* 卡片和容器 */
+    --yougi-projects-section: #1e293b;
+    --yougi-card-bg: #1e293b;
+    --yougi-card-hover: #334155;
+    
+    /* 消息和列表 */
+    --yougi-message-box-hover: #1e293b;
+    --yougi-message-box-border: rgba(241, 245, 249, 0.1);
+    --yougi-more-list-bg: #1e293b;
+    --yougi-more-list-bg-hover: rgba(129, 140, 248, 0.1);
+    --yougi-more-list-shadow: rgba(0, 0, 0, 0.3);
+    
+    /* 按钮和搜索 */
+    --yougi-button-bg: #1e293b;
+    --yougi-search-area-bg: #1e293b;
+    --yougi-star: #fbbf24;
+    --yougi-light-font: rgba(241, 245, 249, 0.8);
+    --yougi-message-btn: rgba(129, 140, 248, 0.1);
+    
+    /* 成功、警告、错误色 - 暗色模式调整 */
+    --yougi-success: #34d399;
+    --yougi-warning: #fbbf24;
+    --yougi-error: #f87171;
+    --yougi-info: #60a5fa;
+    
+    /* Profile 配色升级 */
+    --profile-bg-color: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%);
+    --profile-color: #cbd5e1;
+    --profile-card-header-bg-color: #1e293b;
+    --profile-card-bg-color: #1e293b;
+    --profle-card-bg: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    --profle-destination-card-bg-color: #0f172a;
+    --profle-destination-card-bg-1: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+    --profle-destination-card-bg-2: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    --profile-point-color: #e2e8f0;
+    --profile-credit-type-color: #f1f5f9;
+    --profile-active-link-color: #818cf8;
+    --profile-quote-bg-color: #1e293b;
+    --profile-quote-color: #cbd5e1;
+    
+    /* 阴影系统 - 暗色模式 */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    
+    /* 动画、圆角、间距保持一致 */
+    --transition-fast: 150ms;
+    --transition-base: 250ms;
+    --transition-slow: 350ms;
+    --transition-slower: 500ms;
+    
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    --radius-sm: 0.375rem;
+    --radius-base: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-2xl: 2rem;
+    --radius-full: 9999px;
+    
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
 }

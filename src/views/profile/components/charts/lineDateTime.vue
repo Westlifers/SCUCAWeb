@@ -159,19 +159,39 @@ window.addEventListener('resize', () => chartInstance.value.resize())
 </script>
 
 <template>
-  <div class="switch-group">
-    <el-switch v-model="isAvg" active-text="平均" inactive-text="单次" inactive-color="#13ce66" inline-prompt/>
-    <el-switch v-model="isXaxisDate" active-text="按时间" inactive-text="按比赛" inactive-color="#00ce66" inline-prompt/>
-    <el-switch v-model="showAvgLine" active-text="显示均值线" inactive-text="隐藏均值线" inline-prompt/>
+  <div class="chart-wrapper">
+    <div class="switch-group">
+      <el-switch v-model="isAvg" active-text="平均" inactive-text="单次" inactive-color="#13ce66" inline-prompt size="small"/>
+      <el-switch v-model="isXaxisDate" active-text="按时间" inactive-text="按比赛" inactive-color="#00ce66" inline-prompt size="small"/>
+      <el-switch v-model="showAvgLine" active-text="显示均值线" inactive-text="隐藏均值线" inline-prompt size="small"/>
+    </div>
+    <div ref="chart" class="chart-content"></div>
   </div>
-  <div ref="chart" style="width: 100%; height: 400px;"></div>
 </template>
 
 <style scoped>
+.chart-wrapper {
+    width: 100%;
+}
+
 .switch-group {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: var(--yougi-bg-secondary, #f5f7fa);
+    border-radius: var(--radius-lg, 8px);
+    flex-wrap: wrap;
+}
+
+.dark .switch-group {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.chart-content {
+    width: 100%;
+    height: 400px;
 }
 </style>
