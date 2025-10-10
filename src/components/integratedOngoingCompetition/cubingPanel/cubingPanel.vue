@@ -1,49 +1,71 @@
 <template>
   <div class="cubing" tabindex="-1">
 
-
     <div class="cubing-header">
-      <p>参加比赛</p>
+      <div class="header-content">
+        <div class="header-icon">
+          <el-icon :size="28"><Timer /></el-icon>
+        </div>
+        <div class="header-text">
+          <h2>参加比赛</h2>
+          <p class="subtitle" v-if="events_available.indexOf(activeEvent) > -1">第 {{count}} / {{maxScrambleCount}} 次</p>
+          <p class="subtitle" v-else>已完成</p>
+        </div>
+      </div>
       <div class="selector" v-if="events_available.indexOf(activeEvent) > -1">
-        <el-button icon="ArrowLeft" size="small" round :disabled="count <= 1"
-                   @click="count--"/>
-        <span>{{count}}</span>
-        <el-button icon="ArrowRight" size="small" round :disabled="count >= maxScrambleCount"
-                   @click="count++"/>
+        <el-button-group class="scramble-nav">
+          <el-button :icon="ArrowLeft" size="small" :disabled="count <= 1" @click="count--" type="primary"/>
+          <span class="count-display">{{count}}</span>
+          <el-button :icon="ArrowRight" size="small" :disabled="count >= maxScrambleCount" @click="count++" type="primary"/>
+        </el-button-group>
       </div>
     </div>
 
 
     <div class="scramble-container" v-if="events_available.indexOf(activeEvent) > -1">
-      <el-card shadow="hover" :style="{backgroundColor: '#dbf6fd'}">
+      <el-card shadow="hover" class="scramble-card">
 
         <template #header>
-          <span>{{props.activeEvent}}</span>
-          <el-button-group>
-            <el-switch v-model="imgVisible" active-text="显示结果" inactive-text="隐藏结果" inline-prompt style="padding-right: 5px" />
-            <el-switch v-model="is3d" active-text="3D" inactive-text="2D" inline-prompt />
-          </el-button-group>
+          <div class="card-header-content">
+            <div class="event-badge">
+              <el-icon :size="20"><Grid /></el-icon>
+              <span>{{props.activeEvent}}</span>
+            </div>
+            <el-button-group class="view-controls">
+              <el-switch v-model="imgVisible" active-text="显示" inactive-text="隐藏" inline-prompt size="small" />
+              <el-switch v-model="is3d" active-text="3D" inactive-text="2D" inline-prompt size="small" style="margin-left: 8px" />
+            </el-button-group>
+          </div>
         </template>
 
         <div class="scramble-content" @click="curtain_state++">
-          {{scrambleOfEvent[count - 1]}}
+          <div class="scramble-text">
+            {{scrambleOfEvent[count - 1]}}
+          </div>
           <!--     ignore the following warning, it's inevitable     -->
           <twisty-player
               v-if="imgVisible"
               :puzzle="translateEvent(activeEvent)"
               :alg="scrambleOfEvent[count - 1]"
               :visualization="is3d? '3D' : '2D'"
+              class="twisty-animation"
           />
         </div>
 
         <div class="scramble-footer">
-          <p style="width: 100%; display: flex; justify-content: space-between; font-size: 14px">
-            <span>当前进度</span>
-            <span v-if="!isMobile">按空格开始观察</span>
-            <span v-else>点击打乱公式开始观察</span>
-          </p>
-          <el-progress :percentage="count/maxScrambleCount*100" :show-text="false" :status="count===maxScrambleCount?'success':'exception'" />
-          <p>{{`${count} / ${maxScrambleCount}`}}</p>
+          <div class="progress-header">
+            <span class="progress-label">当前进度</span>
+            <span class="progress-hint" v-if="!isMobile">按空格开始观察</span>
+            <span class="progress-hint" v-else>点击打乱公式开始观察</span>
+          </div>
+          <el-progress 
+            :percentage="count/maxScrambleCount*100" 
+            :show-text="false" 
+            :status="count===maxScrambleCount?'success':'exception'"
+            :stroke-width="8"
+            class="progress-bar"
+          />
+          <div class="progress-count">{{`${count} / ${maxScrambleCount}`}}</div>
         </div>
 
       </el-card>
@@ -54,71 +76,96 @@
           ref="formRef"
           :model="state.resultForm"
           label-width="auto"
-          size="default"
+          size="large"
           :rules="state.resultRules"
+          class="result-form"
       >
-        <el-form-item label="第一次" prop="time_1" v-if="count===1">
+        <el-form-item label="第一次" prop="time_1" v-if="count===1" class="result-form-item">
           <el-input
               v-model="state.resultForm.time_1"
-              class="w-50 m-2"
-              placeholder="Your result"
+              placeholder="已记录"
               disabled
           />
         </el-form-item>
 
-        <el-form-item label="第二次" prop="time_2" v-if="count===2">
+        <el-form-item label="第二次" prop="time_2" v-if="count===2" class="result-form-item">
           <el-input
               v-model="state.resultForm.time_2"
-              class="w-50 m-2"
-              placeholder="Your result"
+              placeholder="已记录"
               disabled
           />
         </el-form-item>
 
-        <el-form-item label="第三次" prop="time_3" v-if="count===3">
+        <el-form-item label="第三次" prop="time_3" v-if="count===3" class="result-form-item">
           <el-input
               v-model="state.resultForm.time_3"
-              class="w-50 m-2"
-              placeholder="Your result"
+              placeholder="已记录"
               disabled
           />
         </el-form-item>
 
-        <el-form-item label="第四次" prop="time_4" v-if="count===4">
+        <el-form-item label="第四次" prop="time_4" v-if="count===4" class="result-form-item">
           <el-input
               v-model="state.resultForm.time_4"
-              class="w-50 m-2"
-              placeholder="Your result"
+              placeholder="已记录"
               disabled
           />
         </el-form-item>
 
-        <el-form-item label="第五次" prop="time_5" v-if="count===5">
+        <el-form-item label="第五次" prop="time_5" v-if="count===5" class="result-form-item">
           <el-input
               v-model="state.resultForm.time_5"
-              class="w-50 m-2"
-              placeholder="Your result"
+              placeholder="已记录"
               disabled
           />
         </el-form-item>
 
-        <el-form-item>
-          <el-button type="primary" @click="openDialog" style="width: 100%" v-if="count===maxScrambleCount">提交</el-button>
-          <el-dialog v-model="dialogVisible" width="30%" title="确认成绩" style="text-align: left">
-            <p>本次成绩如下：</p>
-            <p>第一次：{{state.resultForm.time_1}}</p>
-            <p>第二次：{{state.resultForm.time_2}}</p>
-            <p>第三次：{{state.resultForm.time_3}}</p>
-            <p v-if="maxScrambleCount===5">第四次：{{state.resultForm.time_4}}</p>
-            <p v-if="maxScrambleCount===5">第五次：{{state.resultForm.time_5}}</p>
-            <p>请检查成绩输入是否正确。</p>
+        <el-form-item class="submit-button-item">
+          <el-button type="primary" @click="openDialog" size="large" v-if="count===maxScrambleCount" class="submit-button">
+            <el-icon style="margin-right: 8px"><Check /></el-icon>
+            提交成绩
+          </el-button>
+          <el-dialog v-model="dialogVisible" width="400px" class="result-dialog" :show-close="false">
+            <template #header>
+              <div class="dialog-header">
+                <el-icon :size="32" color="var(--yougi-primary)"><CircleCheck /></el-icon>
+                <span>确认成绩</span>
+              </div>
+            </template>
+            <div class="dialog-content">
+              <p class="dialog-intro">本次成绩如下：</p>
+              <div class="result-list">
+                <div class="result-item">
+                  <span class="result-label">第一次：</span>
+                  <span class="result-value">{{state.resultForm.time_1}}</span>
+                </div>
+                <div class="result-item">
+                  <span class="result-label">第二次：</span>
+                  <span class="result-value">{{state.resultForm.time_2}}</span>
+                </div>
+                <div class="result-item">
+                  <span class="result-label">第三次：</span>
+                  <span class="result-value">{{state.resultForm.time_3}}</span>
+                </div>
+                <div class="result-item" v-if="maxScrambleCount===5">
+                  <span class="result-label">第四次：</span>
+                  <span class="result-value">{{state.resultForm.time_4}}</span>
+                </div>
+                <div class="result-item" v-if="maxScrambleCount===5">
+                  <span class="result-label">第五次：</span>
+                  <span class="result-value">{{state.resultForm.time_5}}</span>
+                </div>
+              </div>
+              <p class="dialog-hint">请检查成绩输入是否正确</p>
+            </div>
             <template #footer>
-              <span class="dialog-footer">
-                <el-button @click="dialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="dialogVisible = false;handleSubmit(formRef)">
-                  确认
+              <div class="dialog-footer">
+                <el-button @click="dialogVisible = false" size="large">取消</el-button>
+                <el-button type="primary" @click="dialogVisible = false;handleSubmit(formRef)" size="large">
+                  <el-icon style="margin-right: 6px"><Check /></el-icon>
+                  确认提交
                 </el-button>
-              </span>
+              </div>
             </template>
           </el-dialog>
         </el-form-item>
@@ -126,26 +173,33 @@
     </div>
 
     <div class="finished" v-else>
-      <div class="finished-header account-profile">
-        <img :src="store.user.avatar" alt="" >
-        <div class="blob-wrap">
-          <div class="blob"></div>
-          <div class="blob"></div>
-          <div class="blob"></div>
+      <div class="finished-top">
+        <div class="finished-header account-profile">
+          <img :src="store.user.avatar" alt="" >
+          <div class="blob-wrap">
+            <div class="blob"></div>
+            <div class="blob"></div>
+            <div class="blob"></div>
+          </div>
+        </div>
+        <div class="finished-badge">
+          <el-icon :size="48"><CircleCheck /></el-icon>
         </div>
       </div>
       <div class="finished-content">
-        <p>你已经完成了此项目</p>
-        <div class="scramble-content">
+        <p class="finished-title">你已经完成了此项目</p>
+        <p class="finished-subtitle">查看你的打乱历史</p>
+        <div class="scramble-review">
           <div class="control">
             <el-button-group>
-              <el-button type="primary" icon="ArrowLeft" @click="count--" :disabled="count===1"></el-button>
-              <el-button type="primary" icon="ArrowRight" @click="count++" :disabled="count===maxScrambleCount"></el-button>
+              <el-button type="primary" :icon="ArrowLeft" @click="count--" :disabled="count===1" size="large"></el-button>
+              <span class="review-count">{{count}} / {{maxScrambleCount}}</span>
+              <el-button type="primary" :icon="ArrowRight" @click="count++" :disabled="count===maxScrambleCount" size="large"></el-button>
             </el-button-group>
           </div>
-          <div class="scramble">
-            <p>{{`第${count}次打乱`}}</p>
-            <p>{{scrambleOfEvent[count - 1]}}</p>
+          <div class="scramble-box">
+            <p class="scramble-title">{{`第 ${count} 次打乱`}}</p>
+            <p class="scramble-formula">{{scrambleOfEvent[count - 1]}}</p>
           </div>
         </div>
       </div>
@@ -174,6 +228,7 @@ import {postResult, postTempResult} from "@/api/service";
 import TwistyPlayer from "@/components/cubingjs/twistyPlayer.vue";
 import TimingCurtain from "@/components/timingCurtain/timingCurtain.vue";
 import {isMobile, SPECIAL_EVENTS} from "@/utils/constants";
+import { Timer, ArrowLeft, ArrowRight, Grid, Check, CircleCheck } from '@element-plus/icons-vue'
 
 const curtain_state = ref(1)
 const store = localStore()
@@ -290,6 +345,7 @@ watch(() => props.activeEvent, () => {
 // 是否是特殊项目
 const is_special = computed(() => maxScrambleCount.value === 3)
 const scrambleOfEvent = computed(() => {
+  if (!compData) return []
   for (let scramble of compData.scramble_set) {
     if (scramble.event === props.activeEvent) {
       return [scramble.scramble_1, scramble.scramble_2, scramble.scramble_3, scramble.scramble_4, scramble.scramble_5]
@@ -303,7 +359,7 @@ const scrambleOfEvent = computed(() => {
 
 // form part
 const formRef = ref<FormInstance>()
-const compId = computed(() => compData.compId)
+const compId = computed(() => compData?.compId || 0)
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const resultValidator = (rule: any, value: string, callback: Function) => {
@@ -402,7 +458,7 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
         time_5: convert_time_str2num(state.resultForm.time_5),
       }
       try {
-        const data = await postResult(req)
+        await postResult(req)
         ElNotification({
           title: '成功',
           message: '提交成功！',
@@ -426,114 +482,550 @@ const handleSubmit =  (formEl: FormInstance | undefined) => {
 
 <style scoped>
 .cubing {
-  background-color: var(--yougi-projects-section);
-  border-radius: 30px;
-  padding: 32px 32px 0 32px;
+  background: var(--yougi-card-bg);
+  border-radius: var(--radius-2xl);
+  padding: 32px;
   display: flex;
   flex-direction: column;
   overflow: auto;
   height: calc(100vh - 120px);
-  transition: all 300ms cubic-bezier(0.19, 1, 0.56, 1);
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--yougi-border);
+  position: relative;
+  animation: fadeInRight 0.6s ease-out;
 }
 
+.cubing::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--yougi-accent), var(--yougi-primary), var(--yougi-accent));
+  background-size: 200% 100%;
+  animation: gradientSlide 3s ease infinite;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes gradientSlide {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+}
+
+/* Header Styles */
 .cubing-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+  gap: 16px;
 }
 
-.cubing-header p {
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 400;
-  opacity: 0.9;
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
 }
 
-.selector {
+.header-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--yougi-accent), var(--yougi-primary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: var(--shadow-md);
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.header-text h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--yougi-accent), var(--yougi-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.header-text .subtitle {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: var(--yougi-text-secondary);
+  font-weight: 500;
+}
+
+.scramble-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: var(--yougi-bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.count-display {
+  min-width: 32px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--yougi-primary);
+  padding: 0 8px;
+}
+
+.scramble-nav :deep(.el-button) {
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+}
+
+.scramble-nav :deep(.el-button:hover:not(:disabled)) {
+  transform: scale(1.1);
+}
+
+/* Card Styles */
+.scramble-container {
+  margin-bottom: 24px;
+}
+
+.scramble-card {
+  border-radius: var(--radius-xl) !important;
+  border: 2px solid var(--yougi-border);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.scramble-card:hover {
+  border-color: var(--yougi-primary);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.card-header-content {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-.selector span {
-  margin-left: 10px;
-  margin-right: 10px;
-  width: 10px;
+.event-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, var(--yougi-primary), var(--yougi-accent));
+  color: white;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.view-controls {
+  display: flex;
+  gap: 8px;
+}
+
+:deep(.el-card__header) {
+  background: var(--yougi-bg-secondary);
+  border-bottom: 2px solid var(--yougi-border);
+  padding: 16px 20px;
+}
+
+:deep(.el-card__body) {
+  padding: 24px;
+}
+
+/* Scramble Content */
+.scramble-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.scramble-content:hover {
+  transform: scale(1.02);
+}
+
+.scramble-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--yougi-text);
+  text-align: center;
+  padding: 16px;
+  background: var(--yougi-card-bg);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--yougi-border);
+  width: 100%;
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.twisty-animation {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Progress Footer */
+.scramble-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.progress-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yougi-text);
+}
+
+.progress-hint {
+  font-size: 12px;
+  color: var(--yougi-text-secondary);
+  font-style: italic;
+}
+
+.progress-bar {
+  margin: 4px 0;
+}
+
+.progress-bar :deep(.el-progress-bar__outer) {
+  background-color: var(--yougi-bg-secondary) !important;
+  border-radius: var(--radius-md);
+}
+
+.progress-bar :deep(.el-progress-bar__inner) {
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, var(--yougi-primary), var(--yougi-accent));
+  transition: all 0.3s ease;
+}
+
+.progress-count {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yougi-primary);
+}
+
+/* Form Styles */
+.scramble-submit {
+  margin-bottom: 24px;
+}
+
+.result-form {
+  background: var(--yougi-bg-secondary);
+  padding: 20px;
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--yougi-border);
+}
+
+.result-form-item :deep(.el-form-item__label) {
+  font-weight: 600;
+  color: var(--yougi-text);
+}
+
+.result-form-item :deep(.el-input__wrapper) {
+  background: var(--yougi-card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.submit-button-item {
+  margin-bottom: 0;
+}
+
+.submit-button {
+  width: 100%;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--yougi-primary), var(--yougi-accent));
+  border: none;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+/* Dialog Styles */
+.result-dialog {
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+}
+
+.result-dialog :deep(.el-dialog__header) {
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+  border-bottom: 2px solid var(--yougi-border);
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--yougi-text);
+}
+
+.dialog-content {
+  padding: 0 24px;
+}
+
+.dialog-intro {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--yougi-text);
+  margin-bottom: 16px;
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--yougi-bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--yougi-border);
+}
+
+.result-label {
+  font-size: 14px;
+  color: var(--yougi-text-secondary);
+  font-weight: 500;
+}
+
+.result-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--yougi-primary);
+  font-family: 'Courier New', monospace;
+}
+
+.dialog-hint {
+  font-size: 13px;
+  color: var(--yougi-text-secondary);
+  text-align: center;
+  font-style: italic;
+  margin: 0;
+}
+
+.dialog-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding: 0 24px 24px;
+}
+
+.dialog-footer .el-button {
+  min-width: 100px;
+  border-radius: var(--radius-lg);
+}
+
+/* Finished State */
+.finished {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.finished-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.finished-header {
+  margin-bottom: 24px;
+}
+
+.finished-badge {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--yougi-primary), var(--yougi-accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: var(--shadow-xl);
+  animation: pulse 2s ease-in-out infinite;
+  position: absolute;
+  left: 150%;
+  z-index: 1;
+}
+
+.finished-content {
+  width: 100%;
+}
+
+.finished-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--yougi-text);
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.finished-subtitle {
+  font-size: 14px;
+  color: var(--yougi-text-secondary);
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.scramble-review {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.control .el-button-group {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--yougi-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 4px;
+  box-shadow: var(--shadow-sm);
+}
+
+.review-count {
+  min-width: 80px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--yougi-primary);
+  padding: 0 16px;
+}
+
+.scramble-box {
+  background: var(--yougi-bg-secondary);
+  padding: 24px;
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--yougi-border);
+}
+
+.scramble-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--yougi-text);
+  margin: 0 0 12px 0;
+  text-align: center;
+}
+
+.scramble-formula {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--yougi-text-secondary);
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  word-break: break-word;
+  margin: 0;
 }
 
 .el-card {
   border-radius: 30px !important;
 }
-:deep(.el-card__header) {
-  color: #4A4A4A;
-}
 
-.scramble-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #4A4A4A;
-  margin-bottom: 24px;
-  font-size: 16px;
-  line-height: 24px;
-  opacity: 0.7;
-}
-
-.scramble-footer {
-  display: flex;
-  flex-direction: column;
-}
-.scramble-footer p:first-child {
-  color: #4A4A4A;
-  font-size: 16px;
-  line-height: 24px;
-  opacity: 0.7;
-  margin-bottom: 8px;
-  text-align: left;
-}
-.scramble-footer p:last-child {
-  color: #4A4A4A;
-  margin-top: 8px;
-  font-size: 16px;
-  line-height: 24px;
-  opacity: 0.7;
-  text-align: right;
-}
-
-:deep(.el-progress-bar__outer) {
-  background-color: #FFFFFF !important;
-}
-
-.scramble-container {
-  margin-bottom: 24px;
-}
-
-.finished-content p{
-  color: var(--yougi-main-color);
-  font-size: 16px;
-  line-height: 24px;
-  opacity: 0.7;
-  margin-bottom: 8px;
-  text-align: center;
-}
-
-
-/* for animatiion */
+/* Account Profile Animation */
 .account-profile {
   position: relative;
   text-align: center;
-  width: 50%;
-  margin: 48px auto 48px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
 }
 .account-profile img {
   width: 84px;
   height: 84px;
   border-radius: 50%;
-  -o-object-fit: cover;
   object-fit: cover;
-  -o-object-position: left;
-  object-position: left;
+  object-position: center;
   padding: 5px;
+  flex-shrink: 0;
 }
 .account-profile .blob {
   position: absolute;

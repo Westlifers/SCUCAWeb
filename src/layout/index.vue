@@ -54,8 +54,33 @@ export default defineComponent({
 
 .el-main {
   padding: 0;
-  height: calc(100vh - 60px);
+  /* 优先使用 dvh (动态视口高度)，不支持则回退到自定义变量，最后回退到 vh */
+  height: calc(100dvh - 60px);
+  height: calc(var(--viewport-height, 100vh) - 60px);
   background-color: var(--yougi-bg-color);
+  overflow: auto;
+}
+
+/* 移动端隐藏滚动条 */
+@media (max-width: 768px) {
+  .el-main {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  }
+  
+  .el-main::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  /* 确保 el-container 也隐藏滚动条 */
+  .el-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .el-container::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 :deep(.el-footer) {
@@ -63,7 +88,9 @@ export default defineComponent({
 }
 
 #largest-container {
-  height: 100vh;
+  height: 100dvh;
+  height: var(--viewport-height, 100vh);
+  overflow: hidden; /* 防止最外层容器出现滚动条 */
 }
 
 </style>

@@ -2,6 +2,7 @@
   <el-table 
     :data="tableData" 
     class="modern-rank-table"
+    :height="height"
     stripe
   >
     <el-table-column type="index" width="100" align="center" label="排名">
@@ -79,6 +80,7 @@ const props = defineProps<{
   tableData: OmittedResultAvgWithCompId[] | OmittedResultBestWithCompId[]
   aorb: string
   page: number
+  height?: string
 }>()
 
 // 计算真实排名（考虑分页）

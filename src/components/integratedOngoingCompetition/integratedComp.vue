@@ -33,12 +33,12 @@ const set_event = (event: apiUsedEventName) => {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 32px 0 0;
+  padding: 20px 32px 0 0;
 }
 
 @media screen and (max-width: 768px) {
   .ongoing-comp-wrapper {
-    padding: 0;
+    padding: 20px 0 0 0;
   }
 }
 

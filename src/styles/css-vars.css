@@ -1,4 +1,8 @@
 :root {
+    /* 视口高度变量 - 兼容移动端浏览器地址栏 */
+    --vh: 1vh;
+    --viewport-height: 100vh;
+    
     /* 基础背景色 - 更柔和的浅色调 */
     --yougi-bg-color: #f8f9fc;
     --yougi-app-container: #f8f9fc;

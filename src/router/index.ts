@@ -3,11 +3,9 @@ import {createRouter, createWebHashHistory} from 'vue-router'
 import layout from "@/layout/index.vue"
 import aboutUs from "@/views/about/AboutUs.vue";
 import loginRegister from "@/views/login/LoginRegister.vue";
-import scuRecord from '@/views/record/RecordSuspense.vue'
 import specialSuspense from "@/views/special/SpecialSuspense.vue";
 import historyListSuspense from "@/views/history/list/HistoryListSuspense.vue";
 import historyDetailSuspense from "@/views/history/detail/HistoryDetailSuspense.vue";
-import rankSuspense from "@/views/rank/RankSuspense.vue";
 import createCompetitionSuspense from "@/views/createComp/createCompetitionSuspense.vue";
 import indexSuspense from "@/views/index/indexSuspense.vue";
 import createAnnouncementForm from "@/views/createAnnouncement/createAnnouncementForm.vue";
@@ -79,32 +77,6 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'detail/:compId',
         component: historyDetailSuspense
-      }
-    ]
-  },
-
-
-  {
-    path: '/record',
-    component: layout,
-    children: [
-      {
-        path: '',
-        component: scuRecord,
-        name: 'record'
-      }
-    ]
-  },
-
-
-  {
-    path: '/rank',
-    component: layout,
-    children: [
-      {
-        path: '',
-        component: rankSuspense,
-        name: 'rank'
       }
     ]
   },
