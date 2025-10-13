@@ -8,7 +8,8 @@
 
 <script lang="ts" setup>
 
-import CubingIndex from "@/components/cubing/CubingIndex.vue"</script>
+import CubingIndex from "@/components/cubing/CubingIndex.vue"
+</script>
 
 <style scoped>
 

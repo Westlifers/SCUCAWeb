@@ -217,7 +217,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, reactive, ref, watch} from "vue";
+import {computed, onMounted, reactive, ref, watch} from "vue";
 import {getComp, getCompCachedResult} from "@/api/fetchData";
 import {localStore} from "@/store";
 import type {apiUsedEventName, CachedResult} from "@/types";
@@ -311,8 +311,9 @@ const maxScrambleCount = computed(() => {
     return 5
   }
 })
+
 // 切换项目时清除表单
-watch(() => props.activeEvent, () => {
+const clearForm = () => {
   let cacheOfThisEvent: CachedResult = {
     event: props.activeEvent,
     time_1: -1, time_2: -1, time_3: -1, time_4: -1, time_5: -1
@@ -329,6 +330,8 @@ watch(() => props.activeEvent, () => {
       if (count.value > maxScrambleCount.value) count.value = maxScrambleCount.value
       break
     }
+    // 如果没有找到，那就是已经完成，count就是最大轮数
+    if (i === maxScrambleCount.value) count.value = maxScrambleCount.value
   }
   // 把缓存成绩填进去
   for (let i = 1; i <= 5; i++) {
@@ -339,7 +342,15 @@ watch(() => props.activeEvent, () => {
       state.resultForm[`time_${i}`] = cacheOfThisEvent[`time_${i}`]==0?'DNF':convert_time_num2str(cacheOfThisEvent[`time_${i}`]).replace(/\s*/g,"")
     }
   }
+}
 
+watch(() => props.activeEvent, () => {
+  clearForm()
+})
+
+// 初始时也要清除表单
+onMounted(() => {
+  clearForm()
 })
 
 // 是否是特殊项目

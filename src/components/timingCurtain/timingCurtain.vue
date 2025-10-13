@@ -283,6 +283,8 @@ watch(() => props.state, stimulate_space)
               0 1px 2px rgba(0, 0, 0, 0.04),
               inset 0 1px 0 rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.4);
+  display: inline-flex;
+  flex-wrap: nowrap; /* 防止换行 */
 }
 
 :deep(.el-radio-button__inner) {
@@ -294,6 +296,7 @@ watch(() => props.state, stimulate_space)
   padding: 12px 32px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  white-space: nowrap; /* 防止文字换行 */
 }
 
 :deep(.el-radio-button__inner:hover) {
@@ -376,7 +379,7 @@ watch(() => props.state, stimulate_space)
   
   :deep(.el-radio-button__inner) {
     font-size: 16px;
-    padding: 10px 24px;
+    padding: 10px 20px;
   }
   
   .space_tip {
@@ -392,12 +395,34 @@ watch(() => props.state, stimulate_space)
   
   :deep(.el-radio-button__inner) {
     font-size: 14px;
-    padding: 8px 16px;
+    padding: 8px 12px;
   }
   
   .space_tip {
     font-size: 12px;
     padding: 8px 16px;
+  }
+}
+
+/* 超窄屏幕适配 - 防止按钮换行 */
+@media (max-width: 360px) {
+  .timing-curtain__content {
+    font-size: 48px;
+  }
+  
+  :deep(.el-radio-group) {
+    padding: 4px;
+  }
+  
+  :deep(.el-radio-button__inner) {
+    font-size: 12px;
+    padding: 6px 10px;
+    font-weight: 500;
+  }
+  
+  .space_tip {
+    font-size: 11px;
+    padding: 6px 12px;
   }
 }
 </style>
