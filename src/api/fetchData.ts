@@ -267,32 +267,32 @@ export async function getUserPb (): Promise<RecordWithScore> {
 }
 
 
-export async function getAnnouncement (type: 'update' | 'scur break' | 'announcement' | 'ua'): Promise<Announcement[]> {
+export async function getAnnouncement (type: 'update' | 'scur break' | 'announcement' | 'ua', page: number = 1) {
     let res
     if (type === 'update') {
         res = await request({
-            url: '/post/update/',
+            url: `/post/update/?page=${page}`,
             method: 'get'
         })
     } else if (type === 'scur break') {
         res = await request({
-            url: '/post/break/',
+            url: `/post/break/?page=${page}`,
             method: 'get'
         })
     } else if (type === 'announcement') {
         res = await request({
-            url: '/post/announcement/',
+            url: `/post/announcement/?page=${page}`,
             method: 'get'
         })
     } else {  // type === 'ua', meaning update and announcement
         res = await request({
-            url: '/post/ua/',
+            url: `/post/ua/?page=${page}`,
             method: 'get'
         })
     }
 
     const announcements: Announcement[] = []
-    for (const announcement of res) {
+    for (const announcement of res['results']) {
         announcements.push({
             title: announcement['title'],
             content: announcement['content'],
@@ -302,7 +302,10 @@ export async function getAnnouncement (type: 'update' | 'scur break' | 'announce
         })
     }
 
-    return announcements
+    return {
+        'announcement': announcements,
+        'page_num': res['count']
+    }
 }
 
 

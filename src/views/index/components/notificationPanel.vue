@@ -50,6 +50,18 @@
         </div>
       </div>
     </el-scrollbar>
+
+    <div class="pagination-container">
+      <el-pagination
+        v-model:current-page="currentPage"
+        :page-size="6"
+        layout="prev, pager, next"
+        :total="totalPage * 6"
+        @current-change="handlePageChange"
+        :hide-on-single-page="false"
+        small
+      />
+    </div>
   </div>
 </template>
 
@@ -58,15 +70,36 @@ import type {Announcement} from "@/types";
 import {getAnnouncement} from "@/api/fetchData";
 import {get_user_avatar, getUserAndEventAndAorb} from "@/utils";
 import { Notification, Trophy, TrendCharts, Clock } from '@element-plus/icons-vue';
+import { ref, type Ref } from "vue";
 
-const breakAnnouncements: Announcement[] = await getAnnouncement('scur break')
-// get every avatar of the user who has a new record, so that we don't need to fetch the avatar every time
-const avatars = {}
-for (const announcement of breakAnnouncements) {
-  const username = getUserAndEventAndAorb(announcement.content).user
-  if (username in avatars) continue
-  avatars[username] = await get_user_avatar(username)
+// Pagination state
+const currentPage = ref(1)
+const breakAnnouncements: Ref<Announcement[]> = ref([])
+const totalPage = ref(0)
+const avatars: Ref<Record<string, string>> = ref({})
+
+// Fetch break announcements
+async function fetchBreakAnnouncements() {
+  const data = await getAnnouncement('scur break', currentPage.value)
+  breakAnnouncements.value = data['announcement']
+  totalPage.value = data['page_num']
+  
+  // Get every avatar of the user who has a new record
+  for (const announcement of data['announcement']) {
+    const username = getUserAndEventAndAorb(announcement.content).user
+    if (username in avatars.value) continue
+    avatars.value[username] = await get_user_avatar(username)
+  }
 }
+
+// Handle page change
+function handlePageChange(page: number) {
+  currentPage.value = page
+  fetchBreakAnnouncements()
+}
+
+// Initial fetch
+fetchBreakAnnouncements()
 </script>
 
 <style scoped>
@@ -279,5 +312,34 @@ for (const announcement of breakAnnouncements) {
     align-items: flex-start;
     gap: 8px;
   }
+}
+
+.pagination-container {
+  margin-top: 16px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pagination-container :deep(.el-pagination) {
+  gap: 8px;
+}
+
+.pagination-container :deep(.el-pager li) {
+  min-width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base) var(--ease-out);
+}
+
+.pagination-container :deep(.el-pager li:hover) {
+  transform: translateY(-2px);
+}
+
+.pagination-container :deep(.el-pager li.is-active) {
+  background: var(--yougi-main-color);
+  color: white;
 }
 </style>
